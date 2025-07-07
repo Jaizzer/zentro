@@ -21,6 +21,9 @@ app.listen(PORT, (error) => {
 	}
 });
 
+// Serve public files (e.g. css, javascript)
+app.use(express.static(path.join(__dirname, "public")));
+
 // Use ejs layout for reusable html layouts
 const expressLayout = require("express-ejs-layouts");
 app.use(expressLayout);
