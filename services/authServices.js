@@ -51,7 +51,12 @@ async function verifyUser(emailVerificationString) {
 		Date.now() < localAccount.emailVerificationStringExpirationDate;
 
 	if (isEligibleForVerification) {
-		await LocalAccount.validate(localAccount.id);
+		await LocalAccount.updateById({
+			id: localAccount.id,
+			data: {
+				isVerified: true,
+			},
+		});
 		return {
 			success: true,
 		};
