@@ -2,6 +2,9 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
+// Load path module for file and directory path
+const path = require("path");
+
 // Setup the server
 const express = require("express");
 const app = express();
@@ -17,3 +20,14 @@ app.listen(PORT, (error) => {
 		console.log(`Server is listening on: ${baseUrl}`);
 	}
 });
+
+// Use ejs layout for reusable html layouts
+const expressLayout = require("express-ejs-layouts");
+app.use(expressLayout);
+
+// Place all javascript at the end of the HTML body to support view-specific scripts in layouts
+app.set("layout extractScripts", true);
+
+// Setup views
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
