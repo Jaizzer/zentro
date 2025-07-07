@@ -29,6 +29,19 @@ async function findByOptions(options) {
 	}
 }
 
+async function findManyByOptions(options) {
+	try {
+		const users = await prisma.user.findMany({
+			where: options,
+		});
+
+		return users;
+	} catch (error) {
+		console.error("Failed to retrieve the users. ", error);
+		throw error;
+	}
+}
+
 async function updateById({ id, data }) {
 	try {
 		const updatedUser = await prisma.user.update({
@@ -63,6 +76,7 @@ async function deleteById(id) {
 module.exports = {
 	create,
 	findByOptions,
+	findManyByOptions,
 	updateById,
 	deleteById,
 };

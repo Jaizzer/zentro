@@ -27,6 +27,19 @@ async function findByOptions(options) {
 	}
 }
 
+async function findManyByOptions(options) {
+	try {
+		const localAccounts = await prisma.localAccount.findMany({
+			where: options,
+		});
+
+		return localAccounts;
+	} catch (error) {
+		console.error("Failed to retrieve the local accounts. ", error);
+		throw error;
+	}
+}
+
 async function updateById({ id, data }) {
 	try {
 		const updatedLocalAccount = await prisma.localAccount.update({
@@ -61,6 +74,7 @@ async function deleteById(id) {
 module.exports = {
 	create,
 	findByOptions,
+	findManyByOptions,
 	updateById,
 	deleteById,
 };
