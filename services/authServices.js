@@ -67,7 +67,34 @@ async function verifyUser(emailVerificationString) {
 	}
 }
 
+async function resendEmailVerificationLink(email) {
+	// Retrieve the local account that matches the provided email from the database
+	const localAccount = await LocalAccount.findByOptions({ email });
+
+	if (localAccount && !localAccount.isVerified) {
+		// Generate a new email verification string
+		const newEmailVerificationString = generateRandomString();
+
+		// Update the email verification string in the database
+		await LocalAccount.updateById({
+			id: localAccount.id,
+			data: {
+				emailVerificationString: newEmailVerificationString,
+				emailVerificationStringExpirationDate:
+					getDateTimeAfterMinutes(5),
+			},
+		});
+
+		// Send the email verification link
+		await emailServices.sendEmailVerification({
+			emailAddress: email,
+			emailVerificationString: newEmailVerificationString,
+		});
+	}
+}
+
 module.exports = {
 	registerLocalUser,
 	verifyUser,
+	resendEmailVerificationLink,
 };

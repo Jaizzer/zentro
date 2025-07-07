@@ -43,8 +43,26 @@ async function verifyUser(req, res, next) {
 	}
 }
 
+async function renderResendVerificationLinkPage(req, res, next) {
+	return res.status(200).render("resendVerificationLink", {
+		formFieldData: null,
+	});
+}
+
+async function resendVerificationLink(req, res, next) {
+	// Resend verification link to the provided email if its associated with an unverified account
+	await authServices.resendEmailVerificationLink(req.body.email);
+
+	// Render email verification page
+	return res.status(200).render("emailVerificationNotice");
+}
+
 module.exports = {
 	renderSignUpPage: asyncHandler(renderSignUpPage),
 	signUpUser: asyncHandler(signUpUser),
 	verifyUser: asyncHandler(verifyUser),
+	renderResendVerificationLinkPage: asyncHandler(
+		renderResendVerificationLinkPage
+	),
+	resendVerificationLink: asyncHandler(resendVerificationLink),
 };

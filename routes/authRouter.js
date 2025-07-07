@@ -23,4 +23,17 @@ authRouter.get(
 	authControllers.verifyUser
 );
 
+authRouter.get(
+	"/resend-verification-link",
+	authMiddlewares.isUnauthenticated,
+	authControllers.renderResendVerificationLinkPage
+);
+
+authRouter.post(
+	"/resend-verification-link",
+	authValidators.resendVerificationLink,
+	authMiddlewares.validateResendVerificationLinkForm,
+	authControllers.resendVerificationLink
+);
+
 module.exports = authRouter;
