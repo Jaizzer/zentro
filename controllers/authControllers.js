@@ -1,3 +1,4 @@
+const asyncHandler = require("express-async-handler");
 const authServices = require("../services/authServices.js");
 
 async function renderSignUpPage(req, res, next) {
@@ -19,6 +20,6 @@ async function signUpUser(req, res, next) {
 }
 
 module.exports = {
-	renderSignUpPage,
-	signUpUser,
+	renderSignUpPage: asyncHandler(renderSignUpPage),
+	signUpUser: asyncHandler(signUpUser),
 };
