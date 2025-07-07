@@ -42,6 +42,20 @@ app.set("views", path.join(__dirname, "views"));
 const sessionMiddleware = require("./config/session.js");
 app.use(sessionMiddleware);
 
+// Load passport for user authentication
+const passport = require("passport");
+
+// Load and configure the Passport strategies
+require("./config/passport.js");
+
+// Initialize Passport and enable session-based authentication
+app.use((req, res, next) => {
+	passport.initialize()(req, res, next);
+});
+app.use((req, res, next) => {
+	passport.session()(req, res, next);
+});
+
 // Main error-handling middleware
 app.use((error, req, res, next) => {
 	console.error(error.stack);
