@@ -31,3 +31,22 @@ app.set("layout extractScripts", true);
 // Setup views
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+// Main error-handling middleware
+app.use((error, req, res, next) => {
+	console.error(error.stack);
+	const statusCode = error.statusCode || error.status || 500;
+	const message = error.message || "Internal server error";
+	console.log(message);
+	res.status(statusCode).render("error", {
+		title: "404 Error",
+		message: "Internal Server Error",
+		redirectLink: null,
+	});
+});
+
+// Error handling for uncaught exceptions
+process.on("uncaughtException", (error) => {
+	console.error(`Uncaught exception: ${error}`);
+	process.exit(1);
+});
