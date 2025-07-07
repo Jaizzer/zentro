@@ -35,6 +35,10 @@ app.set("layout extractScripts", true);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+// Apply session middleware to handle user sessions (e.g., login state, cookies)
+const sessionMiddleware = require("./config/session.js");
+app.use(sessionMiddleware);
+
 // Main error-handling middleware
 app.use((error, req, res, next) => {
 	console.error(error.stack);
