@@ -37,7 +37,7 @@ async function verifyUser(req, res, next) {
 				"This verification link is invalid or has already been used.",
 			redirectLink: {
 				caption: "Resend Verification Link",
-				href: "/auth/resendVerificationLink",
+				href: "/auth/resend-verification-link",
 			},
 		});
 	}
