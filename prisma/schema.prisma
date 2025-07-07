@@ -47,5 +47,6 @@ model LinkedAccount {
     userId         String  @unique
     user           User    @relation(fields: [userId], references: [id])
 
+    @@unique([provider, providerUserId], name: "providerIdentity")
     @@map("linked_accounts")
 }
