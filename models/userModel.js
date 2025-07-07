@@ -17,9 +17,7 @@ async function create(data) {
 async function findByOptions(options) {
 	try {
 		const user = await prisma.user.findUnique({
-			where: {
-				options,
-			},
+			where: options,
 		});
 
 		return user;
