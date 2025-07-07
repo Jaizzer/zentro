@@ -2,11 +2,19 @@ const { Router } = require("express");
 const authRouter = Router();
 const authControllers = require("../controllers/authControllers.js");
 const authMiddlewares = require("../middlewares/authMiddlewares.js");
+const authValidators = require("../validators/authValidators.js");
 
 authRouter.get(
 	"/sign-up",
 	authMiddlewares.isUnauthenticated,
 	authControllers.renderSignUpPage
+);
+
+authRouter.post(
+	"/sign-up",
+	authValidators.signUp,
+	authMiddlewares.validateSignUpForm,
+	authControllers.signUpUser
 );
 
 module.exports = authRouter;
