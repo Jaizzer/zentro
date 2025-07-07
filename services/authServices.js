@@ -38,6 +38,31 @@ async function registerLocalUser({ username, email, password }) {
 	});
 }
 
+async function verifyUser(emailVerificationString) {
+	// Get the local account that  matches the verification string
+	const localAccount = await LocalAccount.findByOptions({
+		emailVerificationString,
+	});
+
+	// Check if the email verification string is usable for user verification
+	const isEligibleForVerification =
+		localAccount &&
+		!localAccount.isVerified &&
+		Date.now() < localAccount.emailVerificationStringExpirationDate;
+
+	if (isEligibleForVerification) {
+		await LocalAccount.validate(localAccount.id);
+		return {
+			success: true,
+		};
+	} else {
+		return {
+			success: false,
+		};
+	}
+}
+
 module.exports = {
 	registerLocalUser,
+	verifyUser,
 };

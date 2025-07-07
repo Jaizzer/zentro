@@ -17,4 +17,10 @@ authRouter.post(
 	authControllers.signUpUser
 );
 
+authRouter.get(
+	"/verify/:emailVerificationString",
+	authMiddlewares.isUnauthenticated,
+	authControllers.verifyUser
+);
+
 module.exports = authRouter;
