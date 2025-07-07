@@ -56,6 +56,10 @@ app.use((req, res, next) => {
 	passport.session()(req, res, next);
 });
 
+// Authentication router
+const authRouter = require("./routes/authRouter");
+app.use("/auth", authRouter);
+
 // Main error-handling middleware
 app.use((error, req, res, next) => {
 	console.error(error.stack);
