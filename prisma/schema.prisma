@@ -14,3 +14,36 @@ model Session {
     data      String
     expiresAt DateTime
 }
+
+model User {
+    id            String         @id @unique @default(cuid())
+    username      String?
+    LocalAccount  LocalAccount?
+    LinkedAccount LinkedAccount?
+
+    @@map("users")
+}
+
+model LocalAccount {
+    id                                    String    @id @default(cuid())
+    passwordHash                          String    @unique @map("password_hash")
+    email                                 String    @unique
+    emailVerificationString               String    @unique @map("email_verification_string")
+    emailVerificationStringExpirationDate DateTime? @map("email_verification_string_expiration_date")
+    isVerified                            Boolean   @map("is_verified")
+    userId                                String    @unique
+    user                                  User      @relation(fields: [userId], references: [id])
+
+    @@map("local_accounts")
+}
+
+model LinkedAccount {
+    id             String  @id @default(cuid())
+    provider       String
+    providerUserId String  @map("provider_user_id")
+    email          String?
+    userId         String  @unique
+    user           User    @relation(fields: [userId], references: [id])
+
+    @@map("linked_accounts")
+}
