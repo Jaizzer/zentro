@@ -58,7 +58,7 @@ async function resendVerificationLink(req, res, next) {
 	return res.status(200).render("emailVerificationNotice");
 }
 
-async function signInGet(req, res, next) {
+async function renderSignInPage(req, res, next) {
 	// Get the attached error message to the request after a failed sign in attempt
 	const failedSignInErrorMessage = req.flash("error")[0];
 	return res.status(200).render("signIn", {
@@ -81,7 +81,7 @@ async function signInGet(req, res, next) {
 	});
 }
 
-async function signInPost(req, res, next) {
+async function signInUserLocally(req, res, next) {
 	passport.authenticate("local", (error, user, info) => {
 		if (error) {
 			return next(error);
@@ -122,6 +122,6 @@ module.exports = {
 		renderResendVerificationLinkPage
 	),
 	resendVerificationLink: asyncHandler(resendVerificationLink),
-	signInGet: asyncHandler(signInGet),
-	signInPost: asyncHandler(signInPost),
+	renderSignInPage: asyncHandler(renderSignInPage),
+	signInUserLocally: asyncHandler(signInUserLocally),
 };

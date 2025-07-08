@@ -39,14 +39,14 @@ authRouter.post(
 authRouter.get(
 	"/sign-in",
 	authMiddlewares.isUnauthenticated,
-	authControllers.signInGet
+	authControllers.renderSignInPage
 );
 
 authRouter.post(
 	"/sign-in",
 	authValidators.signIn,
 	authMiddlewares.validateSignInForm,
-	authControllers.signInPost
+	authControllers.signInUserLocally
 );
 
 module.exports = authRouter;
