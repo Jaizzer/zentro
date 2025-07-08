@@ -23,6 +23,7 @@ model User {
     localAccount           LocalAccount?
     linkedAccount          LinkedAccount?
     profilePictureFilename String?        @map("profile_picture_filename")
+    File                   File?
 
     @@map("users")
 }
@@ -50,4 +51,19 @@ model LinkedAccount {
 
     @@unique([provider, providerUserId], name: "providerIdentity")
     @@map("linked_accounts")
+}
+
+model File {
+    id             String   @id @default(cuid())
+    name           String
+    size           Float?
+    type           String?
+    createdAt      DateTime @default(now()) @map("created_at")
+    ownerId        String   @unique @map("owner_id")
+    owner          User     @relation(fields: [ownerId], references: [id])
+    folderId       String?  @map("folder_id")
+    folder         File?    @relation("FileHierarchy", fields: [folderId], references: [id])
+    folderContents File[]   @relation("FileHierarchy")
+
+    @@map("files")
 }
