@@ -16,11 +16,11 @@ async function create(data) {
 
 async function createMany(data) {
 	try {
-		const file = await prisma.file.createMany({
+		const files = await prisma.file.createManyAndReturn({
 			data,
 		});
 
-		return file;
+		return files;
 	} catch (error) {
 		console.error("Failed to create the files. ", error);
 		throw error;
