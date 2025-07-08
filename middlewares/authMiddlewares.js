@@ -10,6 +10,15 @@ async function isUnauthenticated(req, res, next) {
 	}
 }
 
+async function isAuthenticated(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	} else {
+		// Redirect the user to the sign in page if he/she is not yet authenticated
+		return res.status(302).redirect("/auth/sign-in");
+	}
+}
+
 async function validateSignUpForm(req, res, next) {
 	const isThereInputErrors = !validationResult(req).isEmpty();
 	if (isThereInputErrors) {
@@ -57,6 +66,7 @@ async function validateSignInForm(req, res, next) {
 
 module.exports = {
 	isUnauthenticated,
+	isAuthenticated,
 	validateSignUpForm,
 	validateResendVerificationLinkForm,
 	validateSignInForm,
