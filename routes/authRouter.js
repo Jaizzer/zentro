@@ -73,4 +73,10 @@ authRouter.get(
 	authControllers.signInWithGithub
 );
 
+authRouter.get(
+	"/sign-out",
+	authMiddlewares.isAuthenticated,
+	authControllers.signOut
+);
+
 module.exports = authRouter;
