@@ -16,7 +16,7 @@ async function create(data) {
 
 async function findByOptions(options) {
 	try {
-		const linkedAccount = await prisma.linkedAccount.findUnique({
+		const linkedAccount = await prisma.linkedAccount.findFirst({
 			where: options,
 		});
 

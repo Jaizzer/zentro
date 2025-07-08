@@ -16,7 +16,7 @@ async function create(data) {
 
 async function findByOptions(options) {
 	try {
-		const localAccount = await prisma.localAccount.findUnique({
+		const localAccount = await prisma.localAccount.findFirst({
 			where: options,
 		});
 
