@@ -114,6 +114,17 @@ async function signInUserLocally(req, res, next) {
 	})(req, res, next);
 }
 
+async function initializeSignInWithGoogle(req, res, next) {
+	passport.authenticate("google", {
+		scope: ["profile", "email"],
+		prompt: "select_account",
+	})(req, res, next);
+}
+
+async function signInWithGoogle(req, res, next) {
+	(await authServices.generatePassportLoginHandler("google"))(req, res, next);
+}
+
 module.exports = {
 	renderSignUpPage: asyncHandler(renderSignUpPage),
 	signUpUser: asyncHandler(signUpUser),
@@ -124,4 +135,6 @@ module.exports = {
 	resendVerificationLink: asyncHandler(resendVerificationLink),
 	renderSignInPage: asyncHandler(renderSignInPage),
 	signInUserLocally: asyncHandler(signInUserLocally),
+	initializeSignInWithGoogle: asyncHandler(initializeSignInWithGoogle),
+	signInWithGoogle: asyncHandler(signInWithGoogle),
 };

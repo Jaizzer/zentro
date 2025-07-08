@@ -49,4 +49,16 @@ authRouter.post(
 	authControllers.signInUserLocally
 );
 
+authRouter.get(
+	"/google",
+	authMiddlewares.isUnauthenticated,
+	authControllers.initializeSignInWithGoogle
+);
+
+authRouter.get(
+	"/google/callback",
+	authMiddlewares.isUnauthenticated,
+	authControllers.signInWithGoogle
+);
+
 module.exports = authRouter;

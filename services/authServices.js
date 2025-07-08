@@ -1,3 +1,6 @@
+// Load passport
+const passport = require("passport");
+
 // Load models
 const LocalAccount = require("../models/localAccountModel.js");
 const User = require("../models/userModel.js");
@@ -93,8 +96,35 @@ async function resendEmailVerificationLink(email) {
 	}
 }
 
+async function generatePassportLoginHandler(provider) {
+	return function (req, res, next) {
+		passport.authenticate(provider, (error, user, info) => {
+			if (error || !user) {
+				return res.status(401).render("error", {
+					title: `${capitalize(provider)} Sign-In Failed`,
+					message: error
+						? error.message
+						: `We couldn't log you in with ${capitalize(
+								provider
+						  )}. Please try again or use a different sign-in method.`,
+					redirectLink: null,
+				});
+			} else {
+				req.logIn(user, function (error) {
+					if (error) {
+						return next(error);
+					} else {
+						return res.redirect("/");
+					}
+				});
+			}
+		})(req, res, next);
+	};
+}
+
 module.exports = {
 	registerLocalUser,
 	verifyUser,
 	resendEmailVerificationLink,
+	generatePassportLoginHandler,
 };
