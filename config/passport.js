@@ -97,16 +97,15 @@ passport.use(
 					);
 				} else {
 					// Create a new user to be linked with the Google account
-					const newUser = await User.create({
+					googleAccount = await User.create({
 						username: null,
-					});
-
-					// Link the newly created user to the newly created Google Account
-					googleAccount = await LinkedAccount.create({
-						provider: "Google",
-						providerUserId: profile.id,
-						email: profile.email,
-						userId: newUser.id,
+						linkedAccount: {
+							create: {
+								provider: "Google",
+								providerUserId: profile.id,
+								email: profile.email,
+							},
+						},
 					});
 				}
 			}
