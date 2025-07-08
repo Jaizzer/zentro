@@ -77,10 +77,8 @@ passport.use(
 		async function (request, accessToken, refreshToken, profile, done) {
 			// Check if the linked account already exists
 			let googleAccount = await LinkedAccount.findByOptions({
-				providerIdentity: {
-					provider: "Google",
-					providerUserId: profile.id,
-				},
+				provider: "Google",
+				providerUserId: profile.id,
 			});
 
 			// Create a linked account if it not yet exists
@@ -136,10 +134,8 @@ passport.use(
 		async function (accessToken, refreshToken, profile, done) {
 			// Check if the linked account already exists
 			let githubAccount = await LinkedAccount.findByOptions({
-				providerIdentity: {
-					provider: "Github",
-					providerUserId: profile.id,
-				},
+				provider: "Github",
+				providerUserId: profile.id,
 			});
 
 			// Create a linked account if it not yet exists
