@@ -33,7 +33,7 @@ model LocalAccount {
     emailVerificationString               String    @unique @map("email_verification_string")
     emailVerificationStringExpirationDate DateTime? @map("email_verification_string_expiration_date")
     isVerified                            Boolean   @map("is_verified")
-    userId                                String    @unique
+    userId                                String    @unique @map("user_id")
     user                                  User      @relation(fields: [userId], references: [id])
 
     @@map("local_accounts")
@@ -44,7 +44,7 @@ model LinkedAccount {
     provider       String
     providerUserId String  @map("provider_user_id")
     email          String?
-    userId         String  @unique
+    userId         String  @unique @map("user_id")
     user           User    @relation(fields: [userId], references: [id])
 
     @@unique([provider, providerUserId], name: "providerIdentity")
