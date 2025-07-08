@@ -47,7 +47,7 @@ passport.use(
 
 				const isPasswordMatched = await bcrypt.compare(
 					password,
-					user.localAccount.passwordHash || ""
+					user.localAccount?.passwordHash || ""
 				);
 
 				if (!isPasswordMatched) {
