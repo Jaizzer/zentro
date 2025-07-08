@@ -99,6 +99,7 @@ async function signInUserLocally(req, res, next) {
 		} else {
 			// Render email-verification-sent page if the user signing-in is not yet verified
 			if (!user.isVerified) {
+				console.log(user);
 				// Render email verification page
 				return res.status(200).render("emailVerificationNotice");
 			}
