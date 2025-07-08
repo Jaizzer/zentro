@@ -76,13 +76,12 @@ passport.use(
 		},
 		async function (request, accessToken, refreshToken, profile, done) {
 			// Check if the linked account already exists
-			let googleAccount =
-				await LinkedAccount.getByProviderAndProviderUserId({
-					providerIdentity: {
-						provider: "Github",
-						providerUserId: profile.id,
-					},
-				});
+			let googleAccount = await LinkedAccount.findByOptions({
+				providerIdentity: {
+					provider: "Github",
+					providerUserId: profile.id,
+				},
+			});
 
 			// Create a linked account if it not yet exists
 			if (!googleAccount) {
@@ -159,7 +158,7 @@ passport.use(
 			}
 
 			// Retrieve the user linked to the Github account
-			let user = await User.getById(githubAccount.userId);
+			let user = await User.findByOptions({ id: githubAccount.userId });
 
 			return done(null, user);
 		}
