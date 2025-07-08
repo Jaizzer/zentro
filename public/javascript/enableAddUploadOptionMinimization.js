@@ -1,7 +1,7 @@
-const postAdditionOptionsContainer = document.querySelector(
-	".postAdditionOptionsContainer"
+const uploadAdditionalOptionsContainer = document.querySelector(
+	".uploadAdditionalOptionsContainer"
 );
-const header = postAdditionOptionsContainer.querySelector("h2");
+const header = uploadAdditionalOptionsContainer.querySelector("h2");
 
 const minimizeButton = document.createElement("button");
 minimizeButton.classList.add("minimizeButton");
@@ -16,7 +16,7 @@ minimizeButton.innerHTML = `
 minimizeButton.addEventListener("click", minimizePostAdditionOptionsContainer);
 
 // Insert the minimize button by default
-postAdditionOptionsContainer.insertBefore(
+uploadAdditionalOptionsContainer.insertBefore(
 	minimizeButton,
 	header.nextElementSibling
 );
@@ -38,7 +38,7 @@ maximizeButton.addEventListener("click", maximizePostAdditionOptionsContainer);
 function minimizePostAdditionOptionsContainer() {
 	// Hide the "+" and option name
 	const contentsToHide = Array.from(
-		postAdditionOptionsContainer.querySelectorAll(
+		uploadAdditionalOptionsContainer.querySelectorAll(
 			"span:nth-child(2), h3, h2"
 		)
 	);
@@ -46,18 +46,21 @@ function minimizePostAdditionOptionsContainer() {
 		contentToHide.hidden = true;
 	}
 
-	// Add minimize class to the post addition options container
-	postAdditionOptionsContainer.classList.add("minimized");
+	// Add minimize class to the upload additional options container
+	uploadAdditionalOptionsContainer.classList.add("minimized");
 
 	// Replace the minimize button with the maximize button
 	const minimizeButton = document.querySelector(".minimizeButton");
-	postAdditionOptionsContainer.replaceChild(maximizeButton, minimizeButton);
+	uploadAdditionalOptionsContainer.replaceChild(
+		maximizeButton,
+		minimizeButton
+	);
 }
 
 function maximizePostAdditionOptionsContainer() {
 	// Show the "+" and option name
 	const hiddenContents = Array.from(
-		postAdditionOptionsContainer.querySelectorAll(
+		uploadAdditionalOptionsContainer.querySelectorAll(
 			"span:nth-child(2), h3, h2"
 		)
 	);
@@ -65,10 +68,13 @@ function maximizePostAdditionOptionsContainer() {
 		hiddenContent.hidden = false;
 	}
 
-	// Remove the minimize class to the post addition options container
-	postAdditionOptionsContainer.classList.remove("minimized");
+	// Remove the minimize class to the upload additional options container
+	uploadAdditionalOptionsContainer.classList.remove("minimized");
 
 	// Replace the maximize button with the minimize button
 	const maximizeButton = document.querySelector(".maximizeButton");
-	postAdditionOptionsContainer.replaceChild(minimizeButton, maximizeButton);
+	uploadAdditionalOptionsContainer.replaceChild(
+		minimizeButton,
+		maximizeButton
+	);
 }
