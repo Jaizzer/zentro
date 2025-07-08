@@ -125,6 +125,14 @@ async function signInWithGoogle(req, res, next) {
 	(await authServices.generatePassportLoginHandler("google"))(req, res, next);
 }
 
+async function initializeSignInWithGithub(req, res, next) {
+	passport.authenticate("github")(req, res, next);
+}
+
+async function signInWithGithub(req, res, next) {
+	(await authServices.generatePassportLoginHandler("github"))(req, res, next);
+}
+
 module.exports = {
 	renderSignUpPage: asyncHandler(renderSignUpPage),
 	signUpUser: asyncHandler(signUpUser),
@@ -137,4 +145,6 @@ module.exports = {
 	signInUserLocally: asyncHandler(signInUserLocally),
 	initializeSignInWithGoogle: asyncHandler(initializeSignInWithGoogle),
 	signInWithGoogle: asyncHandler(signInWithGoogle),
+	initializeSignInWithGithub: asyncHandler(initializeSignInWithGithub),
+	signInWithGithub: asyncHandler(signInWithGithub),
 };

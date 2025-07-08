@@ -61,4 +61,16 @@ authRouter.get(
 	authControllers.signInWithGoogle
 );
 
+authRouter.get(
+	"/github",
+	authMiddlewares.isUnauthenticated,
+	authControllers.initializeSignInWithGithub
+);
+
+authRouter.get(
+	"/github/callback",
+	authMiddlewares.isUnauthenticated,
+	authControllers.signInWithGithub
+);
+
 module.exports = authRouter;
