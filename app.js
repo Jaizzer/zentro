@@ -60,6 +60,10 @@ app.use((req, res, next) => {
 	passport.session()(req, res, next);
 });
 
+// Root router
+const rootRouter = require("./routes/rootRouter");
+app.use("/", rootRouter);
+
 // Authentication router
 const authRouter = require("./routes/authRouter");
 app.use("/auth", authRouter);
