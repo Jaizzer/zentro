@@ -20,8 +20,8 @@ model Session {
 model User {
     id            String         @id @unique @default(cuid())
     username      String?        @unique
-    LocalAccount  LocalAccount?
-    LinkedAccount LinkedAccount?
+    localAccount  LocalAccount?
+    linkedAccount LinkedAccount?
 
     @@map("users")
 }
