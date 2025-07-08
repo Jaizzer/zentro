@@ -140,15 +140,15 @@ passport.use(
 			// Create a linked account if it not yet exists
 			if (!githubAccount) {
 				// Create a new user to be linked with the Github account
-				const newUser = await User.create({
+				githubAccount = await User.create({
 					username: null,
-				});
-
-				// Link the newly created user to the newly created Github Account
-				githubAccount = await LinkedAccount.create({
-					provider: "Github",
-					providerUserId: profile.id,
-					userId: newUser.id,
+					linkedAccount: {
+						create: {
+							provider: "Github",
+							providerUserId: profile.id,
+							email: profile.email,
+						},
+					},
 				});
 			}
 
