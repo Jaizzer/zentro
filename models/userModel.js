@@ -18,6 +18,10 @@ async function findByOptions(options) {
 	try {
 		const user = await prisma.user.findFirst({
 			where: options,
+			include: {
+				localAccount: true,
+				linkedAccount: true,
+			},
 		});
 
 		return user;
