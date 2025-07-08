@@ -12,6 +12,7 @@ const emailServices = require("../services/emailServices.js");
 const bcrypt = require("bcrypt");
 const generateRandomString = require("../utils/generateRandomString.js");
 const getDateTimeAfterMinutes = require("../utils/getDateTimeAfterMinutes.js");
+const capitalize = require("../utils/capitalize.js");
 
 async function registerLocalUser({ username, email, password }) {
 	// Hash the password
