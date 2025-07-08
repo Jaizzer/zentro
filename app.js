@@ -60,6 +60,10 @@ app.use((req, res, next) => {
 	passport.session()(req, res, next);
 });
 
+// Make the user data available in every views
+const userMiddlewares = require("./middlewares/userMiddlewares.js");
+app.use(userMiddlewares.attachUserProfileData);
+
 // Root router
 const rootRouter = require("./routes/rootRouter");
 app.use("/", rootRouter);
