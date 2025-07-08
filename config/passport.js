@@ -30,10 +30,14 @@ passport.use(
 				const logInMethod = isEmailOrUsername(emailOrUsername);
 				const user =
 					logInMethod === "email"
-						? await User.getWithLocalAccountByEmail(emailOrUsername)
-						: await User.getWithLocalAccountByUsername(
-								emailOrUsername
-						  );
+						? await User.findByOptions({
+								localAccount: {
+									email: emailOrUsername,
+								},
+						  })
+						: await User.findByOptions({
+								username: emailOrUsername,
+						  });
 
 				if (!user) {
 					return done(null, false, {
@@ -43,7 +47,7 @@ passport.use(
 
 				const isPasswordMatched = await bcrypt.compare(
 					password,
-					user.password_hash || ""
+					user.localAccount.passwordHash || ""
 				);
 
 				if (!isPasswordMatched) {
@@ -74,16 +78,18 @@ passport.use(
 			// Check if the linked account already exists
 			let googleAccount =
 				await LinkedAccount.getByProviderAndProviderUserId({
-					provider: "Google",
-					providerUserId: profile.id,
+					providerIdentity: {
+						provider: "Github",
+						providerUserId: profile.id,
+					},
 				});
 
 			// Create a linked account if it not yet exists
 			if (!googleAccount) {
 				// Check if the gmail is already linked to a local account
-				let isGmailAlreadyLinked = await LocalAccount.getByEmail(
-					profile.email
-				);
+				let isGmailAlreadyLinked = await LocalAccount.findByOptions({
+					email: profile.email,
+				});
 
 				// Send error message if the gmail is already linked to a different account
 				if (isGmailAlreadyLinked) {
@@ -94,12 +100,12 @@ passport.use(
 					);
 				} else {
 					// Create a new user to be linked with the Google account
-					const newUser = await User.add({
-						username: "",
+					const newUser = await User.create({
+						username: null,
 					});
 
 					// Link the newly created user to the newly created Google Account
-					googleAccount = await LinkedAccount.add({
+					googleAccount = await LinkedAccount.create({
 						provider: "Google",
 						providerUserId: profile.id,
 						email: profile.email,
@@ -109,7 +115,7 @@ passport.use(
 			}
 
 			// Retrieve the user linked to the Google account
-			let user = await User.getById(googleAccount.user_id);
+			let user = await User.findByOptions({ id: googleAccount.userId });
 
 			return done(null, user);
 		}
@@ -130,21 +136,22 @@ passport.use(
 		},
 		async function (accessToken, refreshToken, profile, done) {
 			// Check if the linked account already exists
-			let githubAccount =
-				await LinkedAccount.getByProviderAndProviderUserId({
+			let githubAccount = await LinkedAccount.findByOptions({
+				providerIdentity: {
 					provider: "Github",
 					providerUserId: profile.id,
-				});
+				},
+			});
 
 			// Create a linked account if it not yet exists
 			if (!githubAccount) {
 				// Create a new user to be linked with the Github account
-				const newUser = await User.add({
-					username: "",
+				const newUser = await User.create({
+					username: null,
 				});
 
 				// Link the newly created user to the newly created Github Account
-				githubAccount = await LinkedAccount.add({
+				githubAccount = await LinkedAccount.create({
 					provider: "Github",
 					providerUserId: profile.id,
 					userId: newUser.id,
@@ -152,7 +159,7 @@ passport.use(
 			}
 
 			// Retrieve the user linked to the Github account
-			let user = await User.getById(githubAccount.user_id);
+			let user = await User.getById(githubAccount.userId);
 
 			return done(null, user);
 		}
@@ -164,7 +171,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
 	try {
-		const user = await User.getById(id);
+		const user = await User.findByOptions({ id });
 
 		// Prevent null user
 		if (!user) {
