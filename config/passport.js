@@ -78,7 +78,7 @@ passport.use(
 			// Check if the linked account already exists
 			let googleAccount = await LinkedAccount.findByOptions({
 				providerIdentity: {
-					provider: "Github",
+					provider: "Google",
 					providerUserId: profile.id,
 				},
 			});
