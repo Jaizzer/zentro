@@ -184,3 +184,311 @@ textarea {
 	outline: none;
 }
 /* End of Initial Stylings */
+
+/* Theme */
+@media (prefers-color-scheme: light) {
+	:root {
+		--text: #111023;
+		--background: #e0e0f1;
+		--primary: #948fe2;
+		--secondary: #cfcee9;
+		--accent: #5c57b2;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--text: #dddcef;
+		--background: #0e0e20;
+		--primary: #231d72;
+		--secondary: #171631;
+		--accent: #524da8;
+	}
+}
+/* End of Theme */
+
+/* Border Radius */
+:root {
+	--radius-none: 0px;
+	--radius-sm: 5px;
+	--radius-md: 10px;
+	--radius-lg: 15px;
+	--radius-full: 999px;
+}
+
+/* End of Border Radius */
+/* Initial Stylings */
+* {
+	box-sizing: border-box;
+}
+
+html {
+	height: 100dvh;
+	font-size: 62.5%;
+}
+
+body {
+	height: 100%;
+
+	background-color: var(--background);
+
+	font-size: 1.6rem;
+	font-family: "Poppins", sans-serif;
+	color: var(--text);
+
+	display: grid;
+	justify-content: center;
+	align-content: center;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+}
+
+button {
+	padding: 0;
+	border-width: 0;
+
+	background-color: transparent;
+	color: inherit;
+	font: inherit;
+
+	cursor: pointer;
+}
+
+textarea {
+	resize: none;
+	font: inherit;
+	outline: none;
+}
+/* End of Initial Stylings */
+
+/* General stylings */
+h1 {
+	font-size: 2.4rem;
+}
+
+.iconContainer svg {
+	width: 2rem;
+	height: 2rem;
+}
+
+.inputField {
+	position: relative;
+
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.inputField label {
+	font-size: 1.4rem;
+}
+
+.inputField .passwordVisibilityToggler {
+	position: absolute;
+	top: 2.55rem;
+	right: 1rem;
+}
+
+.inputField .errorMessage {
+	font-size: 1.25rem;
+	color: red;
+}
+
+button[type="submit"] {
+	padding: 0.75rem;
+	border-radius: var(--radius-sm);
+
+	background-color: var(--primary);
+	font-size: 1.4rem;
+}
+
+button[type="submit"]:hover {
+	background-color: var(--accent);
+}
+
+input {
+	min-height: 4rem;
+
+	padding: 0.75rem;
+	border-radius: var(--radius-sm);
+
+	font-size: 1.65rem;
+}
+
+.background {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+
+	backdrop-filter: blur(10px);
+
+	display: grid;
+	justify-content: center;
+	align-content: center;
+}
+
+/* End of General stylings */
+
+/* Authentication Stylings */
+.signUpSection,
+.signInSection,
+.pickUsernameSection,
+.signUpSuccessSection,
+.emailVerificationNoticeSection {
+	padding: 4rem;
+	border-radius: var(--radius-md);
+
+	background-color: var(--secondary);
+
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+}
+
+.signInSection,
+.pickUsernameSection {
+	width: clamp(30rem, 90vw, 40rem);
+}
+
+.signUpSection {
+	width: clamp(30rem, 90vw, 50rem);
+}
+
+.resendVerificationLinkSection {
+	padding: 4rem;
+	border-radius: var(--radius-md);
+
+	background-color: var(--secondary);
+
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+
+.resendVerificationLinkSection,
+.emailVerificationNoticeSection {
+	width: clamp(30rem, 90vw, 65rem);
+}
+
+.signUpForm,
+.signInForm,
+.pickUsernameForm,
+.resendVerificationLinkForm {
+	display: flex;
+	flex-direction: column;
+	gap: 1.75rem;
+}
+
+.resendVerificationLinkSection p {
+	font-size: 1.45rem;
+}
+
+.authProvidersContainer {
+	position: relative;
+
+	padding-top: 1.75rem;
+	border-top: 1px solid var(--text);
+
+	display: grid;
+	grid-template-columns: auto;
+	grid-auto-flow: column;
+	justify-content: center;
+	gap: 1.75rem;
+}
+
+.authProvidersContainer > p {
+	position: absolute;
+	top: -7px;
+	left: 0;
+	right: 0;
+
+	width: fit-content;
+
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+	border-radius: var(--radius-full);
+
+	background-color: var(--secondary);
+	font-size: 1.35rem;
+}
+
+p.signUpPrompt,
+p.signInPrompt {
+	font-size: 1.3rem;
+	text-align: center;
+}
+
+.signUpPrompt a,
+.signInPrompt a,
+.signUpSuccessSection a,
+.emailVerificationNoticeSection a {
+	color: var(--accent);
+}
+
+.signUpPrompt a:hover,
+.signInPrompt a:hover,
+.signUpSuccessSection a:hover,
+.emailVerificationNoticeSection a:hover {
+	color: var(--text);
+}
+
+.authProvidersContainer svg {
+	width: 4rem;
+	height: 4rem;
+}
+
+.signUpSuccessSection svg {
+	width: 5rem;
+	height: 5rem;
+}
+
+.signUpSuccessSection svg rect {
+	fill: var(--accent);
+}
+
+/* End of Authentication Stylings */
+
+/* Error Stylings */
+.errorSection {
+	width: clamp(30rem, 90vw, 40rem);
+
+	padding: 4rem;
+	border-radius: var(--radius-md);
+
+	background-color: var(--secondary);
+
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+}
+
+.errorSection a {
+	color: var(--accent);
+}
+
+.errorSection a:hover {
+	color: var(--text);
+}
+
+.errorSection svg {
+	width: 5rem;
+	height: 5rem;
+}
+
+.errorSection svg rect {
+	fill: var(--accent);
+}
+/* End of Error Stylings */
+
+img.profilePicture {
+	width: 5rem;
+	height: 5rem;
+	object-fit: cover;
+	border-radius: var(--radius-full);
+}
