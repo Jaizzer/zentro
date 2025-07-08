@@ -133,6 +133,16 @@ async function signInWithGithub(req, res, next) {
 	(await authServices.generatePassportLoginHandler("github"))(req, res, next);
 }
 
+async function signOut(req, res, next) {
+	req.logout((error) => {
+		if (error) {
+			return next(error);
+		} else {
+			return res.status(302).redirect("/");
+		}
+	});
+}
+
 module.exports = {
 	renderSignUpPage: asyncHandler(renderSignUpPage),
 	signUpUser: asyncHandler(signUpUser),
@@ -147,4 +157,5 @@ module.exports = {
 	signInWithGoogle: asyncHandler(signInWithGoogle),
 	initializeSignInWithGithub: asyncHandler(initializeSignInWithGithub),
 	signInWithGithub: asyncHandler(signInWithGithub),
+	signOut: asyncHandler(signOut),
 };
