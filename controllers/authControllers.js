@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const passport = require("passport");
 const authServices = require("../services/authServices.js");
 
 async function renderSignUpPage(req, res, next) {
@@ -57,6 +58,62 @@ async function resendVerificationLink(req, res, next) {
 	return res.status(200).render("emailVerificationNotice");
 }
 
+async function signInGet(req, res, next) {
+	// Get the attached error message to the request after a failed sign in attempt
+	const failedSignInErrorMessage = req.flash("error")[0];
+	return res.status(200).render("signIn", {
+		formFieldData: {
+			emailOrUsername: {
+				value: req.flash("emailOrUsername"),
+				error:
+					failedSignInErrorMessage?.includes("email") ||
+					failedSignInErrorMessage?.includes("username")
+						? failedSignInErrorMessage
+						: null,
+			},
+			password: {
+				value: req.flash("password"),
+				error: failedSignInErrorMessage?.includes("password")
+					? failedSignInErrorMessage
+					: null,
+			},
+		},
+	});
+}
+
+async function signInPost(req, res, next) {
+	passport.authenticate("local", (error, user, info) => {
+		if (error) {
+			return next(error);
+		}
+
+		if (!user) {
+			// Make the user input persist even after redirecting to signIn page
+			req.flash("emailOrUsername", req.body.emailOrUsername);
+			req.flash("password", req.body.password);
+
+			// Attach the error message to be displayed on the signIn page
+			req.flash("error", info.message);
+
+			return res.status(302).redirect("/auth/sign-in");
+		} else {
+			// Render email-verification-sent page if the user signing-in is not yet verified
+			if (!user.isVerified) {
+				// Render email verification page
+				return res.status(200).render("emailVerificationNotice");
+			}
+
+			req.logIn(user, function (error) {
+				if (error) {
+					return next(error);
+				} else {
+					return res.status(200).redirect("/");
+				}
+			});
+		}
+	})(req, res, next);
+}
+
 module.exports = {
 	renderSignUpPage: asyncHandler(renderSignUpPage),
 	signUpUser: asyncHandler(signUpUser),
@@ -65,4 +122,6 @@ module.exports = {
 		renderResendVerificationLinkPage
 	),
 	resendVerificationLink: asyncHandler(resendVerificationLink),
+	signInGet: asyncHandler(signInGet),
+	signInPost: asyncHandler(signInPost),
 };

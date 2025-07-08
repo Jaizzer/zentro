@@ -63,7 +63,17 @@ const resendVerificationLink = [
 		.withMessage("Please provide a valid email."),
 ];
 
+const signIn = [
+	body("emailOrUsername")
+		.trim()
+		.notEmpty()
+		.withMessage("Please provide an email or a username."),
+
+	body("password").trim().notEmpty().withMessage("Please provide a password"),
+];
+
 module.exports = {
 	signUp,
 	resendVerificationLink,
+	signIn,
 };

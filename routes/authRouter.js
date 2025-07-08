@@ -36,4 +36,17 @@ authRouter.post(
 	authControllers.resendVerificationLink
 );
 
+authRouter.get(
+	"/sign-in",
+	authMiddlewares.isUnauthenticated,
+	authControllers.signInGet
+);
+
+authRouter.post(
+	"/sign-in",
+	authValidators.signIn,
+	authMiddlewares.validateSignInForm,
+	authControllers.signInPost
+);
+
 module.exports = authRouter;

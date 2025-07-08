@@ -40,8 +40,24 @@ async function validateResendVerificationLinkForm(req, res, next) {
 	}
 }
 
+async function validateSignInForm(req, res, next) {
+	const isThereError = !validationResult(req).isEmpty();
+	if (isThereError) {
+		// Render errors in the form
+		return res.status(200).render("signIn", {
+			formFieldData: getFormFieldData({
+				inputValues: req.body,
+				inputErrors: validationResult(req).mapped(),
+			}),
+		});
+	} else {
+		return next();
+	}
+}
+
 module.exports = {
 	isUnauthenticated,
 	validateSignUpForm,
 	validateResendVerificationLinkForm,
+	validateSignInForm,
 };
