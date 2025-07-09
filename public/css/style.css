@@ -740,3 +740,39 @@ img.profilePicture {
 	object-fit: cover;
 	border-radius: var(--radius-full);
 }
+
+/* Home/Files Stylings */
+.filesContainer {
+	display: grid;
+	gap: 1rem;
+}
+
+.file,
+.file .actions,
+.file .location,
+.file .owner {
+	display: grid;
+	grid-template-rows: 1;
+	grid-auto-flow: column;
+	flex-direction: row;
+	align-items: center;
+	gap: 1rem;
+}
+
+.file {
+	padding: 1rem;
+	border-radius: var(--radius-md);
+
+    gap: 6rem;
+
+	background-color: var(--primary);
+}
+
+.file img.profilePicture {
+	width: 2.5rem;
+	height: 2.5rem;
+	object-fit: cover;
+	border-radius: var(--radius-full);
+}
+
+/* End of Home/Files Stylings */
