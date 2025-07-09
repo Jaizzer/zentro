@@ -42,6 +42,28 @@ async function saveFiles({ fileUploads, userId, folderId }) {
 	await File.createMany(metadata);
 }
 
+async function getFiles({ id }) {
+	const files = await File.findManyByOptions({ ownerId: id });
+
+	for (const file of files || []) {
+		// Attach profile picture url to the file owner
+		file.owner.profilePictureUrl = await storageServices.getFileUrl(
+			file.owner.profilePictureFilename ||
+				process.env.DEFAULT_PROFILE_PICTURE_FILENAME
+		);
+
+		// Set the folder name as "My Drive" if the file is not contained by any folder
+		if (!file.folder) {
+			file.folder = {
+				name: "My Vault",
+				owner: file.owner,
+			};
+		}
+	}
+	return files;
+}
+
 module.exports = {
 	saveFiles,
+	getFiles,
 };
