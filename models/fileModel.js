@@ -27,7 +27,34 @@ async function createMany(data) {
 	}
 }
 
+async function findManyByOptions(options) {
+	try {
+		const files = await prisma.file.findMany({
+			where: options,
+			omit: {
+				ownerId: true,
+				folderId: true,
+			},
+			include: {
+				owner: true,
+				folder: true,
+				usersWithAccess: {
+					include: {
+						user: true,
+					},
+				},
+			},
+		});
+
+		return files;
+	} catch (error) {
+		console.error("Failed to retrieve the files. ", error);
+		throw error;
+	}
+}
+
 module.exports = {
 	create,
 	createMany,
+	findManyByOptions,
 };
