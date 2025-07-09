@@ -24,7 +24,7 @@ model User {
     linkedAccount          LinkedAccount?
     profilePictureFilename String?          @map("profile_picture_filename")
     files                  File[]
-    userPermissions        UserPermission[]
+    incomingSharedFiles    UserPermission[]
     favoriteFiles          Favorites[]
 
     @@map("users")
