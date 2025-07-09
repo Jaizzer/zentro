@@ -98,6 +98,8 @@ model FavoriteFile {
 model Folder {
     id              String                 @id @default(cuid())
     name            String
+    isPrivate       Boolean                @default(true)
+    createdAt       DateTime               @default(now()) @map("created_at")
     ownerId         String                 @map("owner_id")
     owner           User                   @relation(fields: [ownerId], references: [id])
     childrenFolders Folder[]               @relation("FolderHierarchy")
