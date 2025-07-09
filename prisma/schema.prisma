@@ -18,12 +18,13 @@ model Session {
 }
 
 model User {
-    id                     String         @id @unique @default(cuid())
-    username               String?        @unique
+    id                     String           @id @unique @default(cuid())
+    username               String?          @unique
     localAccount           LocalAccount?
     linkedAccount          LinkedAccount?
-    profilePictureFilename String?        @map("profile_picture_filename")
+    profilePictureFilename String?          @map("profile_picture_filename")
     files                  File[]
+    userPermissions        UserPermission[]
 
     @@map("users")
 }
@@ -54,16 +55,27 @@ model LinkedAccount {
 }
 
 model File {
-    id             String   @id @default(cuid())
-    name           String
-    size           Float?
-    type           String?
-    createdAt      DateTime @default(now()) @map("created_at")
-    ownerId        String   @map("owner_id")
-    owner          User     @relation(fields: [ownerId], references: [id])
-    folderId       String?  @map("folder_id")
-    folder         File?    @relation("FileHierarchy", fields: [folderId], references: [id])
-    folderContents File[]   @relation("FileHierarchy")
+    id              String           @id @default(cuid())
+    name            String
+    size            Float?
+    type            String?
+    createdAt       DateTime         @default(now()) @map("created_at")
+    ownerId         String           @map("owner_id")
+    owner           User             @relation(fields: [ownerId], references: [id])
+    folderId        String?          @map("folder_id")
+    folder          File?            @relation("FileHierarchy", fields: [folderId], references: [id])
+    folderContents  File[]           @relation("FileHierarchy")
+    usersWithAccess UserPermission[]
 
     @@map("files")
+}
+
+model UserPermission {
+    id     String @id @default(cuid())
+    userId String @map("user_id")
+    user   User   @relation(fields: [userId], references: [id])
+    fileId String @map("file_id")
+    file   File   @relation(fields: [fileId], references: [id])
+
+    @@map("user_permissions")
 }
