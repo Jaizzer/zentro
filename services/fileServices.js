@@ -11,7 +11,7 @@ const storageServices = require("../services/storageServices.js");
 // Load utilities
 const generateRandomString = require("../utils/generateRandomString.js");
 
-async function save({ fileUploads, userId, folderId }) {
+async function saveFiles({ fileUploads, userId, folderId }) {
 	// Add hash
 	fileUploads.forEach((fileUpload) => {
 		fileUpload.hash = generateRandomString();
@@ -43,5 +43,5 @@ async function save({ fileUploads, userId, folderId }) {
 }
 
 module.exports = {
-	save,
+	saveFiles,
 };

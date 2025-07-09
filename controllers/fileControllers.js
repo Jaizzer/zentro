@@ -19,7 +19,7 @@ async function uploadFiles(req, res, next) {
 		size: file.size,
 	}));
 
-	await fileServices.save({
+	await fileServices.saveFiles({
 		userId: req.user.id,
 		fileUploads: mediaUploads,
 		folderId: folderId,
