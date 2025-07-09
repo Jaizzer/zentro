@@ -25,7 +25,7 @@ model User {
     profilePictureFilename String?          @map("profile_picture_filename")
     files                  File[]
     incomingSharedFiles    UserPermission[]
-    favoriteFiles          Favorites[]
+    favoriteFiles          Favorite[]
     folders                Folder[]
 
     @@map("users")
@@ -66,7 +66,7 @@ model File {
     ownerId         String           @map("owner_id")
     owner           User             @relation(fields: [ownerId], references: [id])
     usersWithAccess UserPermission[]
-    favoritedBy     Favorites[]
+    favoritedBy     Favorite[]
     folderId        String?          @map("folder_id")
     folder          Folder?          @relation(fields: [folderId], references: [id])
 
@@ -83,7 +83,7 @@ model UserPermission {
     @@map("user_permissions")
 }
 
-model Favorites {
+model Favorite {
     id     String @id @default(cuid())
     userId String @map("user_id")
     user   User   @relation(fields: [userId], references: [id])
@@ -101,4 +101,6 @@ model Folder {
     childrenFolders Folder[] @relation("FolderHierarchy")
     parentFolder    Folder   @relation("FolderHierarchy", fields: [id], references: [id])
     File            File[]
+
+    @@map("folders")
 }
