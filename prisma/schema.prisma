@@ -61,6 +61,7 @@ model LinkedAccount {
 model File {
     id              String               @id @default(cuid())
     name            String
+    hash            String
     size            Float?
     type            String?
     isPrivate       Boolean              @default(true)

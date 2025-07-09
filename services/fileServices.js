@@ -12,9 +12,9 @@ const storageServices = require("../services/storageServices.js");
 const generateRandomString = require("../utils/generateRandomString.js");
 
 async function save({ fileUploads, userId, folderId }) {
-	// Hash the filenames
+	// Add hash
 	fileUploads.forEach((fileUpload) => {
-		fileUpload.name = generateRandomString();
+		fileUpload.hash = generateRandomString();
 	});
 
 	// Same the file uploads to the cloud in-parallel
@@ -22,7 +22,7 @@ async function save({ fileUploads, userId, folderId }) {
 		fileUploads.map((fileUpload) => {
 			return storageServices.uploadFile({
 				file: fileUpload.file,
-				name: fileUpload.name,
+				name: fileUpload.hash,
 				type: fileUpload.type,
 			});
 		})
@@ -31,8 +31,9 @@ async function save({ fileUploads, userId, folderId }) {
 	// Create the files' metadata
 	const metadata = fileUploads.map((fileUpload) => ({
 		name: fileUpload.name,
+		hash: fileUpload.hash,
 		type: fileUpload.type,
-        size: fileUpload.size,
+		size: fileUpload.size,
 		ownerId: userId,
 		folderId: folderId === "root" ? null : folderId,
 	}));
