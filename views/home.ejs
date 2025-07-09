@@ -2,4 +2,5 @@
 	<h1><%= locals.user.username %></h1>
 	<img src="<%= locals.user.profilePictureUrl %>" class="profilePicture">
 	<a href="/auth/sign-out">Sign Out</a>
+	<%- include('partials/files.ejs', { files: files}) %>
 </section>
