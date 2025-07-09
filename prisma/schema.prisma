@@ -18,15 +18,17 @@ model Session {
 }
 
 model User {
-    id                     String               @id @unique @default(cuid())
-    username               String?              @unique
+    id                     String                 @id @unique @default(cuid())
+    username               String?                @unique
     localAccount           LocalAccount?
     linkedAccount          LinkedAccount?
-    profilePictureFilename String?              @map("profile_picture_filename")
+    profilePictureFilename String?                @map("profile_picture_filename")
     files                  File[]
     incomingSharedFiles    UserFilePermission[]
     favoriteFiles          FavoriteFile[]
     folders                Folder[]
+    UserFolderPermission   UserFolderPermission[]
+    FavoriteFolder         FavoriteFolder[]
 
     @@map("users")
 }
@@ -94,13 +96,35 @@ model FavoriteFile {
 }
 
 model Folder {
-    id              String   @id @default(cuid())
+    id              String                 @id @default(cuid())
     name            String
-    ownerId         String   @map("owner_id")
-    owner           User     @relation(fields: [ownerId], references: [id])
-    childrenFolders Folder[] @relation("FolderHierarchy")
-    parentFolder    Folder   @relation("FolderHierarchy", fields: [id], references: [id])
+    ownerId         String                 @map("owner_id")
+    owner           User                   @relation(fields: [ownerId], references: [id])
+    childrenFolders Folder[]               @relation("FolderHierarchy")
+    parentFolder    Folder                 @relation("FolderHierarchy", fields: [id], references: [id])
     File            File[]
+    usersWithAccess UserFolderPermission[]
+    favoritedBy     FavoriteFolder[]
 
     @@map("folders")
+}
+
+model UserFolderPermission {
+    id       String @id @default(cuid())
+    userId   String @map("user_id")
+    user     User   @relation(fields: [userId], references: [id])
+    folderId String @map("folder_id")
+    folder   Folder @relation(fields: [folderId], references: [id])
+
+    @@map("user_folder_permissions")
+}
+
+model FavoriteFolder {
+    id       String @id @default(cuid())
+    userId   String @map("user_id")
+    user     User   @relation(fields: [userId], references: [id])
+    folderId String @map("folder_id")
+    folder   Folder @relation(fields: [folderId], references: [id])
+
+    @@map("favorite_folders")
 }
