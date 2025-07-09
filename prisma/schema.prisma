@@ -59,6 +59,7 @@ model File {
     name            String
     size            Float?
     type            String?
+    isPrivate       Boolean          @default(true)
     createdAt       DateTime         @default(now()) @map("created_at")
     ownerId         String           @map("owner_id")
     owner           User             @relation(fields: [ownerId], references: [id])
