@@ -26,6 +26,7 @@ model User {
     files                  File[]
     incomingSharedFiles    UserPermission[]
     favoriteFiles          Favorites[]
+    folders                Folder[]
 
     @@map("users")
 }
@@ -64,11 +65,10 @@ model File {
     createdAt       DateTime         @default(now()) @map("created_at")
     ownerId         String           @map("owner_id")
     owner           User             @relation(fields: [ownerId], references: [id])
-    folderId        String?          @map("folder_id")
-    folder          File?            @relation("FileHierarchy", fields: [folderId], references: [id])
-    folderContents  File[]           @relation("FileHierarchy")
     usersWithAccess UserPermission[]
     favoritedBy     Favorites[]
+    folderId        String?          @map("folder_id")
+    folder          Folder?          @relation(fields: [folderId], references: [id])
 
     @@map("files")
 }
@@ -91,4 +91,14 @@ model Favorites {
     file   File   @relation(fields: [fileId], references: [id])
 
     @@map("favorites")
+}
+
+model Folder {
+    id              String   @id @default(cuid())
+    name            String
+    ownerId         String   @map("owner_id")
+    owner           User     @relation(fields: [ownerId], references: [id])
+    childrenFolders Folder[] @relation("FolderHierarchy")
+    parentFolder    Folder   @relation("FolderHierarchy", fields: [id], references: [id])
+    File            File[]
 }
