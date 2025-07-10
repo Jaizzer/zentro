@@ -759,6 +759,12 @@ img.profilePicture {
 	gap: 1rem;
 }
 
+.file .label .name {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .file {
 	padding: 1rem;
 	border-radius: var(--radius-md);
