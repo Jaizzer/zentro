@@ -1,4 +1,10 @@
 <div class="filesContainer">
+	<div class="header">
+		<p class="name">Name</p>
+		<p class="dateUploaded">Date Uploaded</p>
+		<p class="owner">Owner</p>
+		<p class="location">Location</p>
+	</div>
 	<% files.forEach(file => { %>
 	<%- include('file', { file: file}) %>
 	<%})%>
