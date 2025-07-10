@@ -13,7 +13,7 @@
 		</div>
 		<p class="name"><%= file.name %></p>
 	</div>
-	<p class="uploadDate"><%= file.uploadedAt %></p>
+	<p class="creationDate"><%= file.createdAt %></p>
 	<div class="owner">
 		<img src="<%= file.owner.profilePictureUrl %>" alt="" class="profilePicture">
 		<p class="ownerUsername"><%= `${file.owner.id === user.id ? 'You' : file.owner.username}` %></p>
