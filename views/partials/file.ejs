@@ -1,16 +1,18 @@
 <div class="file">
-	<div class="iconContainer">
-		<% if (file.type.includes('image')){ %>
-		🖼️
-		<% } else if (file.type.includes('video')) {%>
-		🎞️
-		<% } else if (file.type.includes('audio')) {%>
-		🎧
-		<% } else {%>
-		📄
-		<% }%>
+	<div class="label">
+		<div class="iconContainer">
+			<% if (file.type.includes('image')){ %>
+			🖼️
+			<% } else if (file.type.includes('video')) {%>
+			🎞️
+			<% } else if (file.type.includes('audio')) {%>
+			🎧
+			<% } else {%>
+			📄
+			<% }%>
+		</div>
+		<p class="name"><%= file.name %></p>
 	</div>
-	<p class="name"><%= file.name %></p>
 	<p class="uploadDate"><%= file.uploadedAt %></p>
 	<div class="owner">
 		<img src="<%= file.owner.profilePictureUrl %>" alt="" class="profilePicture">
