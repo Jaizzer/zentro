@@ -747,12 +747,12 @@ img.profilePicture {
 	gap: 1rem;
 }
 
-.file,
+.file .label,
 .file .actions,
 .file .location,
 .file .owner {
 	display: grid;
-	grid-template-rows: 1;
+	grid-template-rows: auto;
 	grid-auto-flow: column;
 	flex-direction: row;
 	align-items: center;
@@ -763,9 +763,22 @@ img.profilePicture {
 	padding: 1rem;
 	border-radius: var(--radius-md);
 
-    gap: 6rem;
-
 	background-color: var(--primary);
+}
+
+.file,
+.filesContainer .header {
+	display: grid;
+	grid-template-columns: 50rem 20rem 10rem 10rem 1fr;
+	align-items: center;
+	justify-items: start;
+	justify-content: start;
+	gap: 6rem;
+}
+
+.filesContainer .header {
+	padding: 1rem;
+	border-radius: var(--radius-md);
 }
 
 .file img.profilePicture {
