@@ -106,7 +106,7 @@ model Folder {
     owner           User                   @relation(fields: [ownerId], references: [id])
     childrenFolders Folder[]               @relation("FolderHierarchy")
     parentFolder    Folder                 @relation("FolderHierarchy", fields: [id], references: [id])
-    files            File[]
+    files           File[]
     usersWithAccess UserFolderPermission[]
     favoritedBy     FavoriteFolder[]
 
