@@ -3,6 +3,7 @@ const User = require("../models/userModel.js");
 
 // Load services
 const fileServices = require("../services/fileServices.js");
+const folderServices = require("../services/folderServices.js");
 
 async function handleRootRedirect(req, res, next) {
 	const username = req.user.username;
@@ -13,8 +14,13 @@ async function handleRootRedirect(req, res, next) {
 		// Retrieve the user's files
 		const files = await fileServices.getFiles({ id: req.user.id });
 
+		// Retrieve the user's folders
+		const folders = await folderServices.getFolders({ id: req.user.id });
+
 		// Render the feed if the user already has a username
-		return res.status(200).render("home", { files: files });
+		return res
+			.status(200)
+			.render("home", { files: files, folders: folders });
 	}
 }
 
