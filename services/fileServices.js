@@ -42,8 +42,11 @@ async function saveFiles({ fileUploads, userId, folderId }) {
 	await File.createMany(metadata);
 }
 
-async function getFiles({ id }) {
-	const files = await File.findManyByOptions({ ownerId: id });
+async function getFiles({ id, cursor }) {
+	const files = await File.findManyByOptions({
+		options: { ownerId: id },
+		cursor: cursor,
+	});
 
 	for (const file of files || []) {
 		// Attach profile picture url to the file owner

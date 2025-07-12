@@ -5,7 +5,12 @@
 		<p class="owner">Owner</p>
 		<p class="location">Location</p>
 	</div>
-	<% files.forEach(file => { %>
-	<%- include('file', { file: file}) %>
-	<%})%>
+
+	<button class="viewMoreButton">
+		View More
+	</button>
+
 </div>
+
+
+<script src="/javascript/renderFiles.js" defer></script>

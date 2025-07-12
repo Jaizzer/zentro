@@ -11,16 +11,13 @@ async function handleRootRedirect(req, res, next) {
 		// Render the pick username form if the user does not yet have a username
 		return res.status(200).redirect("/pick-username");
 	} else {
-		// Retrieve the user's files
-		const files = await fileServices.getFiles({ id: req.user.id });
-
 		// Retrieve the user's folders
 		const folders = await folderServices.getFolders({ id: req.user.id });
 
 		// Render the feed if the user already has a username
 		return res
 			.status(200)
-			.render("home", { files: files, folders: folders });
+			.render("home", { files: null, folders: folders });
 	}
 }
 

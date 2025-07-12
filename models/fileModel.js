@@ -27,9 +27,12 @@ async function createMany(data) {
 	}
 }
 
-async function findManyByOptions(options) {
+async function findManyByOptions({ options, cursor }) {
 	try {
 		const files = await prisma.file.findMany({
+			take: 5,
+			skip: cursor ? 1 : 0,
+			cursor: cursor && { id: cursor },
 			where: options,
 			omit: {
 				ownerId: true,
@@ -43,6 +46,9 @@ async function findManyByOptions(options) {
 						user: true,
 					},
 				},
+			},
+			orderBy: {
+				id: "asc",
 			},
 		});
 

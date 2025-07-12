@@ -21,4 +21,10 @@ fileRouter.post(
 	fileControllers.uploadFiles
 );
 
+fileRouter.get(
+	"/recent",
+	authMiddlewares.isAuthenticated,
+	fileControllers.getFiles
+);
+
 module.exports = fileRouter;
