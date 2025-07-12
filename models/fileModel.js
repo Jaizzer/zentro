@@ -46,6 +46,11 @@ async function findManyByOptions({ options, cursor }) {
 						user: true,
 					},
 				},
+				favoritedBy: {
+					select: {
+						userId: true,
+					},
+				},
 			},
 			orderBy: {
 				id: "asc",

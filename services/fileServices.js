@@ -62,6 +62,13 @@ async function getFiles({ id, cursor }) {
 				owner: file.owner,
 			};
 		}
+
+		// Add property to determine whether the user add the file to his/her Favorites
+		file.isFavorite =
+			file.favoritedBy?.filter((user) => user.userId === id).length !== 0;
+
+		// Hide the favorited by property for security purposes
+		file.favoritedBy = undefined;
 	}
 	return files;
 }

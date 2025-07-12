@@ -222,7 +222,7 @@ function getActionIcon(action) {
 		case "addToFavorites":
 			return "☆";
 		case "removeFromFavorites":
-			return "★";
+			return "⭐️";
 		case "seeMore":
 			return "︙";
 		default:
