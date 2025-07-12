@@ -60,6 +60,7 @@ model LinkedAccount {
 
 model File {
     id              String               @id @default(cuid())
+    sequenceNumber  Int                  @default(autoincrement()) @map("sequence_number")
     name            String
     hash            String
     size            Float?
@@ -98,6 +99,7 @@ model FavoriteFile {
 
 model Folder {
     id              String                 @id @default(cuid())
+    sequenceNumber  Int                    @default(autoincrement()) @map("sequence_number")
     name            String
     isPrivate       Boolean                @default(true)
     createdAt       DateTime               @default(now()) @map("created_at")
