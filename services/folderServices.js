@@ -8,9 +8,6 @@ const Folder = require("../models/folderModel.js");
 // Load services
 const storageServices = require("../services/storageServices.js");
 
-// Load utilities
-const date = require("../utils/date.js");
-
 async function getFolders({ id }) {
 	const folders = await Folder.findManyByOptions({ ownerId: id });
 
@@ -20,9 +17,6 @@ async function getFolders({ id }) {
 			folder.owner.profilePictureFilename ||
 				process.env.DEFAULT_PROFILE_PICTURE_FILENAME
 		);
-
-		// Remove the time
-		folder.createdAt = date.removeTime(folder.createdAt);
 	}
 	return folders;
 }

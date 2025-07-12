@@ -10,7 +10,6 @@ const storageServices = require("../services/storageServices.js");
 
 // Load utilities
 const generateRandomString = require("../utils/generateRandomString.js");
-const date = require("../utils/date.js");
 
 async function saveFiles({ fileUploads, userId, folderId }) {
 	// Add hash
@@ -60,9 +59,6 @@ async function getFiles({ id }) {
 				owner: file.owner,
 			};
 		}
-
-		// Remove the time
-		file.createdAt = date.removeTime(file.createdAt);
 	}
 	return files;
 }
