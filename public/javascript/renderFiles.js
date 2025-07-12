@@ -1,18 +1,85 @@
 // Render the initial fields
-renderInitialFiles();
+renderFiles();
 
-const viewMoreFilesButton = document.querySelector(
-	".filesContainer .viewMoreButton"
-);
-
-viewMoreFilesButton.addEventListener("click", async () => {
-	const url = "http://localhost:9000/file/recent?page=next";
-
-	// Fetch the files
+async function renderFiles() {
+	const url = "http://localhost:9000/file/recent";
 	const { files, userId } = await requestFiles(url);
 
-	renderFiles({ files, userId });
-});
+	if (files.length !== 0) {
+		renderRecentFilesSection({ files, userId });
+	} else {
+		renderFilelessDriveMessage();
+	}
+}
+
+function renderRecentFilesSection({ files, userId }) {
+	// Access the home page
+	const home = document.querySelector(".homeSection");
+
+	// Create the main section
+	const recentFilesSection = document.createElement("section");
+	recentFilesSection.classList.add("recentFilesSection");
+	home.appendChild(recentFilesSection);
+
+	// Create the section title
+	const title = document.createElement("h2");
+	title.textContent = "Recent Files";
+	recentFilesSection.appendChild(title);
+
+	// Create the files container
+	const filesContainer = document.createElement("div");
+	filesContainer.classList.add("filesContainer");
+	recentFilesSection.appendChild(filesContainer);
+
+	// Create the file list header
+	const header = document.createElement("div");
+	header.classList.add("header");
+	filesContainer.appendChild(header);
+
+	// Create the column titles
+	const columnNames = ["Name", "Creation Date", "Owner", "Location"];
+	for (const columnName of columnNames || []) {
+		const span = document.createElement("div");
+		const camelize = (string) => {
+			return string
+				.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+					return index === 0
+						? word.toLowerCase()
+						: word.toUpperCase();
+				})
+				.replace(/\s+/g, "");
+		};
+		span.classList.add(camelize(columnName));
+		span.textContent = columnName;
+		header.appendChild(span);
+	}
+
+	// Render the files
+	const filesHTML = createFiles({ files, userId });
+	for (const fileHTML of filesHTML || []) {
+		filesContainer.appendChild(fileHTML);
+	}
+
+	// Create the "View More" Button
+	const viewMoreButton = document.createElement("button");
+	viewMoreButton.classList.add("viewMoreButton");
+	viewMoreButton.textContent = "View More";
+
+	// Add functionality to the "View More Button"
+	viewMoreButton.addEventListener("click", async () => {
+		const url = "http://localhost:9000/file/recent?page=next";
+
+		// Fetch the files
+		const { files, userId } = await requestFiles(url);
+
+		// Render the files
+		const upcomingFilesHTML = createFiles({ files, userId });
+		for (const upcomingFileHTML of upcomingFilesHTML || []) {
+			filesContainer.appendChild(upcomingFileHTML);
+		}
+	});
+	recentFilesSection.appendChild(viewMoreButton);
+}
 
 // Fetch the files from the database
 async function requestFiles(url) {
@@ -34,20 +101,14 @@ async function requestFiles(url) {
 	}
 }
 
-async function renderInitialFiles() {
-	const url = "http://localhost:9000/file/recent";
-	const files = await requestFiles(url);
-	renderFiles(files);
-}
-
-function renderFiles({ files, userId }) {
-	const filesContainer = document.querySelector(".filesContainer");
+function createFiles({ files, userId }) {
+	let filesHTML = [];
 
 	for (const file of files || []) {
 		// Create main file metadata container
 		const fileDiv = document.createElement("div");
 		fileDiv.classList.add("file");
-		filesContainer.appendChild(fileDiv);
+		filesHTML.push(fileDiv);
 
 		// Create file label
 		const fileLabel = document.createElement("div");
@@ -163,6 +224,8 @@ function renderFiles({ files, userId }) {
 		});
 		actions.appendChild(seeMore);
 	}
+
+	return filesHTML;
 }
 
 function createAction({ actionName, icon, callback }) {
@@ -187,8 +250,6 @@ function createAction({ actionName, icon, callback }) {
 
 	return action;
 }
-
-function createFilesContainer() {}
 
 function getFileIcon(type) {
 	let icon;
@@ -231,4 +292,26 @@ function getActionIcon(action) {
 		default:
 			return "❔";
 	}
+}
+
+async function renderFilelessDriveMessage() {
+	const homeSection = document.querySelector(".homeSection");
+
+	const filelessDriveMessage = document.createElement("section");
+	filelessDriveMessage.classList.add("blankDriveMessage");
+	homeSection.appendChild(filelessDriveMessage);
+
+	const iconContainer = document.createElement("span");
+	iconContainer.classList.add("iconContainer");
+	iconContainer.innerHTML = "📭";
+	filelessDriveMessage.appendChild(iconContainer);
+
+	const heading = document.createElement("h2");
+	heading.textContent = "Nothing here yet!";
+	filelessDriveMessage.appendChild(heading);
+
+	const message = document.createElement("p");
+	message.textContent =
+		"Start by uploading your first file or organizing with folders.";
+	filelessDriveMessage.appendChild(message);
 }

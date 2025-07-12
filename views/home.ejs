@@ -3,5 +3,6 @@
 	<img src="<%= locals.user.profilePictureUrl %>" class="profilePicture">
 	<a href="/auth/sign-out">Sign Out</a>
 	<%- include('partials/folders.ejs', { folders: folders}) %>
-	<%- include('partials/files.ejs', { files: files}) %>
 </section>
+
+<script src="/javascript/renderFiles.js" defer></script>
