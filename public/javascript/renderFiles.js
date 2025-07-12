@@ -3,16 +3,16 @@ renderFiles();
 
 async function renderFiles() {
 	const url = "http://localhost:9000/file/recent";
-	const { files, userId } = await requestFiles(url);
+	const { files, userId, isNextAvailable } = await requestFiles(url);
 
 	if (files.length !== 0) {
-		renderRecentFilesSection({ files, userId });
+		renderRecentFilesSection({ files, userId, isNextAvailable });
 	} else {
 		renderFilelessDriveMessage();
 	}
 }
 
-function renderRecentFilesSection({ files, userId }) {
+function renderRecentFilesSection({ files, userId, isNextAvailable }) {
 	// Access the home page
 	const home = document.querySelector(".homeSection");
 
@@ -60,25 +60,33 @@ function renderRecentFilesSection({ files, userId }) {
 		filesContainer.appendChild(fileHTML);
 	}
 
-	// Create the "View More" Button
-	const viewMoreButton = document.createElement("button");
-	viewMoreButton.classList.add("viewMoreButton");
-	viewMoreButton.textContent = "View More";
+	// Render the view more button only if there are more files to be fetched
+	if (isNextAvailable) {
+		// Create the "View More" Button
+		const viewMoreButton = document.createElement("button");
+		viewMoreButton.classList.add("viewMoreButton");
+		viewMoreButton.textContent = "View More";
 
-	// Add functionality to the "View More Button"
-	viewMoreButton.addEventListener("click", async () => {
-		const url = "http://localhost:9000/file/recent?page=next";
+		// Add functionality to the "View More Button"
+		viewMoreButton.addEventListener("click", async () => {
+			const url = "http://localhost:9000/file/recent?page=next";
 
-		// Fetch the files
-		const { files, userId } = await requestFiles(url);
+			// Fetch the files
+			const { files, userId, isNextAvailable } = await requestFiles(url);
 
-		// Render the files
-		const upcomingFilesHTML = createFiles({ files, userId });
-		for (const upcomingFileHTML of upcomingFilesHTML || []) {
-			filesContainer.appendChild(upcomingFileHTML);
-		}
-	});
-	recentFilesSection.appendChild(viewMoreButton);
+			// Render the files
+			const upcomingFilesHTML = createFiles({ files, userId });
+			for (const upcomingFileHTML of upcomingFilesHTML || []) {
+				filesContainer.appendChild(upcomingFileHTML);
+			}
+
+			// Remove the view more button if there are no longer files to be fetched
+			if (!isNextAvailable) {
+				viewMoreButton.parentElement.removeChild(viewMoreButton);
+			}
+		});
+		recentFilesSection.appendChild(viewMoreButton);
+	}
 }
 
 // Fetch the files from the database

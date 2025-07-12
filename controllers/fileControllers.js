@@ -45,8 +45,19 @@ async function getFiles(req, res, next) {
 		};
 	}
 
+	// Check if there's more folders for the succeeding request
+	const isNextAvailable =
+		(
+			await fileServices.getFiles({
+				id: req.user.id,
+				cursor: req.session.cursors?.files,
+			})
+		).length !== 0;
+
 	// Send the json
-	return res.status(200).json({ files, userId: req.user.id });
+	return res
+		.status(200)
+		.json({ files, userId: req.user.id, isNextAvailable });
 }
 
 module.exports = {
