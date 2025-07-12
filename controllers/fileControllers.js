@@ -39,7 +39,10 @@ async function getFiles(req, res, next) {
 
 	// Update the cursor for the next request
 	if (files.length !== 0) {
-		req.session.cursors = { files: files[files.length - 1].id };
+		req.session.cursors = {
+			...req.session.cursors,
+			files: files[files.length - 1].id,
+		};
 	}
 
 	// Send the json
