@@ -2,7 +2,7 @@
 	<h1><%= locals.user.username %></h1>
 	<img src="<%= locals.user.profilePictureUrl %>" class="profilePicture">
 	<a href="/auth/sign-out">Sign Out</a>
-	<%- include('partials/folders.ejs', { folders: folders}) %>
 </section>
 
+<script src="/javascript/renderFolders.js" defer></script>
 <script src="/javascript/renderFiles.js" defer></script>
