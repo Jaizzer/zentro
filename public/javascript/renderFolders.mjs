@@ -1,9 +1,12 @@
+import getData from "/javascript/getData.js";
+
 // Render the initial fields
 renderFolders();
 
 async function renderFolders() {
+	console.log(getData);
 	const url = "http://localhost:9000/folder";
-	const { folders, userId, isNextAvailable } = await requestFolders(url);
+	const { folders, userId, isNextAvailable } = await getData(url);
 
 	if (folders.length !== 0) {
 		renderFoldersSection({ folders, userId, isNextAvailable });
@@ -48,9 +51,7 @@ async function renderFoldersSection({ folders, userId, isNextAvailable }) {
 			const url = "http://localhost:9000/folder?page=next";
 
 			// Fetch the folders
-			const { folders, userId, isNextAvailable } = await requestFolders(
-				url
-			);
+			const { folders, userId, isNextAvailable } = await getData(url);
 
 			// Render the folders
 			const upcomingFoldersHTML = createFolders({ folders, userId });
@@ -96,26 +97,6 @@ function createFolders({ folders, userId }) {
 	}
 
 	return foldersHTML;
-}
-
-async function requestFolders(url) {
-	try {
-		// Fetch the folders from the database
-		const response = await fetch(url, {
-			mode: "cors",
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-		if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`);
-		}
-		const json = await response.json();
-		return json;
-	} catch (error) {
-		console.error("Failed to retrieve the folders. ", error);
-	}
 }
 
 async function renderFolderlessDriveMessage() {

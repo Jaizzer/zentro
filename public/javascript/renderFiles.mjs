@@ -1,9 +1,11 @@
+import getData from "/javascript/getData.js";
+
 // Render the initial fields
 renderFiles();
 
 async function renderFiles() {
 	const url = "http://localhost:9000/file/recent";
-	const { files, userId, isNextAvailable } = await requestFiles(url);
+	const { files, userId, isNextAvailable } = await getData(url);
 
 	if (files.length !== 0) {
 		renderRecentFilesSection({ files, userId, isNextAvailable });
@@ -72,7 +74,7 @@ function renderRecentFilesSection({ files, userId, isNextAvailable }) {
 			const url = "http://localhost:9000/file/recent?page=next";
 
 			// Fetch the files
-			const { files, userId, isNextAvailable } = await requestFiles(url);
+			const { files, userId, isNextAvailable } = await getData(url);
 
 			// Render the files
 			const upcomingFilesHTML = createFiles({ files, userId });
@@ -86,26 +88,6 @@ function renderRecentFilesSection({ files, userId, isNextAvailable }) {
 			}
 		});
 		recentFilesSection.appendChild(viewMoreButton);
-	}
-}
-
-// Fetch the files from the database
-async function requestFiles(url) {
-	try {
-		const response = await fetch(url, {
-			mode: "cors",
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-		if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`);
-		}
-		const json = await response.json();
-		return json;
-	} catch (error) {
-		console.error("Failed to retrieve the files. ", error);
 	}
 }
 
