@@ -8,8 +8,11 @@ const Folder = require("../models/folderModel.js");
 // Load services
 const storageServices = require("../services/storageServices.js");
 
-async function getFolders({ id }) {
-	const folders = await Folder.findManyByOptions({ ownerId: id });
+async function getFolders({ id, cursor }) {
+	const folders = await Folder.findManyByOptions({
+		options: { ownerId: id },
+		cursor: cursor,
+	});
 
 	for (const folder of folders || []) {
 		// Attach profile picture url to the folder owner
@@ -17,7 +20,16 @@ async function getFolders({ id }) {
 			folder.owner.profilePictureFilename ||
 				process.env.DEFAULT_PROFILE_PICTURE_FILENAME
 		);
+
+		// Add property to determine whether the user add the folder to his/her Favorites
+		folder.isFavorite =
+			folder.favoritedBy?.filter((user) => user.userId === id).length !==
+			0;
+
+		// Hide the favorited by property for security purposes
+		folder.favoritedBy = undefined;
 	}
+
 	return folders;
 }
 

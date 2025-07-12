@@ -14,9 +14,12 @@ async function create(data) {
 	}
 }
 
-async function findManyByOptions(options) {
+async function findManyByOptions({ options, cursor }) {
 	try {
 		const folders = await prisma.folder.findMany({
+			take: 1,
+			skip: cursor ? 1 : 0,
+			cursor: cursor && { id: cursor },
 			where: options,
 			omit: {
 				ownerId: true,
@@ -29,9 +32,16 @@ async function findManyByOptions(options) {
 						user: true,
 					},
 				},
+				favoritedBy: {
+					select: {
+						userId: true,
+					},
+				},
+			},
+			orderBy: {
+				id: "asc",
 			},
 		});
-
 		return folders;
 	} catch (error) {
 		console.error("Failed to retrieve the folders. ", error);

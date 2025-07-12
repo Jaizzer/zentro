@@ -76,6 +76,10 @@ app.use("/auth", authRouter);
 const fileRouter = require("./routes/fileRouter");
 app.use("/file", fileRouter);
 
+// Folder router
+const folderRouter = require("./routes/folderRouter");
+app.use("/folder", folderRouter);
+
 // Main error-handling middleware
 app.use((error, req, res, next) => {
 	console.error(error.stack);
