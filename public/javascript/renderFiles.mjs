@@ -1,4 +1,5 @@
 import getData from "/javascript/getData.js";
+import createElement from "/javascript/utils/createElement.mjs";
 
 // Render the initial fields
 renderFiles();
@@ -19,29 +20,44 @@ function renderRecentFilesSection({ files, userId, isNextAvailable }) {
 	const home = document.querySelector(".homeSection");
 
 	// Create the main section
-	const recentFilesSection = document.createElement("section");
-	recentFilesSection.classList.add("recentFilesSection");
+	const recentFilesSection = createElement({
+		tag: "div",
+		attributes: {
+			className: "recentFilesSection",
+		},
+	});
 	home.appendChild(recentFilesSection);
 
 	// Create the section title
-	const title = document.createElement("h2");
-	title.textContent = "Recent Files";
+	const title = createElement({
+		tag: "h2",
+		attributes: {
+			textContent: "Recent Files",
+		},
+	});
 	recentFilesSection.appendChild(title);
 
 	// Create the files container
-	const filesContainer = document.createElement("div");
-	filesContainer.classList.add("filesContainer");
+	const filesContainer = createElement({
+		tag: "div",
+		attributes: {
+			className: "filesContainer",
+		},
+	});
 	recentFilesSection.appendChild(filesContainer);
 
 	// Create the file list header
-	const header = document.createElement("div");
-	header.classList.add("header");
+	const header = createElement({
+		tag: "div",
+		attributes: {
+			className: "header",
+		},
+	});
 	filesContainer.appendChild(header);
 
 	// Create the column titles
 	const columnNames = ["Name", "Creation Date", "Owner", "Location"];
 	for (const columnName of columnNames || []) {
-		const span = document.createElement("div");
 		const camelize = (string) => {
 			return string
 				.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
@@ -51,8 +67,13 @@ function renderRecentFilesSection({ files, userId, isNextAvailable }) {
 				})
 				.replace(/\s+/g, "");
 		};
-		span.classList.add(camelize(columnName));
-		span.textContent = columnName;
+		const span = createElement({
+			tag: "span",
+			attributes: {
+				textContent: columnName,
+				className: camelize(columnName),
+			},
+		});
 		header.appendChild(span);
 	}
 
@@ -65,28 +86,36 @@ function renderRecentFilesSection({ files, userId, isNextAvailable }) {
 	// Render the view more button only if there are more files to be fetched
 	if (isNextAvailable) {
 		// Create the "View More" Button
-		const viewMoreButton = document.createElement("button");
-		viewMoreButton.classList.add("viewMoreButton");
-		viewMoreButton.textContent = "View More";
+		const viewMoreButton = createElement({
+			tag: "button",
+			attributes: {
+				className: "viewMoreButton",
+				textContent: "View More",
+			},
+			eventListener: {
+				event: "click",
+				callback: async (e) => {
+					const url = "http://localhost:9000/file/recent?page=next";
 
-		// Add functionality to the "View More Button"
-		viewMoreButton.addEventListener("click", async () => {
-			const url = "http://localhost:9000/file/recent?page=next";
+					// Fetch the files
+					const { files, userId, isNextAvailable } = await getData(
+						url
+					);
 
-			// Fetch the files
-			const { files, userId, isNextAvailable } = await getData(url);
+					// Render the files
+					const upcomingFilesHTML = createFiles({ files, userId });
+					for (const upcomingFileHTML of upcomingFilesHTML || []) {
+						filesContainer.appendChild(upcomingFileHTML);
+					}
 
-			// Render the files
-			const upcomingFilesHTML = createFiles({ files, userId });
-			for (const upcomingFileHTML of upcomingFilesHTML || []) {
-				filesContainer.appendChild(upcomingFileHTML);
-			}
-
-			// Remove the view more button if there are no longer files to be fetched
-			if (!isNextAvailable) {
-				viewMoreButton.parentElement.removeChild(viewMoreButton);
-			}
+					// Remove the view more button if there are no longer files to be fetched
+					if (!isNextAvailable) {
+						e.target.parentElement.removeChild(viewMoreButton);
+					}
+				},
+			},
 		});
+
 		recentFilesSection.appendChild(viewMoreButton);
 	}
 }
@@ -96,70 +125,118 @@ function createFiles({ files, userId }) {
 
 	for (const file of files || []) {
 		// Create main file metadata container
-		const fileDiv = document.createElement("div");
-		fileDiv.classList.add("file");
+		const fileDiv = createElement({
+			tag: "div",
+			attributes: {
+				className: "file",
+			},
+		});
 		filesHTML.push(fileDiv);
 
 		// Create file label
-		const fileLabel = document.createElement("div");
-		fileLabel.classList.add("label");
+		const fileLabel = createElement({
+			tag: "div",
+			attributes: {
+				className: "label",
+			},
+		});
 		fileDiv.appendChild(fileLabel);
 
 		// Create file icon
-		const fileIconContainer = document.createElement("span");
-		fileIconContainer.classList.add("iconContainer");
-		fileIconContainer.innerHTML = getFileIcon(file.type);
+		const fileIconContainer = createElement({
+			tag: "span",
+			attributes: {
+				className: "iconContainer",
+				innerHTML: getFileIcon(file.type),
+			},
+		});
 		fileLabel.appendChild(fileIconContainer);
 
 		// Create filename
-		const filename = document.createElement("span");
-		filename.classList.add("name");
-		filename.textContent = file.name;
+		const filename = createElement({
+			tag: "span",
+			attributes: {
+				className: "name",
+				textContent: file.name,
+			},
+		});
 		fileLabel.appendChild(filename);
 
 		// Create file creation date
-		const creationDate = document.createElement("time");
-		creationDate.dateTime = new Date(file.createdAt);
-		creationDate.classList.add("creationDate");
-		creationDate.textContent = new Date(file.createdAt).toDateString();
+		const creationDate = createElement({
+			tag: "time",
+			attributes: {
+				className: "creationDate",
+				dateTime: new Date(file.createdAt),
+				textContent: new Date(file.createdAt).toDateString(),
+			},
+		});
 		fileDiv.appendChild(creationDate);
 
 		// Create file owner information
-		const owner = document.createElement("div");
-		owner.classList.add("owner");
+		const owner = createElement({
+			tag: "div",
+			attributes: {
+				className: "owner",
+			},
+		});
 		fileDiv.appendChild(owner);
 
-		const ownerProfilePicture = document.createElement("img");
-		ownerProfilePicture.classList.add("profilePicture");
-		ownerProfilePicture.src = file.owner.profilePictureUrl;
+		const ownerProfilePicture = createElement({
+			tag: "img",
+			attributes: {
+				className: "profilePicture",
+				src: file.owner.profilePictureUrl,
+			},
+		});
 		owner.appendChild(ownerProfilePicture);
 
-		const ownerUsername = document.createElement("span");
-		ownerUsername.classList.add("ownerUsername");
-		ownerUsername.textContent = `${
-			file.owner.id === userId ? "You" : file.owner.username
-		}`;
+		const ownerUsername = createElement({
+			tag: "span",
+			attributes: {
+				className: "ownerUsername",
+				textContent: `${
+					file.owner.id === userId ? "You" : file.owner.username
+				}`,
+			},
+		});
 		owner.appendChild(ownerUsername);
 
 		// Create file location information
-		const location = document.createElement("div");
-		location.classList.add("location");
+		const location = createElement({
+			tag: "div",
+			attributes: {
+				className: "location",
+			},
+		});
 		fileDiv.appendChild(location);
 
-		const folderIconContainer = document.createElement("span");
-		folderIconContainer.classList.add("iconContainer");
-		folderIconContainer.innerHTML = getFolderIcon(file.owner.id === userId);
+		const folderIconContainer = createElement({
+			tag: "span",
+			attributes: {
+				className: "iconContainer",
+				innerHTML: getFolderIcon(file.owner.id === userId),
+			},
+		});
 		location.appendChild(folderIconContainer);
 
-		const folderName = document.createElement("span");
-		folderName.classList.add("name");
-		folderName.textContent =
-			file.owner.id === userId ? file.folder?.name : "Shared with You";
+		const folderName = createElement({
+			div: "span",
+			attributes: {
+				className: "name",
+				textContent:
+					file.owner.id === userId
+						? file.folder?.name
+						: "Shared with You",
+			},
+		});
 		location.appendChild(folderName);
 
 		// Create file actions (e.g. Download, Rename, Favorite, Unfavorite, More)
-		const actions = document.createElement("ul");
-		actions.classList.add("actions");
+		const actions = createElement({
+			tag: "ul",
+			attributes: { className: "actions" },
+		});
 		fileDiv.appendChild(actions);
 
 		// Create download action
@@ -219,21 +296,30 @@ function createFiles({ files, userId }) {
 }
 
 function createAction({ actionName, icon, callback }) {
-	const action = document.createElement("li");
-	action.classList.add("action");
+	const action = createElement({
+		tag: "li",
+		action: {
+			className: "action",
+		},
+	});
 
 	// Create the action button
-	const actionButton = document.createElement("button");
-	actionButton.classList.add(`${actionName}ActionButton`);
-	actionButton.innerHTML = getActionIcon(actionName);
-	actionButton.title = actionName
-		.replace(/([A-Z])/g, " $1")
-		.replace(/^./, function (str) {
-			return str.toUpperCase();
-		});
-
-	// Add functionality to the button
-	actionButton.addEventListener("click", callback);
+	const actionButton = createElement({
+		tag: "button",
+		attributes: {
+			className: `${actionName}ActionButton`,
+			title: actionName
+				.replace(/([A-Z])/g, " $1")
+				.replace(/^./, function (str) {
+					return str.toUpperCase();
+				}),
+			innerHTML: getActionIcon(actionName),
+		},
+		eventListener: {
+			event: "click",
+			callback: callback,
+		},
+	});
 
 	// Insert the action button inside the action
 	action.appendChild(actionButton);
@@ -287,21 +373,37 @@ function getActionIcon(action) {
 async function renderFilelessDriveMessage() {
 	const homeSection = document.querySelector(".homeSection");
 
-	const filelessDriveMessage = document.createElement("section");
-	filelessDriveMessage.classList.add("blankDriveMessage");
+	const filelessDriveMessage = createElement({
+		tag: "section",
+		attributes: {
+			className: "blankDriveMessage",
+		},
+	});
 	homeSection.appendChild(filelessDriveMessage);
 
-	const iconContainer = document.createElement("span");
-	iconContainer.classList.add("iconContainer");
-	iconContainer.innerHTML = "📭";
+	const iconContainer = createElement({
+		tag: "span",
+		attributes: {
+			className: "iconContainer",
+			innerHTML: "🦜",
+		},
+	});
 	filelessDriveMessage.appendChild(iconContainer);
 
-	const heading = document.createElement("h2");
-	heading.textContent = "Nothing here yet!";
+	const heading = createElement({
+		tag: "h2",
+		attributes: {
+			textContent: "Nothing here yet!",
+		},
+	});
 	filelessDriveMessage.appendChild(heading);
 
-	const message = document.createElement("p");
-	message.textContent =
-		"Start by uploading your first file or organizing with folders.";
+	const message = createElement({
+		tag: "p",
+		attributes: {
+			textContent:
+				"Start by uploading your first file or organizing with folders.",
+		},
+	});
 	filelessDriveMessage.appendChild(message);
 }
