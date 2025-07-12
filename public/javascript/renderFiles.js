@@ -175,6 +175,11 @@ function createAction({ actionName, icon, callback }) {
 	const actionButton = document.createElement("button");
 	actionButton.classList.add(`${actionName}ActionButton`);
 	actionButton.innerHTML = getActionIcon(actionName);
+	actionButton.title = actionName
+		.replace(/([A-Z])/g, " $1")
+		.replace(/^./, function (str) {
+			return str.toUpperCase();
+		});
 
 	// Add functionality to the button
 	actionButton.addEventListener("click", callback);
