@@ -162,8 +162,6 @@ function renderFiles({ files, userId }) {
 			},
 		});
 		actions.appendChild(seeMore);
-
-		console.log(file);
 	}
 }
 
