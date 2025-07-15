@@ -1,5 +1,6 @@
 import getData from "/javascript/getData.js";
 import createElement from "/javascript/utils/createElement.mjs";
+import camelize from "/javascript/utils/camelize.mjs";
 
 // Render the initial fields
 renderFiles();
@@ -58,15 +59,6 @@ function renderRecentFilesSection({ files, userId, isNextAvailable }) {
 	// Create the column titles
 	const columnNames = ["Name", "Creation Date", "Owner", "Location"];
 	for (const columnName of columnNames || []) {
-		const camelize = (string) => {
-			return string
-				.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
-					return index === 0
-						? word.toLowerCase()
-						: word.toUpperCase();
-				})
-				.replace(/\s+/g, "");
-		};
 		const span = createElement({
 			tag: "span",
 			attributes: {
