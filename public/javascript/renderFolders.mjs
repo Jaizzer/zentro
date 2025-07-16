@@ -5,7 +5,6 @@ import createElement from "/javascript/utils/createElement.mjs";
 renderFolders();
 
 async function renderFolders() {
-	console.log(getData);
 	const url = "http://localhost:9000/folder";
 	const { folders, userId, isNextAvailable } = await getData(url);
 
