@@ -2,113 +2,104 @@ import getData from "/javascript/getData.js";
 import createElement from "/javascript/utils/createElement.mjs";
 import camelize from "/javascript/utils/camelize.mjs";
 
-// Render the initial fields
-renderFiles();
+export default async function createFilesSection({ initialUrl, nextUrl }) {
+	// Perform initial file request
+	const { files, userId, isNextAvailable } = await getData(initialUrl);
 
-async function renderFiles() {
-	const url = "http://localhost:9000/file/recent";
-	const { files, userId, isNextAvailable } = await getData(url);
-
-	if (files.length !== 0) {
-		renderRecentFilesSection({ files, userId, isNextAvailable });
-	} else {
-		renderFilelessDriveMessage();
-	}
-}
-
-function renderRecentFilesSection({ files, userId, isNextAvailable }) {
-	// Access the home page
-	const home = document.querySelector(".homeSection");
-
-	// Create the main section
-	const recentFilesSection = createElement({
-		tag: "div",
-		attributes: {
-			className: "recentFilesSection",
-		},
-	});
-	home.appendChild(recentFilesSection);
-
-	// Create the section title
-	const title = createElement({
-		tag: "h2",
-		attributes: {
-			textContent: "Recent Files",
-		},
-	});
-	recentFilesSection.appendChild(title);
-
-	// Create the files container
-	const filesContainer = createElement({
-		tag: "div",
-		attributes: {
-			className: "filesContainer",
-		},
-	});
-	recentFilesSection.appendChild(filesContainer);
-
-	// Create the file list header
-	const header = createElement({
-		tag: "div",
-		attributes: {
-			className: "header",
-		},
-	});
-	filesContainer.appendChild(header);
-
-	// Create the column titles
-	const columnNames = ["Name", "Creation Date", "Owner", "Location"];
-	for (const columnName of columnNames || []) {
-		const span = createElement({
-			tag: "span",
+	if (files?.length !== 0) {
+		// Create the main section
+		const filesSection = createElement({
+			tag: "div",
 			attributes: {
-				textContent: columnName,
-				className: camelize(columnName),
+				className: "filesSection",
 			},
 		});
-		header.appendChild(span);
-	}
 
-	// Render the files
-	const filesHTML = createFiles({ files, userId });
-	for (const fileHTML of filesHTML || []) {
-		filesContainer.appendChild(fileHTML);
-	}
-
-	// Render the view more button only if there are more files to be fetched
-	if (isNextAvailable) {
-		// Create the "View More" Button
-		const viewMoreButton = createElement({
-			tag: "button",
+		// Create the section title
+		const title = createElement({
+			tag: "h2",
 			attributes: {
-				className: "viewMoreButton",
-				textContent: "View More",
+				textContent: "Recent Files",
 			},
-			eventListener: {
-				event: "click",
-				callback: async (e) => {
-					const url = "http://localhost:9000/file/recent?page=next";
+		});
+		filesSection.appendChild(title);
 
-					// Fetch the files
-					const { files, userId, isNextAvailable } = await getData(
-						url
-					);
+		// Create the files container
+		const filesContainer = createElement({
+			tag: "div",
+			attributes: {
+				className: "filesContainer",
+			},
+		});
+		filesSection.appendChild(filesContainer);
 
-					// Render the files
-					const upcomingFilesHTML = createFiles({ files, userId });
-					for (const upcomingFileHTML of upcomingFilesHTML || []) {
-						filesContainer.appendChild(upcomingFileHTML);
-					}
+		// Create the file list header
+		const header = createElement({
+			tag: "div",
+			attributes: {
+				className: "header",
+			},
+		});
+		filesContainer.appendChild(header);
 
-					// Remove the view more button if there are no longer files to be fetched
-					if (!isNextAvailable) {
-						e.target.parentElement.removeChild(viewMoreButton);
-					}
+		// Create the column titles
+		const columnNames = ["Name", "Creation Date", "Owner", "Location"];
+		for (const columnName of columnNames || []) {
+			const span = createElement({
+				tag: "span",
+				attributes: {
+					textContent: columnName,
+					className: camelize(columnName),
 				},
-			},
-		});
+			});
+			header.appendChild(span);
+		}
 
-		recentFilesSection.appendChild(viewMoreButton);
+		// Render the files
+		const filesHTML = createFiles({ files, userId });
+		for (const fileHTML of filesHTML || []) {
+			filesContainer.appendChild(fileHTML);
+		}
+
+		// Render the view more button only if there are more files to be fetched
+		if (isNextAvailable) {
+			// Create the "View More" Button
+			const viewMoreButton = createElement({
+				tag: "button",
+				attributes: {
+					className: "viewMoreButton",
+					textContent: "View More",
+				},
+				eventListener: {
+					event: "click",
+					callback: async (e) => {
+						// Fetch the files
+						const { files, userId, isNextAvailable } =
+							await getData(nextUrl);
+
+						// Render the files
+						const upcomingFilesHTML = createFiles({
+							files,
+							userId,
+						});
+						for (const upcomingFileHTML of upcomingFilesHTML ||
+							[]) {
+							filesContainer.appendChild(upcomingFileHTML);
+						}
+
+						// Remove the view more button if there are no longer files to be fetched
+						if (!isNextAvailable) {
+							e.target.parentElement.removeChild(viewMoreButton);
+						}
+					},
+				},
+			});
+
+			filesSection.appendChild(viewMoreButton);
+		}
+		return filesSection;
+	} else {
+		return null;
 	}
 }
 
