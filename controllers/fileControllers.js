@@ -28,11 +28,11 @@ async function uploadFiles(req, res, next) {
 	return res.status(302).redirect("/");
 }
 
-async function getFiles(req, res, next) {
+async function getFilesData(req, res, next) {
 	const { page } = req.query;
 
 	// Retrieve the user's files
-	const files = await fileServices.getFiles({
+	const files = await fileServices.getFilesData({
 		id: req.user.id,
 		cursor: page === "next" ? req.session.cursors?.files : undefined,
 	});
@@ -48,7 +48,7 @@ async function getFiles(req, res, next) {
 	// Check if there's more folders for the succeeding request
 	const isNextAvailable =
 		(
-			await fileServices.getFiles({
+			await fileServices.getFilesData({
 				id: req.user.id,
 				cursor: req.session.cursors?.files,
 			})
@@ -63,5 +63,5 @@ async function getFiles(req, res, next) {
 module.exports = {
 	renderFileUploadPage: asyncHandler(renderFileUploadPage),
 	uploadFiles: asyncHandler(uploadFiles),
-	getFiles: asyncHandler(getFiles),
+	getFilesData: asyncHandler(getFilesData),
 };

@@ -42,7 +42,7 @@ async function saveFiles({ fileUploads, userId, folderId }) {
 	await File.createMany(metadata);
 }
 
-async function getFiles({ id, cursor }) {
+async function getFilesData({ id, cursor }) {
 	const files = await File.findManyByOptions({
 		options: { ownerId: id },
 		cursor: cursor,
@@ -75,5 +75,5 @@ async function getFiles({ id, cursor }) {
 
 module.exports = {
 	saveFiles,
-	getFiles,
+	getFilesData,
 };
