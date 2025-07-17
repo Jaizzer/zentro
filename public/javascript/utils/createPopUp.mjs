@@ -1,14 +1,14 @@
 import createElement from "/javascript/utils/createElement.mjs";
 
 export default function createPopUp(childNode) {
-	const popUpBackground = createElement({
+	const popUp = createElement({
 		tag: "div",
 		attributes: {
-			className: "popUpBackground",
+			className: "popUp",
 		},
 	});
 	// Add styling to the background
-	Object.assign(popUpBackground.style, {
+	Object.assign(popUp.style, {
 		width: "100dvw",
 		height: "100dvh",
 		backgroundColor: "rgba(0, 0, 0, 0.45)",
@@ -19,15 +19,7 @@ export default function createPopUp(childNode) {
 		justifyContent: "center",
 		alignItems: "center",
 	});
+	popUp.appendChild(childNode);
 
-	const popUpContainer = createElement({
-		tag: "div",
-		attributes: {
-			className: "popUpContainer",
-		},
-	});
-	popUpContainer.appendChild(childNode);
-	popUpBackground.appendChild(popUpContainer);
-
-	return popUpBackground;
+	return popUp;
 }
