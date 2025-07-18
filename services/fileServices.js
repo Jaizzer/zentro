@@ -73,7 +73,16 @@ async function getFilesData({ id, cursor }) {
 	return files;
 }
 
+async function getFileUrls(fileHashes) {
+	const fileUrls = await Promise.all(
+		fileHashes.map((fileHash) => storageServices.getFileUrl(fileHash))
+	);
+
+	return fileUrls;
+}
+
 module.exports = {
 	saveFiles,
 	getFilesData,
+	getFileUrls,
 };
