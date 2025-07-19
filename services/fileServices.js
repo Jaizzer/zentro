@@ -69,20 +69,14 @@ async function getFilesData({ id, cursor }) {
 
 		// Hide the favorited by property for security purposes
 		file.favoritedBy = undefined;
+
+		// Attach the file url
+		file.url = await storageServices.getFileUrl(file.hash);
 	}
 	return files;
-}
-
-async function getFileUrls(fileHashes) {
-	const fileUrls = await Promise.all(
-		fileHashes.map((fileHash) => storageServices.getFileUrl(fileHash))
-	);
-
-	return fileUrls;
 }
 
 module.exports = {
 	saveFiles,
 	getFilesData,
-	getFileUrls,
 };

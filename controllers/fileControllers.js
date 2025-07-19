@@ -60,18 +60,8 @@ async function getFilesData(req, res, next) {
 		.json({ files, userId: req.user.id, isNextAvailable });
 }
 
-async function getFileUrls(req, res, next) {
-	// Parse the hashes
-	const fileHashes = req.query.fileHashes.split(",");
-
-	// Retrieve the file urls
-	const fileUrls = await fileServices.getFileUrls(fileHashes);
-	res.status(200).json({ fileUrls, userId: req.user.id });
-}
-
 module.exports = {
 	renderFileUploadPage: asyncHandler(renderFileUploadPage),
 	uploadFiles: asyncHandler(uploadFiles),
 	getFilesData: asyncHandler(getFilesData),
-	getFileUrls: asyncHandler(getFileUrls),
 };

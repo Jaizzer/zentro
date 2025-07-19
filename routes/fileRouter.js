@@ -27,10 +27,4 @@ fileRouter.get(
 	fileControllers.getFilesData
 );
 
-fileRouter.get(
-	"/url",
-	authMiddlewares.isAuthenticated,
-	fileControllers.getFileUrls
-);
-
 module.exports = fileRouter;
