@@ -22,7 +22,8 @@ async function saveFiles({ fileUploads, userId, folderId }) {
 		fileUploads.map((fileUpload) => {
 			return storageServices.uploadFile({
 				file: fileUpload.file,
-				name: fileUpload.hash,
+				name: fileUpload.name,
+				hash: fileUpload.hash,
 				type: fileUpload.type,
 			});
 		})

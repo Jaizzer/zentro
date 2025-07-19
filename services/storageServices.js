@@ -28,14 +28,15 @@ const cloudFront = new CloudFrontClient({
 	region: process.env.BUCKET_REGION,
 });
 
-async function uploadFile({ file, name, type }) {
+async function uploadFile({ file, hash, name, type }) {
 	try {
 		// Upload file to S3
 		const params = {
 			Bucket: process.env.BUCKET_NAME,
-			Key: name,
+			Key: hash,
 			Body: file,
 			ContentType: type,
+			ContentDisposition: `attachment; filename="${name}"`,
 		};
 		const command = new PutObjectCommand(params);
 		await s3.send(command);
