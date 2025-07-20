@@ -1,12 +1,13 @@
 import createElement from "/javascript/utils/createElement.mjs";
 
-export default function createPopUp(childNode) {
+export default function createPopUp() {
 	const popUp = createElement({
 		tag: "div",
 		attributes: {
 			className: "popUp",
 		},
 	});
+    
 	// Add styling to the background
 	Object.assign(popUp.style, {
 		width: "100dvw",
@@ -19,7 +20,14 @@ export default function createPopUp(childNode) {
 		justifyContent: "center",
 		alignItems: "center",
 	});
-	popUp.appendChild(childNode);
 
-	return popUp;
+	return {
+		element: popUp,
+		close: () => {
+			popUp.parentElement.removeChild(popUp);
+		},
+		append: (node) => {
+			popUp.appendChild(node);
+		},
+	};
 }
