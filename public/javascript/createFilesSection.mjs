@@ -1,7 +1,7 @@
 import getData from "/javascript/getData.js";
 import createElement from "/javascript/utils/createElement.mjs";
 import camelize from "/javascript/utils/camelize.mjs";
-import renderDownloadPromptPopUp from "./utils/renderDownloadPromptPopUp.mjs";
+import renderDownloadPromptPopUp from "/javascript/utils/renderDownloadPromptPopUp.mjs";
 
 export default async function createFilesSection({ initialUrl, nextUrl }) {
 	// Perform initial file request
