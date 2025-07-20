@@ -10,6 +10,7 @@ const storageServices = require("../services/storageServices.js");
 
 // Load utilities
 const generateRandomString = require("../utils/generateRandomString.js");
+const formatFileSize = require("../utils/formatFileSize.js");
 
 async function saveFiles({ fileUploads, userId, folderId }) {
 	// Add hash
@@ -73,6 +74,9 @@ async function getFilesData({ id, cursor }) {
 
 		// Attach the file url
 		file.url = await storageServices.getFileUrl(file.hash);
+
+		// Choose an appropriate file size unit
+		file.size = `${formatFileSize(file.size)}`;
 	}
 	return files;
 }
