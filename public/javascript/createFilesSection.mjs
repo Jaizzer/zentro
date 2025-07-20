@@ -2,6 +2,7 @@ import getData from "/javascript/getData.js";
 import createElement from "/javascript/utils/createElement.mjs";
 import camelize from "/javascript/utils/camelize.mjs";
 import renderDownloadPromptPopUp from "/javascript/utils/renderDownloadPromptPopUp.mjs";
+import createActionList from "/javascript/utils/createActionList.mjs";
 
 export default async function createFilesSection({ initialUrl, nextUrl }) {
 	// Perform initial file request
@@ -216,99 +217,59 @@ function createFiles({ files, userId }) {
 		});
 		location.appendChild(folderName);
 
-		// Create file actions (e.g. Download, Rename, Favorite, Unfavorite, More)
-		const actions = createElement({
-			tag: "ul",
-			attributes: { className: "actions" },
-		});
-		fileDiv.appendChild(actions);
+		// Create file actions
+		const actionList = createActionList();
+		fileDiv.appendChild(actionList.element);
 
 		// Create download action
-		const downloadAction = createAction({
+		actionList.addAction({
 			actionName: "download",
 			icon: getActionIcon("download"),
 			callback: () => {
 				renderDownloadPromptPopUp(file);
 			},
 		});
-		actions.appendChild(downloadAction);
 
 		// Create rename action
-		const renameAction = createAction({
+		actionList.addAction({
 			actionName: "rename",
 			icon: getActionIcon("rename"),
 			callback: () => {
 				console.log(`Renaming ${file.name}...`);
 			},
 		});
-		actions.appendChild(renameAction);
 
 		if (file.isFavorite) {
 			// Create remove from favorites file action
-			const removeFromFavoritesAction = createAction({
+			actionList.addAction({
 				actionName: "removeFromFavorites",
 				icon: getActionIcon("removeFromFavoritesAction"),
 				callback: () => {
 					console.log(`Removing ${file.name} from favorites...`);
 				},
 			});
-			actions.appendChild(removeFromFavoritesAction);
 		} else {
 			// Create add to favorites file action
-			const addToFavoritesAction = createAction({
+			actionList.addAction({
 				actionName: "addToFavorites",
 				icon: getActionIcon("addToFavorites"),
 				callback: () => {
 					console.log(`Adding ${file.name} to favorites...`);
 				},
 			});
-			actions.appendChild(addToFavoritesAction);
 		}
 
 		// Create see more action
-		const seeMore = createAction({
+		actionList.addAction({
 			actionName: "seeMore",
 			icon: getActionIcon("seeMore"),
 			callback: () => {
 				console.log(`Opening other actions...`);
 			},
 		});
-		actions.appendChild(seeMore);
 	}
 
 	return filesHTML;
-}
-
-function createAction({ actionName, icon, callback }) {
-	const action = createElement({
-		tag: "li",
-		action: {
-			className: "action",
-		},
-	});
-
-	// Create the action button
-	const actionButton = createElement({
-		tag: "button",
-		attributes: {
-			className: `${actionName}ActionButton`,
-			title: actionName
-				.replace(/([A-Z])/g, " $1")
-				.replace(/^./, function (str) {
-					return str.toUpperCase();
-				}),
-			innerHTML: icon,
-		},
-		eventListener: {
-			event: "click",
-			callback: callback,
-		},
-	});
-
-	// Insert the action button inside the action
-	action.appendChild(actionButton);
-
-	return action;
 }
 
 function getFileIcon(type) {
