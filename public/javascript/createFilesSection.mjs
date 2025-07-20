@@ -297,7 +297,7 @@ function createAction({ actionName, icon, callback }) {
 				.replace(/^./, function (str) {
 					return str.toUpperCase();
 				}),
-			innerHTML: getActionIcon(actionName),
+			innerHTML: icon,
 		},
 		eventListener: {
 			event: "click",
