@@ -135,6 +135,10 @@ input {
 	box-shadow: none !important;
 	outline: none;
 }
+
+input[type="checkbox"] {
+	-webkit-appearance: auto;
+}
 /* End of Reset CSS */
 
 /* Initial Stylings */
