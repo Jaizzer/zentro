@@ -1,6 +1,6 @@
 import createElement from "/javascript/utils/createElement.mjs";
 
-export default function createActionList() {
+export default function createActionList(actions) {
 	const actionList = createElement({
 		tag: "ul",
 		attributes: { className: "actions" },
@@ -9,6 +9,11 @@ export default function createActionList() {
 	const addAction = ({ actionName, icon, callback }) => {
 		actionList.appendChild(createAction({ actionName, icon, callback }));
 	};
+
+	// Add provided actions
+	for (const action of actions || []) {
+		addAction(action);
+	}
 
 	return { element: actionList, addAction };
 }
