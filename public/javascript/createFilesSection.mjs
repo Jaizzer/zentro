@@ -5,7 +5,7 @@ import createFiles from "/javascript/utils/createFiles.mjs";
 
 export default async function createFilesSection({ initialUrl, nextUrl }) {
 	// Perform initial file request
-	const { files, userId, isNextAvailable } = await getData(initialUrl);
+	const { files, isNextAvailable } = await getData(initialUrl);
 
 	if (files?.length !== 0) {
 		// Create the main section
@@ -57,7 +57,7 @@ export default async function createFilesSection({ initialUrl, nextUrl }) {
 		}
 
 		// Render the files
-		const filesHTML = createFiles({ files, userId });
+		const filesHTML = createFiles({ files });
 		for (const fileHTML of filesHTML || []) {
 			filesContainer.appendChild(fileHTML);
 		}
@@ -81,7 +81,6 @@ export default async function createFilesSection({ initialUrl, nextUrl }) {
 						// Render the files
 						const upcomingFilesHTML = createFiles({
 							files,
-							userId,
 						});
 						for (const upcomingFileHTML of upcomingFilesHTML ||
 							[]) {

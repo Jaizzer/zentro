@@ -57,11 +57,21 @@ async function getFilesData({ id, cursor }) {
 				process.env.DEFAULT_PROFILE_PICTURE_FILENAME
 		);
 
-		// Set the folder name as "My Drive" if the file is not contained by any folder
+		// Change the owner username to "You" if the current user id matches the id of the file owner
+		if (id === file.owner.id) {
+			file.owner.username = "You";
+		}
+
+		const isFileOwnedByOtherUser = file.owner.id !== id;
+		if (isFileOwnedByOtherUser) {
+			// Set the folder name of the file to "Shared with you" if the user do not own the file
+			file.folder = { name: "Shared with you" };
+		}
+
+		// Set the folder name as "My Drive" if the file is not contained by any folder and the user owns the file
 		if (!file.folder) {
 			file.folder = {
 				name: "My Vault",
-				owner: file.owner,
 			};
 		}
 

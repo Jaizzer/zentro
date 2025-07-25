@@ -97,7 +97,9 @@ export default function createFiles({ files, userId }) {
 			tag: "span",
 			attributes: {
 				className: "iconContainer",
-				innerHTML: getFolderIcon(file.owner.id === userId),
+				innerHTML: getFolderIcon(
+					file.folder.name !== "Shared with you"
+				),
 			},
 		});
 		location.appendChild(folderIconContainer);
@@ -106,10 +108,7 @@ export default function createFiles({ files, userId }) {
 			div: "span",
 			attributes: {
 				className: "name",
-				textContent:
-					file.owner.id === userId
-						? file.folder?.name
-						: "Shared with You",
+				textContent: file.folder.name,
 			},
 		});
 		location.appendChild(folderName);
