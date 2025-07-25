@@ -45,9 +45,9 @@ async function saveFiles({ fileUploads, userId, folderId }) {
 }
 
 async function getFilesData({ id, cursor }) {
-	const files = await File.findManyByOptions({
-		options: { ownerId: id },
-		cursor: cursor,
+	const files = await File.findAccessible({
+		userId: id,
+		cursor,
 	});
 
 	for (const file of files || []) {
