@@ -145,20 +145,3 @@ function getFolderIcon(isFolderShared) {
 
 	return icon;
 }
-
-function getActionIcon(action) {
-	switch (action) {
-		case "download":
-			return "⬇️";
-		case "rename":
-			return "🖋️";
-		case "addToFavorites":
-			return "☆";
-		case "removeFromFavorites":
-			return "⭐️";
-		case "seeMore":
-			return "︙";
-		default:
-			return "❔";
-	}
-}
