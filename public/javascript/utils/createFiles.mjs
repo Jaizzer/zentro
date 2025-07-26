@@ -1,6 +1,5 @@
-import renderDownloadPromptPopUp from "/javascript/utils/renderDownloadPromptPopUp.mjs";
-import createActionList from "/javascript/utils/createActionList.mjs";
 import createElement from "/javascript/utils/createElement.mjs";
+import createFileActionList from "/javascript/utils/createFileActionList.mjs";
 
 export default function createFiles({ files, userId }) {
 	let filesHTML = [];
@@ -114,55 +113,8 @@ export default function createFiles({ files, userId }) {
 		location.appendChild(folderName);
 
 		// Create file actions
-		const actionList = createActionList();
-		fileDiv.appendChild(actionList.element);
-
-		// Create download action
-		actionList.addAction({
-			actionName: "download",
-			icon: getActionIcon("download"),
-			callback: () => {
-				renderDownloadPromptPopUp(file);
-			},
-		});
-
-		// Create rename action
-		actionList.addAction({
-			actionName: "rename",
-			icon: getActionIcon("rename"),
-			callback: () => {
-				console.log(`Renaming ${file.name}...`);
-			},
-		});
-
-		if (file.isFavorite) {
-			// Create remove from favorites file action
-			actionList.addAction({
-				actionName: "removeFromFavorites",
-				icon: getActionIcon("removeFromFavoritesAction"),
-				callback: () => {
-					console.log(`Removing ${file.name} from favorites...`);
-				},
-			});
-		} else {
-			// Create add to favorites file action
-			actionList.addAction({
-				actionName: "addToFavorites",
-				icon: getActionIcon("addToFavorites"),
-				callback: () => {
-					console.log(`Adding ${file.name} to favorites...`);
-				},
-			});
-		}
-
-		// Create see more action
-		actionList.addAction({
-			actionName: "seeMore",
-			icon: getActionIcon("seeMore"),
-			callback: () => {
-				console.log(`Opening other actions...`);
-			},
-		});
+		const actionList = createFileActionList(file);
+		fileDiv.appendChild(actionList);
 	}
 
 	return filesHTML;
