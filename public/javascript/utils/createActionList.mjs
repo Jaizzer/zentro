@@ -6,16 +6,12 @@ export default function createActionList(actions) {
 		attributes: { className: "actions" },
 	});
 
-	const addAction = ({ actionName, icon, callback }) => {
-		actionList.appendChild(createAction({ actionName, icon, callback }));
-	};
-
 	// Add provided actions
 	for (const action of actions || []) {
-		addAction(action);
+		actionList.appendChild(createAction(action));
 	}
 
-	return { element: actionList, addAction };
+	return actionList;
 }
 
 function createAction({ actionName, icon, callback }) {
