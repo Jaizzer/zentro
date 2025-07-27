@@ -1,10 +1,17 @@
 import createActionList from "/javascript/utils/createActionList.mjs";
 import renderDownloadPromptPopUp from "/javascript/utils/renderDownloadPromptPopUp.mjs";
+import {
+	downloadIcon,
+	editIcon,
+	addToFavoritesIcon,
+	removeFromFavoritesIcon,
+	seeMoreIcon,
+} from "../../icons/actionIcons.mjs";
 
 export default function createFileActionList(file) {
 	const downloadAction = {
 		actionName: "download",
-		icon: "⬇️",
+		icon: downloadIcon,
 		callback: () => {
 			renderDownloadPromptPopUp(file);
 		},
@@ -12,7 +19,7 @@ export default function createFileActionList(file) {
 
 	const renameAction = {
 		actionName: "rename",
-		icon: "🖋️",
+		icon: editIcon,
 		callback: () => {
 			console.log(`Renaming ${file.name}...`);
 		},
@@ -20,7 +27,7 @@ export default function createFileActionList(file) {
 
 	const removeFromFavoritesAction = {
 		actionName: "removeFromFavorites",
-		icon: "⭐️",
+		icon: removeFromFavoritesIcon,
 		callback: () => {
 			console.log(`Removing ${file.name} from favorites...`);
 		},
@@ -28,7 +35,7 @@ export default function createFileActionList(file) {
 
 	const addToFavoritesAction = {
 		actionName: "addToFavorites",
-		icon: "☆",
+		icon: addToFavoritesIcon,
 		callback: () => {
 			console.log(`Adding ${file.name} to favorites...`);
 		},
@@ -36,7 +43,7 @@ export default function createFileActionList(file) {
 
 	const seeMoreAction = {
 		actionName: "seeMore",
-		icon: "︙",
+		icon: seeMoreIcon,
 		callback: () => {
 			console.log(`Opening other actions...`);
 		},
