@@ -1,3 +1,4 @@
+import getFileIcon from "/javascript/utils/getFileIcon.mjs";
 import createElement from "/javascript/utils/createElement.mjs";
 import createFileActionList from "/javascript/utils/createFileActionList.mjs";
 
@@ -28,7 +29,7 @@ export default function createFiles({ files, userId }) {
 			tag: "span",
 			attributes: {
 				className: "iconContainer",
-				innerHTML: getFileIcon(file.type),
+				innerHTML: getFileIcon(file.type.split("/")[1]),
 			},
 		});
 		fileLabel.appendChild(fileIconContainer);
@@ -118,21 +119,6 @@ export default function createFiles({ files, userId }) {
 	}
 
 	return filesHTML;
-}
-
-function getFileIcon(type) {
-	let icon;
-	if (type.includes("image")) {
-		icon = "🖼️";
-	} else if (type.includes("video")) {
-		icon = "🎞️";
-	} else if (type.includes("audio")) {
-		icon = "🎧";
-	} else {
-		icon = "📄";
-	}
-
-	return icon;
 }
 
 function getFolderIcon(isFolderShared) {
