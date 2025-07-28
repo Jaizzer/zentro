@@ -1,6 +1,7 @@
 import getFileIcon from "/javascript/utils/getFileIcon.mjs";
 import createElement from "/javascript/utils/createElement.mjs";
 import createFileActionList from "/javascript/utils/createFileActionList.mjs";
+import { defaultFolderIcon, sharedWithYouFolderIcon } from "/icons/folderIcons.mjs";
 
 export default function createFiles({ files, userId }) {
 	let filesHTML = [];
@@ -97,9 +98,7 @@ export default function createFiles({ files, userId }) {
 			tag: "span",
 			attributes: {
 				className: "iconContainer",
-				innerHTML: getFolderIcon(
-					file.folder.name !== "Shared with you"
-				),
+				innerHTML: file.folder.name !== "Shared with you" ? defaultFolderIcon : sharedWithYouFolderIcon,
 			},
 		});
 		location.appendChild(folderIconContainer);
