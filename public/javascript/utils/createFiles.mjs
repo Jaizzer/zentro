@@ -119,14 +119,3 @@ export default function createFiles({ files, userId }) {
 
 	return filesHTML;
 }
-
-function getFolderIcon(isFolderShared) {
-	let icon;
-	if (isFolderShared) {
-		icon = "📁";
-	} else {
-		icon = "🧑‍🧒‍🧒";
-	}
-
-	return icon;
-}
