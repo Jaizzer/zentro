@@ -30,7 +30,6 @@ async function getFolders(req, res, next) {
 	// Send the json
 	return res.status(200).json({
 		folders,
-		userId: req.user.id,
 		isNextAvailable,
 	});
 }

@@ -2,7 +2,7 @@ import getData from "/javascript/getData.js";
 import createElement from "/javascript/utils/createElement.mjs";
 
 export default async function createFoldersSection({ initialUrl, nextUrl }) {
-	const { folders, userId, isNextAvailable } = await getData(initialUrl);
+	const { folders, isNextAvailable } = await getData(initialUrl);
 
 	if (folders?.length !== 0) {
 		// Create the main section
@@ -32,7 +32,7 @@ export default async function createFoldersSection({ initialUrl, nextUrl }) {
 		foldersSection.appendChild(foldersContainer);
 
 		// Render the folders
-		const foldersHTML = createFolders({ folders, userId });
+		const foldersHTML = createFolders({ folders });
 		for (const folderHTML of foldersHTML || []) {
 			foldersContainer.appendChild(folderHTML);
 		}
@@ -78,7 +78,7 @@ export default async function createFoldersSection({ initialUrl, nextUrl }) {
 	}
 }
 
-function createFolders({ folders, userId }) {
+function createFolders({ folders }) {
 	let foldersHTML = [];
 
 	for (const folder of folders || []) {
