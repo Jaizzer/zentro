@@ -52,10 +52,6 @@ let seeMoreIcon = `
 </svg>
 `;
 
-let folderIcon = `
-    
-`
-
 export {
 	downloadIcon,
 	editIcon,
