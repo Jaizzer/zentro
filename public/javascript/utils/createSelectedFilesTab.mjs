@@ -1,5 +1,12 @@
 import createElement from "/javascript/utils/createElement.mjs";
 import createActionList from "/javascript/utils/createActionList.mjs";
+import {
+	downloadIcon,
+	deleteIcon,
+	shareIcon,
+	moveIcon,
+	seeMoreIcon,
+} from "/icons/actionIcons.mjs";
 
 export default function createSelectedFilesTab() {
 	const selectedFilesTab = createElement({
@@ -58,7 +65,7 @@ export default function createSelectedFilesTab() {
 	// Create download action
 	actionList.addAction({
 		actionName: "download",
-		icon: "⬇️",
+		icon: downloadIcon,
 		callback: () => {
 			console.log(`Downloading file...`);
 		},
@@ -66,7 +73,7 @@ export default function createSelectedFilesTab() {
 
 	// Create move action
 	actionList.addAction({
-		actionName: "move",
+		actionName: moveIcon,
 		icon: "➡️",
 		callback: () => {
 			console.log(`Moving file...`);
@@ -76,7 +83,7 @@ export default function createSelectedFilesTab() {
 	// Create delete action
 	actionList.addAction({
 		actionName: "delete",
-		icon: "🗑️",
+		icon: deleteIcon,
 		callback: () => {
 			console.log(`Deleting file...`);
 		},
@@ -85,7 +92,7 @@ export default function createSelectedFilesTab() {
 	// Create copy link action
 	actionList.addAction({
 		actionName: "copyLink",
-		icon: "🔗",
+		icon: shareIcon,
 		callback: () => {
 			console.log(`Getting the file link...`);
 		},
@@ -94,7 +101,7 @@ export default function createSelectedFilesTab() {
 	// Create see more action
 	actionList.addAction({
 		actionName: "seeMore",
-		icon: "⫶",
+		icon: seeMoreIcon,
 		callback: () => {
 			console.log(`Opening other actions...`);
 		},
