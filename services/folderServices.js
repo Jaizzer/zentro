@@ -9,9 +9,9 @@ const Folder = require("../models/folderModel.js");
 const storageServices = require("../services/storageServices.js");
 
 async function getFolders({ id, cursor }) {
-	const folders = await Folder.findManyByOptions({
-		options: { ownerId: id },
-		cursor: cursor,
+	const folders = await Folder.findAccessible({
+		userId: id,
+		cursor,
 	});
 
 	for (const folder of folders || []) {

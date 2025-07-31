@@ -14,13 +14,26 @@ async function create(data) {
 	}
 }
 
-async function findManyByOptions({ options, cursor }) {
+async function findAccessible({ userId, cursor }) {
 	try {
 		const folders = await prisma.folder.findMany({
 			take: 1,
 			skip: cursor ? 1 : 0,
 			cursor: cursor && { id: cursor },
-			where: options,
+			where: {
+				OR: [
+					{
+						ownerId: userId,
+					},
+					{
+						usersWithAccess: {
+							some: {
+								userId: userId,
+							},
+						},
+					},
+				],
+			},
 			omit: {
 				ownerId: true,
 			},
@@ -51,5 +64,5 @@ async function findManyByOptions({ options, cursor }) {
 
 module.exports = {
 	create,
-	findManyByOptions,
+	findAccessible,
 };
