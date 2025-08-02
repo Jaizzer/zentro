@@ -13,6 +13,7 @@ export default function createSelectedFilesTab() {
 		tag: "div",
 		attributes: {
 			className: "selectedFilesTab",
+			hidden: true,
 		},
 	});
 
