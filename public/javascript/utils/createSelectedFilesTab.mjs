@@ -10,6 +10,7 @@ import {
 
 export default function createSelectedFilesTab() {
 	let selectedFiles = [];
+	const getSelectedFiles = () => selectedFiles;
 
 	const selectedFilesTab = createElement({
 		tag: "div",
