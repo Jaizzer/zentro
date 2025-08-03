@@ -86,4 +86,5 @@ export default function createSelectedFilesTab() {
 		selectedFilesTab.hidden = true;
 	};
 
+	return { html: selectedFilesTab, addFile, removeFile, show, hide };
 }
