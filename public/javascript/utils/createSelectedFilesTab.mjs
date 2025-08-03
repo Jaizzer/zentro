@@ -50,6 +50,9 @@ export default function createSelectedFilesTab() {
 	const actionList = createSelectedFilesTabActionList(getSelectedFiles);
 	selectedFilesTab.appendChild(actionList);
 
+	const updateSelectedFileCount = (newFileCount) => {
+		selectedFilesCount.textContent = newFileCount;
+	};
 
 
 	};
