@@ -32,7 +32,7 @@ export default function createSelectedFilesTab() {
 		tag: "span",
 		attributes: {
 			className: "selectedFilesCount",
-			textContent: 1,
+			textContent: 0,
 		},
 	});
 	selectedFilesTab.appendChild(selectedFilesCount);
