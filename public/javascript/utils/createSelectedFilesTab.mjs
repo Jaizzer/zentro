@@ -56,5 +56,12 @@ export default function createSelectedFilesTab() {
 
 
 
+	const show = () => {
+		selectedFilesTab.hidden = false;
+	};
+
+	const hide = () => {
+		selectedFilesTab.hidden = true;
+	};
 
 }
