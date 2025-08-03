@@ -2,6 +2,7 @@ import getData from "/javascript/getData.js";
 import createElement from "/javascript/utils/createElement.mjs";
 import camelize from "/javascript/utils/camelize.mjs";
 import createFiles from "/javascript/utils/createFiles.mjs";
+import createSelectedFilesTab from "./utils/createSelectedFilesTab.mjs";
 
 export default async function createFilesSection({ initialUrl, nextUrl }) {
 	// Perform initial file request
@@ -24,6 +25,10 @@ export default async function createFilesSection({ initialUrl, nextUrl }) {
 			},
 		});
 		filesSection.appendChild(title);
+
+		// Create selected files tab
+		const selectedFilesTab = createSelectedFilesTab();
+		filesSection.appendChild(selectedFilesTab.html);
 
 		// Create the files container
 		const filesContainer = createElement({
