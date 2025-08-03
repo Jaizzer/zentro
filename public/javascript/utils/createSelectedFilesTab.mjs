@@ -47,7 +47,7 @@ export default function createSelectedFilesTab() {
 	selectedFilesTab.appendChild(selectedKeyword);
 
 	// Create the action list
-	const actionList = createSelectedFilesTabActionList(() => selectedFiles);
+	const actionList = createSelectedFilesTabActionList(getSelectedFiles);
 	selectedFilesTab.appendChild(actionList);
 
 
