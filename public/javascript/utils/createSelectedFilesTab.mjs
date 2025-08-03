@@ -9,6 +9,8 @@ import {
 } from "/icons/actionIcons.mjs";
 
 export default function createSelectedFilesTab() {
+	let selectedFiles = [];
+
 	const selectedFilesTab = createElement({
 		tag: "div",
 		attributes: {
