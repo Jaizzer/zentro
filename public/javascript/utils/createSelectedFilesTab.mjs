@@ -54,10 +54,29 @@ export default function createSelectedFilesTab() {
 		selectedFilesCount.textContent = newFileCount;
 	};
 
+	const addFile = (fileToAdd) => {
+		const isFileAlreadyAdded =
+			selectedFiles.filter((file) => file.hash === fileToAdd.hash)
+				.length !== 0;
+		if (!isFileAlreadyAdded) {
+			selectedFiles.push(fileToAdd);
+		}
 
+		updateSelectedFileCount(selectedFiles.length);
 	};
 
+	const removeFile = (fileToRemove) => {
+		const isFileAlreadyAdded =
+			selectedFiles.filter((file) => file.hash === fileToRemove.hash)
+				.length !== 0;
 
+		if (isFileAlreadyAdded) {
+			selectedFiles = selectedFiles.filter(
+				(file) => file.hash === fileToRemove.hash
+			);
+		}
+		updateSelectedFileCount(selectedFiles.length);
+	};
 
 	const show = () => {
 		selectedFilesTab.hidden = false;
