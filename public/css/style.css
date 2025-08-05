@@ -824,4 +824,18 @@ img.profilePicture {
 	gap: 1rem;
 }
 
+.selectedFilesTab,
+.selectedFilesTab ul {
+	display: flex;
+	align-items: center;
+}
+
+.selectedFilesTab {
+	gap: 1rem;
+}
+
+.selectedFilesTab ul {
+	gap: 1rem;
+}
+
 /* End of Home/Files Stylings */
