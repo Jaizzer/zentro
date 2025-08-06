@@ -5,6 +5,7 @@ import {
 	shareIcon,
 	moveIcon,
 	seeMoreIcon,
+	copyLinkIcon,
 } from "/icons/actionIcons.mjs";
 
 export default function createSelectedFilesTabActionList(getSelectedFiles) {
@@ -47,7 +48,7 @@ export default function createSelectedFilesTabActionList(getSelectedFiles) {
 
 	const copyLinkAction = {
 		actionName: "copyLink",
-		icon: shareIcon,
+		icon: copyLinkIcon,
 		callback: () => {
 			console.log(`Getting the file link...`);
 		},
