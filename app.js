@@ -25,6 +25,10 @@ app.listen(PORT, (error) => {
 const flash = require("connect-flash");
 app.use(flash());
 
+// Parse application/json type POST data
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+
 // Encode data into key-value pairs
 app.use(express.urlencoded({ extended: true }));
 
