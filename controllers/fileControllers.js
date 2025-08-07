@@ -60,8 +60,14 @@ async function getFilesData(req, res, next) {
 		.json({ files, userId: req.user.id, isNextAvailable });
 }
 
+async function downloadFiles(req, res, next) {
+	const files = req.body.files;
+	return res.status(200).json({ message: "Files are ready for download." });
+}
+
 module.exports = {
 	renderFileUploadPage: asyncHandler(renderFileUploadPage),
 	uploadFiles: asyncHandler(uploadFiles),
 	getFilesData: asyncHandler(getFilesData),
+	downloadFiles: asyncHandler(downloadFiles),
 };

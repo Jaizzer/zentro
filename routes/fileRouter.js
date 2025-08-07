@@ -27,4 +27,10 @@ fileRouter.get(
 	fileControllers.getFilesData
 );
 
+fileRouter.post(
+	"/download",
+	authMiddlewares.isAuthenticated,
+	fileControllers.downloadFiles
+);
+
 module.exports = fileRouter;
