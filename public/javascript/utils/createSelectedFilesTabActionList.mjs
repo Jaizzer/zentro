@@ -21,7 +21,6 @@ export default function createSelectedFilesTabActionList(getSelectedFiles) {
 	const downloadAction = {
 		actionName: "download",
 		icon: downloadIcon,
-        // TODO: Commit the async
 		callback: async () => {
 			const selectedFiles = getSelectedFiles();
 
