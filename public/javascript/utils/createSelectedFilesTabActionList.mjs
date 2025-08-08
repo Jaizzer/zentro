@@ -1,4 +1,5 @@
 import createActionList from "/javascript/utils/createActionList.mjs";
+import sendData from "/javascript/sendData.mjs";
 import {
 	downloadIcon,
 	deleteIcon,
@@ -20,8 +21,18 @@ export default function createSelectedFilesTabActionList(getSelectedFiles) {
 	const downloadAction = {
 		actionName: "download",
 		icon: downloadIcon,
-		callback: () => {
+        // TODO: Commit the async
+		callback: async () => {
 			const selectedFiles = getSelectedFiles();
+
+			const url = "http://localhost:9000/file/download";
+
+			const { message } = await sendData({
+				url: url,
+				data: { files: selectedFiles },
+			});
+
+			console.log(message);
 
 			console.log(`Downloading the following files:`);
 			for (const selectedFile of selectedFiles || []) {
