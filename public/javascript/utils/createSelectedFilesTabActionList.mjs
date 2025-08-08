@@ -32,11 +32,6 @@ export default function createSelectedFilesTabActionList(getSelectedFiles) {
 			});
 
 			console.log(message);
-
-			console.log(`Downloading the following files:`);
-			for (const selectedFile of selectedFiles || []) {
-				console.log(selectedFile.name);
-			}
 		},
 	};
 
