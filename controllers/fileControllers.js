@@ -61,8 +61,16 @@ async function getFilesData(req, res, next) {
 }
 
 async function downloadFiles(req, res, next) {
-	const files = req.body.files;
-	return res.status(200).json({ message: "Files are ready for download." });
+	try {
+		const files = req.body.files;
+		return res
+			.status(200)
+			.json({ message: "Files are ready for download." });
+	} catch (error) {
+		return res.status(404).json({
+			message: "A problem occurred while downloading the file/s.",
+		});
+	}
 }
 
 module.exports = {
