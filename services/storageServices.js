@@ -4,6 +4,7 @@ require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const {
 	S3Client,
 	PutObjectCommand,
+	GetObjectCommand,
 	DeleteObjectCommand,
 } = require("@aws-sdk/client-s3");
 const {
@@ -90,8 +91,25 @@ async function getFileUrl(name) {
 	}
 }
 
+async function getFile({ hash }) {
+	try {
+		// Get the file from S3
+		const params = {
+			Bucket: process.env.BUCKET_NAME,
+			Key: hash,
+		};
+		const command = new GetObjectCommand(params);
+		const response = await s3.send(command);
+		const file = await response.Body.transformToByteArray();
+		return file;
+	} catch (error) {
+		throw error;
+	}
+}
+
 module.exports = {
 	uploadFile,
 	deleteFile,
 	getFileUrl,
+	getFile,
 };
