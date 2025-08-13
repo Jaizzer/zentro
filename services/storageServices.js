@@ -101,7 +101,8 @@ async function getFile({ hash, name }) {
 		const command = new GetObjectCommand(params);
 		const response = await s3.send(command);
 		const buffer = await response.Body.transformToByteArray();
-		return { fileName: name, buffer };
+		const contentType = response.ContentType;
+		return { fileName: name, buffer, contentType };
 	} catch (error) {
 		throw error;
 	}
