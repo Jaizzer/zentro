@@ -6,7 +6,13 @@ function zip(files) {
 
 		// Zip all files together
 		files.forEach((file) => {
-			zipper.addFile(file.name, file.buffer);
+			// Combine the file name and extension
+			const fileNameWithExtension = `${file.name}.${
+				file.contentType.split("/")[1]
+			}`;
+
+			// Add the file to the zip
+			zipper.addFile(fileNameWithExtension, file.buffer);
 		});
 
 		const zipFile = zipper.toBuffer();
