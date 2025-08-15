@@ -17,7 +17,7 @@ function zip(files) {
 
 		const zipFile = zipper.toBuffer();
 
-		return zipFile;
+		return { content: zipFile, contentType: "application/zip" };
 	} catch (error) {
 		throw new Error("A problem occurred while zipping the file.");
 	}
