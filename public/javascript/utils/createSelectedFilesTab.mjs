@@ -63,13 +63,5 @@ export default function createSelectedFilesTab() {
 		updateSelectedFileCount(selectedFiles.length);
 	};
 
-	const show = () => {
-		selectedFilesTab.hidden = false;
-	};
-
-	const hide = () => {
-		selectedFilesTab.hidden = true;
-	};
-
-	return { html: selectedFilesTab, addFile, removeFile, show, hide };
+	return { html: selectedFilesTab, addFile, removeFile };
 }
