@@ -112,7 +112,7 @@ function createDownloadPrompt(file, closePopUp) {
 				// Remove the popup
 				closePopUp();
 
-				downloadUrl(file.url);
+				downloadUrl({ url: file.url });
 			},
 		},
 	});
