@@ -28,7 +28,35 @@ export default async function createFilesSection({ initialUrl, nextUrl }) {
 
 		// Create selected files tab
 		const selectedFilesTab = createSelectedFilesTab();
-		filesSection.appendChild(selectedFilesTab.html);
+
+		// Create the selected files tab visibility toggle button
+		const selectFilesButton = createElement({
+			tag: "button",
+			attributes: {
+				className: "selectFilesButton",
+				textContent: "Select Files",
+			},
+			eventListener: {
+				event: "click",
+				callback: (e) => {
+					if (e.target.textContent === "Select Files") {
+						// Update button text
+						e.target.textContent = "Cancel";
+
+						filesSection.insertBefore(
+							selectedFilesTab.html,
+							title.nextElementSibling
+						);
+					} else {
+						// Update button text
+						e.target.textContent = "Select Files";
+
+						filesSection.removeChild(selectedFilesTab.html);
+					}
+				},
+			},
+		});
+		filesSection.appendChild(selectFilesButton);
 
 		// Create the files container
 		const filesContainer = createElement({
