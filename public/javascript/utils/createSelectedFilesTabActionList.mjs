@@ -8,6 +8,8 @@ import {
 	seeMoreIcon,
 	copyLinkIcon,
 } from "/icons/actionIcons.mjs";
+import createFileDownloadLink from "/javascript/utils/createFileDownloadLink.mjs";
+import downloadUrl from "/javascript/utils/downloadUrl.mjs";
 
 export default function createSelectedFilesTabActionList(getSelectedFiles) {
 	const shareAction = {
@@ -24,14 +26,23 @@ export default function createSelectedFilesTabActionList(getSelectedFiles) {
 		callback: async () => {
 			const selectedFiles = getSelectedFiles();
 
-			const url = "http://localhost:9000/file/download";
+			const url = "http://localhost:9000/file/getZipFile";
 
-			const { message } = await sendData({
+			const { message, zipFile } = await sendData({
 				url: url,
 				data: { files: selectedFiles },
 			});
 
 			console.log(message);
+
+			// Create a download link for the zip file
+			const fileDownloadLink = createFileDownloadLink(zipFile);
+
+			// Download the zip file
+			downloadUrl({
+				url: fileDownloadLink,
+				fileName: "zentro-archive.zip",
+			});
 		},
 	};
 
