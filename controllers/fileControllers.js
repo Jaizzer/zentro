@@ -68,7 +68,7 @@ async function getZipFile(req, res, next) {
 		const zipFile = await fileServices.downloadFiles(files);
 		return res
 			.status(200)
-			.json({ message: "Files are zipped successfully.", zipFile });
+			.json({ message: "Files archived successfully.", zipFile });
 	} catch (error) {
 		return res.status(404).json({
 			message: "A problem occurred while downloading the file/s.",
