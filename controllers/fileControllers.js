@@ -65,7 +65,7 @@ async function getZipFile(req, res, next) {
 		const files = req.body.files;
 
 		// Get the zip file containing the requested files
-		const zipFile = await fileServices.downloadFiles(files);
+		const zipFile = await fileServices.zipFiles(files);
 		return res
 			.status(200)
 			.json({ message: "Files archived successfully.", zipFile });
