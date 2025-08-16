@@ -13,21 +13,6 @@ export default function createSelectedFilesTab() {
 		},
 	});
 
-	const closeButton = createElement({
-		tag: "button",
-		attributes: {
-			className: "closeButton",
-			innerHTML: "&times;",
-		},
-		eventListener: {
-			event: "click",
-			callback: () => {
-				selectedFilesTab.parentElement.removeChild(selectedFilesTab);
-			},
-		},
-	});
-	selectedFilesTab.appendChild(closeButton);
-
 	const selectedFilesCount = createElement({
 		tag: "span",
 		attributes: {
