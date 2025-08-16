@@ -11,6 +11,7 @@ const storageServices = require("../services/storageServices.js");
 // Load utilities
 const generateRandomString = require("../utils/generateRandomString.js");
 const formatFileSize = require("../utils/formatFileSize.js");
+const zip = require("../utils/zip.js");
 
 async function saveFiles({ fileUploads, userId, folderId }) {
 	// Add hash
@@ -91,7 +92,25 @@ async function getFilesData({ id, cursor }) {
 	return files;
 }
 
+async function zipFiles(fileMetadataList) {
+	// Retrieve all the files
+	const files = await Promise.all(
+		fileMetadataList.map((fileMetadata) => {
+			return storageServices.getFile({
+				hash: fileMetadata.hash,
+				name: fileMetadata.name,
+			});
+		})
+	);
+
+	// Zip the files
+	const zipFile = zip(files);
+
+	return zipFile;
+}
+
 module.exports = {
 	saveFiles,
 	getFilesData,
+	zipFiles,
 };
