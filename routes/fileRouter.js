@@ -28,9 +28,9 @@ fileRouter.get(
 );
 
 fileRouter.post(
-	"/download",
+	"/getZipFile",
 	authMiddlewares.isAuthenticated,
-	fileControllers.downloadFiles
+	fileControllers.getZipFile
 );
 
 module.exports = fileRouter;

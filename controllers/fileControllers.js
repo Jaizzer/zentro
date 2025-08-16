@@ -60,7 +60,7 @@ async function getFilesData(req, res, next) {
 		.json({ files, userId: req.user.id, isNextAvailable });
 }
 
-async function downloadFiles(req, res, next) {
+async function getZipFile(req, res, next) {
 	try {
 		const files = req.body.files;
 		return res
@@ -77,5 +77,5 @@ module.exports = {
 	renderFileUploadPage: asyncHandler(renderFileUploadPage),
 	uploadFiles: asyncHandler(uploadFiles),
 	getFilesData: asyncHandler(getFilesData),
-	downloadFiles: asyncHandler(downloadFiles),
+	getZipFile: asyncHandler(getZipFile),
 };
