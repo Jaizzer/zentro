@@ -80,8 +80,9 @@ export default async function createFilesSection({ initialUrl, nextUrl }) {
 					event: "click",
 					callback: async (e) => {
 						// Fetch the files
-						const { files, userId, isNextAvailable } =
-							await getData(nextUrl);
+						const { files, isNextAvailable } = await getData(
+							nextUrl
+						);
 
 						// Render the files
 						const upcomingFilesHTML = createFiles({
