@@ -47,11 +47,15 @@ export default async function createFilesSection({ initialUrl, nextUrl }) {
 							selectedFilesTab.html,
 							title.nextElementSibling
 						);
+
+                        // Enable checkbox mode
 					} else {
 						// Update button text
 						e.target.textContent = "Select Files";
 
 						filesSection.removeChild(selectedFilesTab.html);
+
+                        // Exit checkbox mode
 					}
 				},
 			},
