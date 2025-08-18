@@ -6,11 +6,11 @@ import {
 	sharedWithYouFolderIcon,
 } from "/icons/folderIcons.mjs";
 
-export default function createFiles({ files, userId }) {
+export default function createFiles({ files }) {
 	let fileDivs = [];
 
 	for (const file of files || []) {
-		const fileDiv = createFile({ file, userId });
+		const fileDiv = createFile({ file });
 		fileDivs.push(fileDiv);
 	}
 
@@ -96,9 +96,7 @@ function createFile({ file, userId }) {
 		tag: "span",
 		attributes: {
 			className: "ownerUsername",
-			textContent: `${
-				file.owner.id === userId ? "You" : file.owner.username
-			}`,
+			textContent: file.owner.username,
 		},
 	});
 	owner.appendChild(ownerUsername);
