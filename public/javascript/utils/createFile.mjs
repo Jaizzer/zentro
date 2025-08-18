@@ -6,26 +6,7 @@ import {
 	sharedWithYouFolderIcon,
 } from "/icons/folderIcons.mjs";
 
-export default function createFiles({ files }) {
-	let fileDivs = [];
-
-	for (const file of files || []) {
-		const fileDiv = createFile({ file });
-		fileDivs.push(fileDiv);
-	}
-
-	const enableCheckboxMode = () => {
-		for (const fileDiv of fileDivs) {
-			fileDiv.enableCheckboxMode();
-		}
-	};
-
-	const fileDivsHtml = fileDivs.map((fileDiv) => fileDiv.html);
-
-	return { html: fileDivsHtml, enableCheckboxMode };
-}
-
-function createFileView({ file }) {
+export default function createFileView({ file }) {
 	// Create main file metadata container
 	const fileDiv = createElement({
 		tag: "div",
