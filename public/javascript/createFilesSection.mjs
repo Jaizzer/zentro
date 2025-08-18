@@ -1,7 +1,7 @@
 import getData from "/javascript/getData.js";
 import createElement from "/javascript/utils/createElement.mjs";
 import camelize from "/javascript/utils/camelize.mjs";
-import createFiles from "/javascript/utils/createFiles.mjs";
+import createFileView from "./utils/createFileView.mjs";
 import createSelectedFilesTab from "./utils/createSelectedFilesTab.mjs";
 
 export default async function createFilesSection({ initialUrl, nextUrl }) {
@@ -93,10 +93,11 @@ export default async function createFilesSection({ initialUrl, nextUrl }) {
 			header.appendChild(span);
 		}
 
-		// Render the files
-		const filesHTML = createFiles({ files });
-		for (const fileHTML of filesHTML || []) {
-			filesContainer.appendChild(fileHTML);
+		// Create the file views
+		const fileViews = files.map((file) => createFileView({ file }));
+
+		for (const fileView of fileViews || []) {
+			filesContainer.appendChild(fileView.element);
 		}
 
 		// Render the view more button only if there are more files to be fetched
@@ -111,18 +112,22 @@ export default async function createFilesSection({ initialUrl, nextUrl }) {
 				eventListener: {
 					event: "click",
 					callback: async (e) => {
-						// Fetch the files
+						// Fetch the next batch of files
 						const { files, isNextAvailable } = await getData(
 							nextUrl
 						);
 
-						// Render the files
-						const upcomingFilesHTML = createFiles({
-							files,
-						});
-						for (const upcomingFileHTML of upcomingFilesHTML ||
+						// Create the upcoming file views
+						const upcomingFileViews = files.map((upcomingFile) =>
+							createFileView({ file: upcomingFile })
+						);
+
+						// Render the upcoming file views
+						for (const upcomingFileView of upcomingFileViews ||
 							[]) {
-							filesContainer.appendChild(upcomingFileHTML);
+							filesContainer.appendChild(
+								upcomingFileView.element
+							);
 						}
 
 						// Remove the view more button if there are no longer files to be fetched
