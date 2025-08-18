@@ -25,7 +25,7 @@ export default function createFiles({ files }) {
 	return { html: fileDivsHtml, enableCheckboxMode };
 }
 
-function createFile({ file, userId }) {
+function createFile({ file }) {
 	// Create main file metadata container
 	const fileDiv = createElement({
 		tag: "div",
