@@ -57,7 +57,7 @@ export default function createSelectedFilesTab() {
 
 		if (isFileAlreadyAdded) {
 			selectedFiles = selectedFiles.filter(
-				(file) => file.hash === fileToRemove.hash
+				(file) => file.hash !== fileToRemove.hash
 			);
 		}
 		updateSelectedFileCount(selectedFiles.length);
