@@ -63,5 +63,5 @@ export default function createSelectedFilesTab() {
 		updateSelectedFileCount(selectedFiles.length);
 	};
 
-	return { html: selectedFilesTab, addFile, removeFile };
+	return { element: selectedFilesTab, addFile, removeFile };
 }

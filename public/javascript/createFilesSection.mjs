@@ -44,16 +44,17 @@ export default async function createFilesSection({ initialUrl, nextUrl }) {
 						e.target.textContent = "Cancel";
 
 						filesSection.insertBefore(
-							selectedFilesTab.html,
+							selectedFilesTab.element,
 							title.nextElementSibling
 						);
 
 						// Enable file selection mode
+
 					} else {
 						// Update button text
 						e.target.textContent = "Select Files";
 
-						filesSection.removeChild(selectedFilesTab.html);
+						filesSection.removeChild(selectedFilesTab.element);
 
 						// Disable file selection mode
 					}
