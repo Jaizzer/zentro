@@ -1,4 +1,4 @@
-import fileIcons from "/icons/fileIcons.mjs";
+import fileIcons from "../../icons/fileIcons.mjs";
 
 export default function getFileIcon(fileType) {
 	// Normalize the input to lowercase to make it case-insensitive (optional)

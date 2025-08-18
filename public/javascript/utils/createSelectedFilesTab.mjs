@@ -1,5 +1,5 @@
-import createElement from "/javascript/utils/createElement.mjs";
-import createSelectedFilesTabActionList from "/javascript/utils/createSelectedFilesTabActionList.mjs";
+import createElement from "./createElement.mjs";
+import createSelectedFilesTabActionList from "./createSelectedFilesTabActionList.mjs";
 
 export default function createSelectedFilesTab() {
 	let selectedFiles = [];

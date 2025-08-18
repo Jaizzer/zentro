@@ -1,4 +1,4 @@
-import createElement from "/javascript/utils/createElement.mjs";
+import createElement from "./createElement.mjs";
 
 export default function createPopUp() {
 	const popUp = createElement({

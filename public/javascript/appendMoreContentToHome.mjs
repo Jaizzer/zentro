@@ -1,6 +1,6 @@
-import createFoldersSection from "/javascript/createFoldersSection.mjs";
-import createEmptyVaultMessage from "/javascript/createEmptyVaultMessage.mjs";
-import createFilesSection from "/javascript/createFilesSection.mjs";
+import createFoldersSection from "./createFoldersSection.mjs";
+import createEmptyVaultMessage from "./createEmptyVaultMessage.mjs";
+import createFilesSection from "./createFilesSection.mjs";
 
 async function appendMoreContentToHome() {
 	const home = document.querySelector(".homeSection");

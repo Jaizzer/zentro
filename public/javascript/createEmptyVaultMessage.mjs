@@ -1,4 +1,4 @@
-import createElement from "/javascript/utils/createElement.mjs";
+import createElement from "./utils/createElement.mjs";
 
 export default function createEmptyVaultMessage() {
 	const emptyVaultMessage = createElement({

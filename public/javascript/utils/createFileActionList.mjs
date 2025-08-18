@@ -1,5 +1,5 @@
-import createActionList from "/javascript/utils/createActionList.mjs";
-import renderDownloadPromptPopUp from "/javascript/utils/renderDownloadPromptPopUp.mjs";
+import createActionList from "./createActionList.mjs";
+import renderDownloadPromptPopUp from "./renderDownloadPromptPopUp.mjs";
 import {
 	downloadIcon,
 	editIcon,

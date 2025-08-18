@@ -1,6 +1,6 @@
-import downloadUrl from "/javascript/utils/downloadUrl.mjs";
-import createElement from "/javascript/utils/createElement.mjs";
-import createPopUp from "/javascript/utils/createPopUp.mjs";
+import downloadUrl from "./downloadUrl.mjs";
+import createElement from "./createElement.mjs";
+import createPopUp from "./createPopUp.mjs";
 
 export default function renderDownloadPromptPopUp(file) {
 	const popUp = createPopUp();

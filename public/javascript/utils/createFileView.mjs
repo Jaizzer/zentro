@@ -1,6 +1,6 @@
-import getFileIcon from "/javascript/utils/getFileIcon.mjs";
-import createElement from "/javascript/utils/createElement.mjs";
-import createFileActionList from "/javascript/utils/createFileActionList.mjs";
+import getFileIcon from "./getFileIcon.mjs";
+import createElement from "./createElement.mjs";
+import createFileActionList from "./createFileActionList.mjs";
 import {
 	defaultFolderIcon,
 	sharedWithYouFolderIcon,

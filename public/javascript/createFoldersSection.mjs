@@ -1,5 +1,5 @@
-import getData from "/javascript/getData.js";
-import createElement from "/javascript/utils/createElement.mjs";
+import getData from "./getData.js";
+import createElement from "./utils/createElement.mjs";
 
 export default async function createFoldersSection({ initialUrl, nextUrl }) {
 	const { folders, isNextAvailable } = await getData(initialUrl);

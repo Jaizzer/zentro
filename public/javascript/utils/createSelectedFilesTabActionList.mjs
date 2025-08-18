@@ -1,5 +1,5 @@
-import createActionList from "/javascript/utils/createActionList.mjs";
-import sendData from "/javascript/sendData.mjs";
+import createActionList from "./createActionList.mjs";
+import sendData from "../sendData.mjs";
 import {
 	downloadIcon,
 	deleteIcon,
@@ -8,8 +8,8 @@ import {
 	seeMoreIcon,
 	copyLinkIcon,
 } from "/icons/actionIcons.mjs";
-import createFileDownloadLink from "/javascript/utils/createFileDownloadLink.mjs";
-import downloadUrl from "/javascript/utils/downloadUrl.mjs";
+import createFileDownloadLink from "./createFileDownloadLink.mjs";
+import downloadUrl from "./downloadUrl.mjs";
 
 export default function createSelectedFilesTabActionList(getSelectedFiles) {
 	const shareAction = {

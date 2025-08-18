@@ -1,4 +1,4 @@
-import createElement from "/javascript/utils/createElement.mjs";
+import createElement from "./utils/createElement.mjs";
 
 const fileUploadsPreview = document.querySelector(".fileUploadsPreview");
 const uploadFilesOptionButton = document.querySelector("#uploadFilesOption");

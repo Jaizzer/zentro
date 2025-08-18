@@ -1,6 +1,6 @@
-import getData from "/javascript/getData.js";
-import createElement from "/javascript/utils/createElement.mjs";
-import camelize from "/javascript/utils/camelize.mjs";
+import getData from "./getData.js";
+import createElement from "./utils/createElement.mjs";
+import camelize from "./utils/camelize.mjs";
 import createFileView from "./utils/createFileView.mjs";
 import createSelectedFilesTab from "./utils/createSelectedFilesTab.mjs";
 
