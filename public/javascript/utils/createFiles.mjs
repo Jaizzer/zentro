@@ -7,14 +7,22 @@ import {
 } from "/icons/folderIcons.mjs";
 
 export default function createFiles({ files, userId }) {
-	let filesHTML = [];
+	let fileDivs = [];
 
 	for (const file of files || []) {
-		const fileHTML = createFile({ file, userId });
-		filesHTML.push(fileHTML);
+		const fileDiv = createFile({ file, userId });
+		fileDivs.push(fileDiv);
 	}
 
-	return filesHTML;
+	const enableCheckboxMode = () => {
+		for (const fileDiv of fileDivs) {
+			fileDiv.enableCheckboxMode();
+		}
+	};
+
+	const fileDivsHtml = fileDivs.map((fileDiv) => fileDiv.html);
+
+	return { html: fileDivsHtml, enableCheckboxMode };
 }
 
 function createFile({ file, userId }) {
