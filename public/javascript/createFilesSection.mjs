@@ -48,14 +48,14 @@ export default async function createFilesSection({ initialUrl, nextUrl }) {
 							title.nextElementSibling
 						);
 
-                        // Enable checkbox mode
+						// Enable file selection mode
 					} else {
 						// Update button text
 						e.target.textContent = "Select Files";
 
 						filesSection.removeChild(selectedFilesTab.html);
 
-                        // Exit checkbox mode
+						// Disable file selection mode
 					}
 				},
 			},
