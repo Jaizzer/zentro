@@ -129,5 +129,17 @@ function createFile({ file, userId }) {
 	const actionList = createFileActionList(file);
 	fileDiv.appendChild(actionList);
 
-	return fileDiv;
+	const enableCheckboxMode = () => {
+		const checkbox = createElement({
+			tag: "input",
+			attributes: {
+				type: "checkbox",
+				className: "fileCheckbox",
+			},
+		});
+
+		fileLabel.prepend(checkbox);
+	};
+
+	return { html: fileDiv, enableCheckboxMode };
 }
