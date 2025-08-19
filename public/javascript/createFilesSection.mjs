@@ -1,8 +1,8 @@
 import getData from "./getData.js";
 import createElement from "./utils/createElement.mjs";
 import camelize from "./utils/camelize.mjs";
-import createFileView from "./utils/createFileView.mjs";
 import createSelectedFilesTab from "./utils/createSelectedFilesTab.mjs";
+import FileView from "./utils/FileView.js";
 
 export default async function createFilesSection({ initialUrl, nextUrl }) {
 	// Perform initial file request
@@ -49,7 +49,7 @@ export default async function createFilesSection({ initialUrl, nextUrl }) {
 						);
 
 						// Enable file selection mode
-
+						FileView.enableCheckbox();
 					} else {
 						// Update button text
 						e.target.textContent = "Select Files";
@@ -57,6 +57,7 @@ export default async function createFilesSection({ initialUrl, nextUrl }) {
 						filesSection.removeChild(selectedFilesTab.element);
 
 						// Disable file selection mode
+						FileView.disableCheckbox();
 					}
 				},
 			},
@@ -95,7 +96,14 @@ export default async function createFilesSection({ initialUrl, nextUrl }) {
 		}
 
 		// Create the file views
-		const fileViews = files.map((file) => createFileView({ file }));
+		const fileViews = files.map(
+			(file) =>
+				new FileView(
+					file,
+					selectedFilesTab.addFile,
+					selectedFilesTab.removeFile
+				)
+		);
 
 		for (const fileView of fileViews || []) {
 			filesContainer.appendChild(fileView.element);
@@ -119,8 +127,13 @@ export default async function createFilesSection({ initialUrl, nextUrl }) {
 						);
 
 						// Create the upcoming file views
-						const upcomingFileViews = files.map((upcomingFile) =>
-							createFileView({ file: upcomingFile })
+						const upcomingFileViews = files.map(
+							(upcomingFile) =>
+								new FileView(
+									upcomingFile,
+									selectedFilesTab.addFile,
+									selectedFilesTab.removeFile
+								)
 						);
 
 						// Render the upcoming file views
