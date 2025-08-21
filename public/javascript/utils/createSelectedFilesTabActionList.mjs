@@ -28,12 +28,10 @@ export default function createSelectedFilesTabActionList(getSelectedFiles) {
 
 			const url = "http://localhost:9000/file/getZipFile";
 
-			const { message, zipFile } = await sendData({
+			const { zipFile } = await sendData({
 				url: url,
 				data: { files: selectedFiles },
 			});
-
-			console.log(message);
 
 			// Create a download link for the zip file
 			const fileDownloadLink = createFileDownloadLink(zipFile);
