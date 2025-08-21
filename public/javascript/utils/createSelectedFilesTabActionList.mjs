@@ -43,7 +43,7 @@ export default function createSelectedFilesTabActionList(getSelectedFiles) {
 					fileName: "zentro-archive.zip",
 				});
 			} else {
-				console.log("Not");
+				console.error("Download failed. Please try again.");
 			}
 		},
 	};
