@@ -33,14 +33,18 @@ export default function createSelectedFilesTabActionList(getSelectedFiles) {
 				data: { files: selectedFiles },
 			});
 
-			// Create a download link for the zip file
-			const fileDownloadLink = createFileDownloadLink(zipFile);
+			if (zipFile) {
+				// Create a download link for the zip file
+				const fileDownloadLink = createFileDownloadLink(zipFile);
 
-			// Download the zip file
-			downloadUrl({
-				url: fileDownloadLink,
-				fileName: "zentro-archive.zip",
-			});
+				// Download the zip file
+				downloadUrl({
+					url: fileDownloadLink,
+					fileName: "zentro-archive.zip",
+				});
+			} else {
+				console.log("Not");
+			}
 		},
 	};
 
