@@ -19,6 +19,7 @@ async function uploadFiles(req, res, next) {
 		size: file.size,
 	}));
 
+	// Save the files to a cloud storage
 	await fileServices.saveFiles({
 		userId: req.user.id,
 		fileUploads: mediaUploads,
