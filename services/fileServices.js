@@ -40,7 +40,7 @@ async function saveFiles({ fileUploads, userId, folderId }) {
 	await File.createMany(metadata);
 }
 
-async function createFileMetaData({ fileUpload, userId, folderId }) {
+function createFileMetaData({ fileUpload, userId, folderId }) {
 	return {
 		name: fileUpload.name,
 		hash: fileUpload.hash,
