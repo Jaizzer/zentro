@@ -32,17 +32,23 @@ async function saveFiles({ fileUploads, userId, folderId }) {
 	);
 
 	// Create the files' metadata
-	const metadata = fileUploads.map((fileUpload) => ({
+	const metadata = fileUploads.map((fileUpload) =>
+		createFileMetaData({ fileUpload, userId, folderId })
+	);
+
+	// Save the file metadata to the database
+	await File.createMany(metadata);
+}
+
+async function createFileMetaData({ fileUpload, userId, folderId }) {
+	return {
 		name: fileUpload.name,
 		hash: fileUpload.hash,
 		type: fileUpload.type,
 		size: fileUpload.size,
 		ownerId: userId,
 		folderId: folderId === "root" ? null : folderId,
-	}));
-
-	// Save the file metadata to the database
-	await File.createMany(metadata);
+	};
 }
 
 async function getFilesData({ id, cursor }) {
