@@ -27,6 +27,28 @@ async function createMany(data) {
 	}
 }
 
+async function findFilesInFolder({ userId, folderId }) {
+	try {
+		const files = await prisma.file.findMany({
+			where: {
+				AND: [
+					{
+						ownerId: userId,
+					},
+					{
+						folderId: folderId,
+					},
+				],
+			},
+		});
+
+		return files;
+	} catch (error) {
+		console.error("Failed to retrieve the files. ", error);
+		throw error;
+	}
+}
+
 async function findAccessible({ userId, cursor }) {
 	try {
 		const files = await prisma.file.findMany({
@@ -81,4 +103,5 @@ module.exports = {
 	create,
 	createMany,
 	findAccessible,
+	findFilesInFolder,
 };
