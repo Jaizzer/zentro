@@ -31,9 +31,12 @@ async function saveFiles({ fileUploads, userId, folderId }) {
 		})
 	);
 
-	// Create the files' metadata
-	const metadata = fileUploads.map((fileUpload) =>
-		createFileMetaData({ fileUpload, userId, folderId })
+	// Create the file metadata
+	const metadata = await Promise.all(
+		fileUploads.map(
+			async (fileUpload) =>
+				await createFileMetaData({ fileUpload, userId, folderId })
+		)
 	);
 
 	// Save the file metadata to the database
