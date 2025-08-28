@@ -27,20 +27,23 @@ async function createMany(data) {
 	}
 }
 
-async function findFilesInFolder({ userId, folderId }) {
+async function findInFolder({ userId, folderId, fileName }) {
 	try {
-		const files = await prisma.file.findMany({
-			where: {
-				AND: [
-					{
-						ownerId: userId,
-					},
-					{
-						folderId: folderId,
-					},
-				],
-			},
-		});
+		// Split the file name into the name and extension
+		const [name, extension] = fileName.split(".");
+
+		// Generate String pattern
+		const pattern = `${name}(- \d)?.${extension}%`;
+
+		// Retrieve the files using raw SQL query
+		const files = await prisma.$queryRaw`
+		    SELECT name
+		    FROM files
+		    LEFT JOIN user_file_permissions
+		    ON files.id = user_file_permissions.file_id
+		    WHERE folder_id = ${`${folderId}`}
+		        AND ( owner_id = ${userId}  OR user_id = ${userId}  )
+		        AND name SIMILAR TO ${pattern}`;
 
 		return files;
 	} catch (error) {
@@ -103,5 +106,5 @@ module.exports = {
 	create,
 	createMany,
 	findAccessible,
-	findFilesInFolder,
+	findInFolder,
 };
