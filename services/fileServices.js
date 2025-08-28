@@ -19,7 +19,7 @@ async function saveFiles({ fileUploads, userId, folderId }) {
 		fileUpload.hash = generateRandomString();
 	});
 
-	// Same the file uploads to the cloud in-parallel
+	// Save the file uploads to the cloud in-parallel
 	await Promise.all(
 		fileUploads.map((fileUpload) => {
 			return storageServices.uploadFile({
