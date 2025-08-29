@@ -33,9 +33,8 @@ async function saveFiles({ fileUploads, userId, folderId }) {
 
 	// Create the file metadata
 	const metadata = await Promise.all(
-		fileUploads.map(
-			async (fileUpload) =>
-				await createFileMetaData({ fileUpload, userId, folderId })
+		fileUploads.map(async (fileUpload) =>
+			createFileMetaData({ fileUpload, userId, folderId })
 		)
 	);
 
