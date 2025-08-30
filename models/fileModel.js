@@ -33,7 +33,7 @@ async function findInFolder({ userId, folderId, fileName }) {
 		const [name, extension] = fileName.split(".");
 
 		// Generate String pattern
-		const pattern = `${name}(- \d)?.${extension}%`;
+		const pattern = `${name}( - \d)?.${extension}%`;
 
 		// Retrieve the files using raw SQL query
 		const files = await prisma.$queryRaw`
@@ -41,8 +41,8 @@ async function findInFolder({ userId, folderId, fileName }) {
 		    FROM files
 		    LEFT JOIN user_file_permissions
 		    ON files.id = user_file_permissions.file_id
-		    WHERE folder_id = ${`${folderId}`}
-		        AND ( owner_id = ${userId}  OR user_id = ${userId}  )
+		    WHERE folder_id = ${`${folderId !== "root" ? folderId : "NULL"}`}
+		        AND (owner_id = ${userId} OR user_id = ${userId})
 		        AND name SIMILAR TO ${pattern}`;
 
 		return files;
