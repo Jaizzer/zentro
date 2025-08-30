@@ -102,6 +102,7 @@ model Folder {
     sequenceNumber  Int                    @default(autoincrement()) @map("sequence_number")
     name            String
     isPrivate       Boolean                @default(true)
+    isRoot          Boolean                @default(false) @map("is_root")
     createdAt       DateTime               @default(now()) @map("created_at")
     updatedAt       DateTime               @default(now()) @map("updated_at")
     ownerId         String                 @map("owner_id")
