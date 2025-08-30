@@ -119,11 +119,13 @@ async function zipFiles(fileMetadataList) {
 
 async function createUniqueFileName({ originalFileName, userId, folderId }) {
 	// Retrieve the existing files that matches the name of the current file of interest
-	const currentFileNames = await File.findInFolder({
-		userId,
-		folderId,
-		fileName: originalFileName,
-	}).map((fileMetadata) => fileMetadata.name);
+	const currentFileNames = (
+		await File.findInFolder({
+			userId,
+			folderId,
+			fileName: originalFileName,
+		})
+	).map((fileMetadata) => fileMetadata.name);
 
 	// Sort the file names alphanumerically
 	const sortedFileNames = currentFileNames.sort((a, b) => a > b);
