@@ -33,6 +33,17 @@ async function getFolders({ id, cursor }) {
 	return folders;
 }
 
+async function createFolder({ userId, isRoot, isPrivate, name }) {
+	const folder = await Folder.create({
+		userId,
+		isRoot,
+		isPrivate,
+		name,
+	});
+	return folder;
+}
+
 module.exports = {
 	getFolders,
+	createFolder,
 };
