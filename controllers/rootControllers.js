@@ -12,7 +12,7 @@ async function handleRootRedirect(req, res, next) {
 		return res.status(200).redirect("/pick-username");
 	} else {
 		// Retrieve the user's folders
-		const folders = await folderServices.getFolders({ id: req.user.id });
+		const folders = await folderServices.get({ id: req.user.id });
 
 		// Render the feed if the user already has a username
 		return res

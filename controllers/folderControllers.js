@@ -5,7 +5,7 @@ async function getFolders(req, res, next) {
 	const { page } = req.query;
 
 	// Retrieve the user's folders
-	const folders = await folderServices.getFolders({
+	const folders = await folderServices.get({
 		id: req.user.id,
 		cursor: page === "next" ? req.session.cursors?.folders : undefined,
 	});
@@ -21,7 +21,7 @@ async function getFolders(req, res, next) {
 	// Check if there's more folders for the succeeding request
 	const isNextAvailable =
 		(
-			await folderServices.getFolders({
+			await folderServices.get({
 				id: req.user.id,
 				cursor: req.session.cursors?.folders,
 			})
