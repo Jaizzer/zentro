@@ -33,7 +33,7 @@ async function getFolders({ id, cursor }) {
 	return folders;
 }
 
-async function createFolder({ userId, isRoot, isPrivate, name }) {
+async function create({ userId, isRoot, isPrivate, name }) {
 	const folder = await Folder.create({
 		userId,
 		isRoot,
@@ -45,5 +45,5 @@ async function createFolder({ userId, isRoot, isPrivate, name }) {
 
 module.exports = {
 	getFolders,
-	createFolder,
+	create,
 };
