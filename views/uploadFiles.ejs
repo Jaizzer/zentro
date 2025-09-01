@@ -10,7 +10,7 @@
 		<h1>Upload Files</h1>
 		<button class="uploadButton" type="submit">Upload</button>
 	</div>
-	<form class="uploadFilesForm" action="/file/upload/<%= folderId %>" method="POST" enctype="multipart/form-data">
+	<form class="uploadFilesForm" method="POST">
 		<div class="inputField">
 			<input type="file" id="fileUploads" name="fileUploads" multiple hidden />
 			<div class="fileUploadsPreview">
