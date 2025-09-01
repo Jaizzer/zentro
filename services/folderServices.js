@@ -8,7 +8,7 @@ const Folder = require("../models/folderModel.js");
 // Load services
 const storageServices = require("../services/storageServices.js");
 
-async function getFolders({ id, cursor }) {
+async function get({ id, cursor }) {
 	const folders = await Folder.findAccessible({
 		userId: id,
 		cursor,
@@ -44,6 +44,6 @@ async function create({ userId, isRoot, isPrivate, name }) {
 }
 
 module.exports = {
-	getFolders,
+	get,
 	create,
 };
