@@ -102,13 +102,13 @@ model Folder {
     name            String
     ownerId         String                 @map("owner_id")
     createdAt       DateTime               @default(now()) @map("created_at")
-    isPrivate       Boolean                @default(true)
+    isPrivate       Boolean                @default(true) @map("is_private")
     updatedAt       DateTime               @default(now()) @map("updated_at")
     sequenceNumber  Int                    @default(autoincrement()) @map("sequence_number")
     isRoot          Boolean                @default(false) @map("is_root")
     favoritedBy     FavoriteFolder[]
     files           File[]
-    parentFolderId  String
+    parentFolderId  String                 @map("parent_folder_id")
     parentFolder    Folder                 @relation("folderHierarchy", fields: [parentFolderId], references: [id])
     childrenFolders Folder[]               @relation("folderHierarchy")
     owner           User                   @relation(fields: [ownerId], references: [id])
