@@ -9,4 +9,10 @@ folderRouter.get(
 	folderControllers.getFolders
 );
 
+folderRouter.get(
+	"/:folderId",
+	authMiddlewares.isAuthenticated,
+	folderControllers.getFolder
+);
+
 module.exports = folderRouter;
