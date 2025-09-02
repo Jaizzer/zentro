@@ -108,8 +108,8 @@ model Folder {
     isRoot          Boolean                @default(false) @map("is_root")
     favoritedBy     FavoriteFolder[]
     files           File[]
-    parentFolderId  String                 @map("parent_folder_id")
-    parentFolder    Folder                 @relation("folderHierarchy", fields: [parentFolderId], references: [id])
+    parentFolderId  String?                @map("parent_folder_id")
+    parentFolder    Folder?                @relation("folderHierarchy", fields: [parentFolderId], references: [id])
     childrenFolders Folder[]               @relation("folderHierarchy")
     owner           User                   @relation(fields: [ownerId], references: [id])
     usersWithAccess UserFolderPermission[]
