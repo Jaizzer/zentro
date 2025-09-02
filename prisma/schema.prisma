@@ -20,15 +20,15 @@ model Session {
 model User {
     id                     String                 @id @unique @default(cuid())
     username               String?                @unique
-    localAccount           LocalAccount?
-    linkedAccount          LinkedAccount?
     profilePictureFilename String?                @map("profile_picture_filename")
-    files                  File[]
-    incomingSharedFiles    UserFilePermission[]
     favoriteFiles          FavoriteFile[]
-    folders                Folder[]
-    UserFolderPermission   UserFolderPermission[]
     FavoriteFolder         FavoriteFolder[]
+    files                  File[]
+    folders                Folder[]
+    linkedAccount          LinkedAccount?
+    localAccount           LocalAccount?
+    incomingSharedFiles    UserFilePermission[]
+    UserFolderPermission   UserFolderPermission[]
 
     @@map("users")
 }
@@ -60,19 +60,19 @@ model LinkedAccount {
 
 model File {
     id              String               @id @default(cuid())
-    sequenceNumber  Int                  @default(autoincrement()) @map("sequence_number")
     name            String
-    hash            String
     size            Float?
     type            String?
-    isPrivate       Boolean              @default(true)
     createdAt       DateTime             @default(now()) @map("created_at")
     ownerId         String               @map("owner_id")
+    folderId        String?              @map("folder_id")
+    isPrivate       Boolean              @default(true)
+    hash            String
+    sequenceNumber  Int                  @default(autoincrement()) @map("sequence_number")
+    favoritedBy     FavoriteFile[]
+    folder          Folder?              @relation(fields: [folderId], references: [id])
     owner           User                 @relation(fields: [ownerId], references: [id])
     usersWithAccess UserFilePermission[]
-    favoritedBy     FavoriteFile[]
-    folderId        String?              @map("folder_id")
-    folder          Folder?              @relation(fields: [folderId], references: [id])
 
     @@map("files")
 }
@@ -80,9 +80,9 @@ model File {
 model UserFilePermission {
     id     String @id @default(cuid())
     userId String @map("user_id")
-    user   User   @relation(fields: [userId], references: [id])
     fileId String @map("file_id")
     file   File   @relation(fields: [fileId], references: [id])
+    user   User   @relation(fields: [userId], references: [id])
 
     @@map("user_file_permissions")
 }
@@ -90,28 +90,28 @@ model UserFilePermission {
 model FavoriteFile {
     id     String @id @default(cuid())
     userId String @map("user_id")
-    user   User   @relation(fields: [userId], references: [id])
     fileId String @map("file_id")
     file   File   @relation(fields: [fileId], references: [id])
+    user   User   @relation(fields: [userId], references: [id])
 
     @@map("favorite_files")
 }
 
 model Folder {
     id              String                 @id @default(cuid())
-    sequenceNumber  Int                    @default(autoincrement()) @map("sequence_number")
     name            String
-    isPrivate       Boolean                @default(true)
-    isRoot          Boolean                @default(false) @map("is_root")
-    createdAt       DateTime               @default(now()) @map("created_at")
-    updatedAt       DateTime               @default(now()) @map("updated_at")
     ownerId         String                 @map("owner_id")
-    owner           User                   @relation(fields: [ownerId], references: [id])
-    childrenFolders Folder[]               @relation("FolderHierarchy")
-    parentFolder    Folder                 @relation("FolderHierarchy", fields: [id], references: [id])
-    files           File[]
-    usersWithAccess UserFolderPermission[]
+    createdAt       DateTime               @default(now()) @map("created_at")
+    isPrivate       Boolean                @default(true)
+    updatedAt       DateTime               @default(now()) @map("updated_at")
+    sequenceNumber  Int                    @default(autoincrement()) @map("sequence_number")
+    isRoot          Boolean                @default(false) @map("is_root")
     favoritedBy     FavoriteFolder[]
+    files           File[]
+    folders         Folder                 @relation("foldersTofolders", fields: [id], references: [id])
+    other_folders   Folder?                @relation("foldersTofolders")
+    owner           User                   @relation(fields: [ownerId], references: [id])
+    usersWithAccess UserFolderPermission[]
 
     @@map("folders")
 }
@@ -119,9 +119,9 @@ model Folder {
 model UserFolderPermission {
     id       String @id @default(cuid())
     userId   String @map("user_id")
-    user     User   @relation(fields: [userId], references: [id])
     folderId String @map("folder_id")
     folder   Folder @relation(fields: [folderId], references: [id])
+    user     User   @relation(fields: [userId], references: [id])
 
     @@map("user_folder_permissions")
 }
@@ -129,9 +129,9 @@ model UserFolderPermission {
 model FavoriteFolder {
     id       String @id @default(cuid())
     userId   String @map("user_id")
-    user     User   @relation(fields: [userId], references: [id])
     folderId String @map("folder_id")
     folder   Folder @relation(fields: [folderId], references: [id])
+    user     User   @relation(fields: [userId], references: [id])
 
     @@map("favorite_folders")
 }
