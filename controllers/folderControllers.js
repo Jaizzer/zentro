@@ -38,7 +38,16 @@ async function getFolders(req, res, next) {
 }
 
 async function getFolder(req, res, next) {
-	return res.status(200);
+	// Extract the folder id from the request
+	const { folderId } = req.params;
+
+	// Get the folder that matches the provided id
+	const folder = await folderServices.get({
+		userId: req.user.id,
+		folderId: folderId,
+	});
+
+	return res.status(200).json({ folder });
 }
 
 module.exports = {
