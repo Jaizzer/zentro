@@ -6,9 +6,6 @@ const fileServices = require("../services/fileServices.js");
 const folderServices = require("../services/folderServices.js");
 
 async function handleRootRedirect(req, res, next) {
-	// Debugging line
-	console.log("Debugging line");
-
 	const username = req.user.username;
 	if (!username) {
 		// Render the pick username form if the user does not yet have a username
