@@ -46,6 +46,7 @@ async function findAccessible({ userId, folderId, cursor }) {
 			include: {
 				owner: true,
 				files: true,
+				childrenFolders: true,
 				usersWithAccess: {
 					include: {
 						user: true,
