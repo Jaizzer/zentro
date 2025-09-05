@@ -37,6 +37,11 @@ async function getFolders(req, res, next) {
 	});
 }
 
+async function getFolder(req, res, next) {
+	return res.status(200);
+}
+
 module.exports = {
 	getFolders: asyncHandler(getFolders),
+	getFolder: asyncHandler(getFolder),
 };
