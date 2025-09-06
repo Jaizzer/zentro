@@ -7,6 +7,7 @@ const File = require("../models/fileModel.js");
 
 // Load services
 const storageServices = require("../services/storageServices.js");
+const folderServices = require("../services/folderServices.js");
 
 // Load utilities
 const generateRandomString = require("../utils/generateRandomString.js");
@@ -14,10 +15,34 @@ const formatFileSize = require("../utils/formatFileSize.js");
 const zip = require("../utils/zip.js");
 
 async function saveFiles({ fileUploads, userId, folderId }) {
+	// Get the folder destination
+	let folderDestination;
+	if (folderId) {
+		folderDestination = await folderServices.get({
+			userId: userId,
+			folderId: folderId,
+		});
+	} else {
+		folderDestination = await folderServices.create({
+			ownerId: userId,
+			name: "root",
+			isRoot: true,
+		});
+	}
+
 	// Add hash
 	fileUploads.forEach((fileUpload) => {
 		fileUpload.hash = generateRandomString();
 	});
+
+	// Ensure each file name would be unique when uploaded to the selected folder
+	for (const fileUpload of fileUploads) {
+		fileUpload.name = await createUniqueFileName({
+			originalFileName: fileUpload.name,
+			folderId: folderDestination.id,
+			userId,
+		});
+	}
 
 	// Save the file uploads to the cloud in-parallel
 	await Promise.all(
