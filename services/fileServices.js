@@ -127,22 +127,29 @@ async function createUniqueFileName({ originalFileName, userId, folderId }) {
 		})
 	).map((fileMetadata) => fileMetadata.name);
 
-	// Sort the file names alphanumerically
-	const sortedFileNames = currentFileNames.sort((a, b) => a > b);
+	const isThereSimilarName = currentFileNames.length > 0;
+	// Modify the file name if there are already existing similar names
+	if (isThereSimilarName) {
+		// Sort the file names alphanumerically
+		const sortedFileNames = currentFileNames.sort((a, b) => a > b);
 
-	// Get the last file name
-	const last = sortedFileNames[sortedFileNames.length - 1];
+		// Get the last file name
+		const last = sortedFileNames[sortedFileNames.length - 1];
 
-	// Split the file name into its multiple parts
-	const [fileName, extension] = last.split(".");
-	const [actualName, index] = fileName.split(" - ");
+		// Split the file name into its multiple parts
+		const [fileName, extension] = last.split(".");
+		const [actualName, index] = fileName.split(" - ");
 
-	if (index) {
-		// Return the file name with with an index up by 1 from the current last file name
-		return `${actualName} - ${parseInt(index) + 1}.${extension}`;
+		if (index) {
+			// Return the file name with with an index up by 1 from the current last file name
+			return `${actualName} - ${parseInt(index) + 1}.${extension}`;
+		} else {
+			// Return a file name with an index 1
+			return `${actualName} - 1.${extension}`;
+		}
 	} else {
-		// Return a file name with an index 1
-		return `${actualName} - 1.${extension}`;
+		// Return the original file name if its unique
+		return originalFileName;
 	}
 }
 
