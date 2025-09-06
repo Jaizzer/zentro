@@ -8,9 +8,10 @@ const Folder = require("../models/folderModel.js");
 // Load services
 const storageServices = require("../services/storageServices.js");
 
-async function get({ id, cursor }) {
+async function get({ userId, folderId, cursor }) {
 	const folders = await Folder.findAccessible({
-		userId: id,
+		folderId,
+		userId,
 		cursor,
 	});
 
