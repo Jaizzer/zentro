@@ -4,12 +4,12 @@ const folderServices = require("../services/folderServices.js");
 async function getFolders(req, res, next) {
 	const { page } = req.query;
 
-	// Obtain the folder ID
-	const folderId = req.originalUrl.split("/").slice(-1).pop();
+	const { folderId } = req.params;
 
 	// Retrieve the user's folders
 	const folders = await folderServices.get({
-		id: req.user.id,
+		userId: req.user.id,
+		folderId,
 		cursor: page === "next" ? req.session.cursors?.folders : undefined,
 	});
 
