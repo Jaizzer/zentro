@@ -1,5 +1,7 @@
-<section class="folderSection">
+<section class="folderSection" data-folder="<%= folder %>">
 	<h1><%= locals.user.username %></h1>
 	<img src="<%= locals.user.profilePictureUrl %>" class="profilePicture">
 	<a href="/auth/sign-out">Sign Out</a>
 </section>
+
+<script src="/javascript/renderFolder.mjs" type="module" defer></script>

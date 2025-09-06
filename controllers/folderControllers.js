@@ -39,12 +39,31 @@ async function getFolders(req, res, next) {
 
 async function renderInitialFolderPage(req, res, next) {
 	const username = req.user.username;
+	const { folderId } = req.params;
+
 	if (!username) {
 		// Render the pick username form if the user does not yet have a username
 		return res.status(200).redirect("/pick-username");
 	} else {
-		// Render the feed if the user already has a username
-		return res.status(200).render("folder");
+		// Retrieve the folder
+		const folder = await folderServices.get({
+			userId: req.user.id,
+			folderId,
+		});
+
+		if (folder.length !== 0) {
+			// Render the folder if it exists
+			return res
+				.status(200)
+				.render("folder", { folder: JSON.stringify(folder) });
+		} else {
+			// Render error if the folder does not exists
+			return res.status(404).render("error", {
+				title: "404 Error",
+				message: "Folder unavailable",
+				redirectLink: { caption: "Go Back", href: "/" },
+			});
+		}
 	}
 }
 
