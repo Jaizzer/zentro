@@ -37,20 +37,18 @@ async function getFolders(req, res, next) {
 	});
 }
 
-async function getFolder(req, res, next) {
-	// Extract the folder id from the request
-	const { folderId } = req.params;
-
-	// Get the folder that matches the provided id
-	const folder = await folderServices.get({
-		userId: req.user.id,
-		folderId: folderId,
-	});
-
-	return res.status(200).json({ folder });
+async function renderInitialFolderPage(req, res, next) {
+	const username = req.user.username;
+	if (!username) {
+		// Render the pick username form if the user does not yet have a username
+		return res.status(200).redirect("/pick-username");
+	} else {
+		// Render the feed if the user already has a username
+		return res.status(200).render("folder");
+	}
 }
 
 module.exports = {
 	getFolders: asyncHandler(getFolders),
-	getFolder: asyncHandler(getFolder),
+	renderInitialFolderPage: asyncHandler(renderInitialFolderPage),
 };

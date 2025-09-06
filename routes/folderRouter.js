@@ -6,13 +6,7 @@ const authMiddlewares = require("../middlewares/authMiddlewares.js");
 folderRouter.get(
 	"/",
 	authMiddlewares.isAuthenticated,
-	folderControllers.getFolders
-);
-
-folderRouter.get(
-	"/:folderId",
-	authMiddlewares.isAuthenticated,
-	folderControllers.getFolder
+	folderControllers.renderInitialFolderPage
 );
 
 module.exports = folderRouter;
