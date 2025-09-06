@@ -2,8 +2,18 @@ import getData from "./getData.js";
 import createElement from "./utils/createElement.mjs";
 import createFolders from "./utils/createFolders.mjs";
 
-export default async function createFoldersSection({ initialUrl, nextUrl }) {
-	const { folders, isNextAvailable } = await getData(initialUrl);
+export default async function createFoldersSection({
+	folders,
+	initialUrl,
+	nextUrl,
+}) {
+	let isNextAvailable = false;
+	if (!folders) {
+		// Perform initial folder GET request if folders were not provided
+		const data = await getData(initialUrl);
+		folders = data.folders;
+		isNextAvailable = data.isNextAvailable;
+	}
 
 	if (folders?.length !== 0) {
 		// Create the main section

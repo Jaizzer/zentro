@@ -4,9 +4,17 @@ import camelize from "./utils/camelize.mjs";
 import createSelectedFilesTab from "./utils/createSelectedFilesTab.mjs";
 import FileView from "./utils/FileView.js";
 
-export default async function createFilesSection({ initialUrl, nextUrl }) {
-	// Perform initial file request
-	const { files, isNextAvailable } = await getData(initialUrl);
+export default async function createFilesSection({
+	files,
+	initialUrl,
+	nextUrl,
+}) {
+	let isNextAvailable = false;
+	if (!files) {
+		// Perform initial file GET request if folders were not provided
+		const data = await getData(initialUrl);
+		(files = data.files), (isNextAvailable = data.isNextAvailable);
+	}
 
 	if (files?.length !== 0) {
 		// Create the main section
