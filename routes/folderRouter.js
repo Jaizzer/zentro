@@ -4,15 +4,15 @@ const folderControllers = require("../controllers/folderControllers.js");
 const authMiddlewares = require("../middlewares/authMiddlewares.js");
 
 folderRouter.get(
-	"/:folderId",
+	"/retrieve{/:folderId}",
 	authMiddlewares.isAuthenticated,
-	folderControllers.renderInitialFolderPage
+	folderControllers.getFolders
 );
 
 folderRouter.get(
-	"/retrieve/:folderId",
+	"/:folderId",
 	authMiddlewares.isAuthenticated,
-	folderControllers.getFolders
+	folderControllers.renderInitialFolderPage
 );
 
 module.exports = folderRouter;
