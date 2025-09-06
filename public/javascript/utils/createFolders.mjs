@@ -6,8 +6,9 @@ export default function createFolders({ folders }) {
 	for (const folder of folders || []) {
 		// Create main folder container
 		const folderDiv = createElement({
-			tag: "div",
+			tag: "a",
 			attributes: {
+				href: `http://localhost:9000/folder/${folder.id}`,
 				className: "folder",
 			},
 		});
