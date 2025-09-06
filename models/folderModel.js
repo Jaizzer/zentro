@@ -14,11 +14,11 @@ async function create(data) {
 	}
 }
 
-async function findAccessible({ userId, folderId, cursor }) {
+async function findAccessible({ userId, folderId, cursor, isPaginated }) {
 	try {
 		const folders = await prisma.folder.findMany({
-			take: 1,
-			skip: cursor ? 1 : 0,
+			take: isPaginated ? 1 : undefined,
+			skip: isPaginated && cursor ? 1 : 0,
 			cursor: cursor && { id: cursor },
 			where: {
 				AND: [
@@ -45,7 +45,12 @@ async function findAccessible({ userId, folderId, cursor }) {
 			},
 			include: {
 				owner: true,
-				files: true,
+				files: {
+					include: {
+						owner: true,
+						folder: true,
+					},
+				},
 				childrenFolders: true,
 				usersWithAccess: {
 					include: {
