@@ -1,5 +1,6 @@
 import getData from "./getData.js";
 import createElement from "./utils/createElement.mjs";
+import createFolders from "./utils/createFolders.mjs";
 
 export default async function createFoldersSection({ initialUrl, nextUrl }) {
 	const { folders, isNextAvailable } = await getData(initialUrl);
@@ -76,51 +77,4 @@ export default async function createFoldersSection({ initialUrl, nextUrl }) {
 	} else {
 		return null;
 	}
-}
-
-function createFolders({ folders }) {
-	let foldersHTML = [];
-
-	for (const folder of folders || []) {
-		// Create main folder container
-		const folderDiv = createElement({
-			tag: "div",
-			attributes: {
-				className: "folder",
-			},
-		});
-		foldersHTML.push(folderDiv);
-
-		// Create folder icon
-		const folderIconContainer = createElement({
-			tag: "span",
-			attributes: {
-				className: "iconContainer",
-				innerHTML: "📁",
-			},
-		});
-		folderDiv.appendChild(folderIconContainer);
-
-		// Create foldername
-		const foldername = createElement({
-			tag: "p",
-			attributes: {
-				className: "name",
-				textContent: folder.name,
-			},
-		});
-		folderDiv.appendChild(foldername);
-
-		// Create folder content count
-		const folderContentCount = createElement({
-			tag: "p",
-			attributes: {
-				className: "contentCount",
-				textContent: `${folder.files.length} files`,
-			},
-		});
-		folderDiv.appendChild(folderContentCount);
-	}
-
-	return foldersHTML;
 }
