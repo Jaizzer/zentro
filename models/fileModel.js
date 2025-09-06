@@ -37,13 +37,13 @@ async function findInFolder({ userId, folderId, fileName }) {
 
 		// Retrieve the files using raw SQL query
 		const files = await prisma.$queryRaw`
-		    SELECT name
-		    FROM files
-		    LEFT JOIN user_file_permissions
-		    ON files.id = user_file_permissions.file_id
-		    WHERE folder_id = ${`${folderId !== "root" ? folderId : "NULL"}`}
-		        AND (owner_id = ${userId} OR user_id = ${userId})
-		        AND name SIMILAR TO ${pattern}`;
+            SELECT name
+            FROM files
+            LEFT JOIN user_file_permissions
+                ON files.id = user_file_permissions.file_id
+            WHERE folder_id = ${folderId}
+                AND (owner_id = ${userId} OR user_id = ${userId})
+                AND name SIMILAR TO ${pattern}`;
 
 		return files;
 	} catch (error) {
