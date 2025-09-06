@@ -56,26 +56,17 @@ async function saveFiles({ fileUploads, userId, folderId }) {
 		})
 	);
 
-	// Create the file metadata
-	const metadata = await Promise.all(
-		fileUploads.map(async (fileUpload) =>
-			createFileMetaData({ fileUpload, userId, folderId })
-		)
-	);
-
 	// Save the file metadata to the database
-	await File.createMany(metadata);
-}
-
-function createFileMetaData({ fileUpload, userId, folderId }) {
-	return {
-		name: fileUpload.name,
-		hash: fileUpload.hash,
-		type: fileUpload.type,
-		size: fileUpload.size,
-		ownerId: userId,
-		folderId: folderId === "root" ? null : folderId,
-	};
+	await File.createMany(
+		fileUploads.map((fileUpload) => ({
+			name: fileUpload.name,
+			hash: fileUpload.hash,
+			type: fileUpload.type,
+			size: fileUpload.size,
+			ownerId: userId,
+			folderId: folderDestination.id,
+		}))
+	);
 }
 
 async function getFilesData({ id, cursor }) {
