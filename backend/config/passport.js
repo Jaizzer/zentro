@@ -1,6 +1,6 @@
 // Import path to resolve the absolute path to the .env file (one level up from current directory)
 const path = require("path");
-require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
+require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 
 // Import passport dependencies
 const passport = require("passport");

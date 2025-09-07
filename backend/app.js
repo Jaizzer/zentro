@@ -1,9 +1,9 @@
-// Load the environment variables
-const dotenv = require("dotenv");
-dotenv.config();
-
 // Load path module for file and directory path
 const path = require("path");
+
+// Load the environment variables
+const dotenv = require("dotenv");
+require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
 // Setup the server
 const express = require("express");
