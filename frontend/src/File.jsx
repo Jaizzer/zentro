@@ -1,4 +1,8 @@
 export default function File({ metadata }) {
+	if (!metadata) {
+		return <div>Loading...</div>;
+	}
+
 	return (
 		<a>
 			<div className="label">
