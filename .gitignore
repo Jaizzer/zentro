@@ -1,0 +1,7 @@
+.env
+/backend/.env
+/backend/node_modules
+/backend/downloads
+/backend/generated/prisma
+/backend/temp.js
+/backend/models/directDatabaseUpdates.js

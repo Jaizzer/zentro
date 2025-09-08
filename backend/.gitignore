@@ -1,7 +1,0 @@
-.env
-node_modules
-downloads
-/generated/prisma
-temp.js
-
-/models/directDatabaseUpdates.js
