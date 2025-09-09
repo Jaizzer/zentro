@@ -1,15 +1,15 @@
 import { useState } from "react";
 
 export default function File({
-	metadata,
+	file,
 	isInSelectMode,
 	selectFileCallback,
 	unselectFileCallback,
 }) {
 	const [isSelected, setIsSelected] = useState(false);
 
-	// Render a loading message of the metadata is not yet available
-	if (!metadata) {
+	// Render a loading message of the file is not yet available
+	if (!file) {
 		return <div>Loading...</div>;
 	}
 
@@ -45,21 +45,18 @@ export default function File({
 			{checkbox}
 			<div className="label">
 				<span className="iconContainer"></span>
-				<span className="name">{metadata.name}</span>
+				<span className="name">{file.name}</span>
 			</div>
-			<time
-				className="creationDate"
-				dateTime={new Date(metadata.createdAt)}
-			>
-				{new Date(metadata.createdAt).toDateString()}
+			<time className="creationDate" dateTime={new Date(file.createdAt)}>
+				{new Date(file.createdAt).toDateString()}
 			</time>
 			<div className="owner">
-				<img src={metadata.owner.profilePictureUrl} />
-				<span className="username">{metadata.owner.username}</span>
+				<img src={file.owner.profilePictureUrl} />
+				<span className="username">{file.owner.username}</span>
 			</div>
 			<div className="location">
 				<span className="iconContainer"></span>
-				<div className="name">{metadata.folder.name}</div>
+				<div className="name">{file.folder.name}</div>
 			</div>
 			<div className="actions"></div>
 		</a>
