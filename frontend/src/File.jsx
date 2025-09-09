@@ -8,7 +8,7 @@ export default function File({
 }) {
 	const [isSelected, setIsSelected] = useState(false);
 
-	// Render a loading message of the file is not yet available
+	// Render a loading message if the file is not yet available
 	if (!file) {
 		return <div>Loading...</div>;
 	}
