@@ -1,11 +1,6 @@
 import { useState } from "react";
 
-export default function Item({
-	item,
-	isInSelectMode,
-	selectItemCallback,
-	unselectItemCallback,
-}) {
+export default function Item({ item, isInSelectMode, onSelectedItemsChange }) {
 	const [isSelected, setIsSelected] = useState(false);
 
 	// Render a loading message if the item is not yet available
@@ -19,14 +14,9 @@ export default function Item({
 		// Avoid triggering the parent element's event/s
 		e.stopPropagation();
 
-		// Execute the call back for selecting and unselecting the item
-		if (!isSelected) {
-			setIsSelected(!isSelected);
-			selectItemCallback();
-		} else {
-			setIsSelected(!isSelected);
-			unselectItemCallback();
-		}
+		// Update item selection status
+		setIsSelected(!isSelected);
+		onSelectedItemsChange(item);
 	};
 
 	if (isInSelectMode) {
