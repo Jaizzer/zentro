@@ -1,32 +1,40 @@
+import { useState } from "react";
+
 export default function File({
 	metadata,
 	isInSelectMode,
 	selectFileCallback,
 	unselectFileCallback,
 }) {
+	const [isSelected, setIsSelected] = useState(false);
+
 	if (!metadata) {
 		return <div>Loading...</div>;
 	}
 
 	// Create a checkbox
 	let checkbox;
-	let handleCheckboxChange = (e) => {
+	let handleFileSelect = (e) => {
 		// Avoid triggering the parent element's event/s
 		e.stopPropagation();
 
 		// Execute the call back for selecting and unselecting the file
-		if (e.target.checked) {
+		if (!isSelected) {
+			setIsSelected(!isSelected);
 			selectFileCallback();
 		} else {
+			setIsSelected(!isSelected);
 			unselectFileCallback();
 		}
 	};
+
 	if (isInSelectMode) {
 		checkbox = (
 			<input
 				className="checkbox"
 				type="checkbox"
-				onChange={handleCheckboxChange}
+				checked={isSelected}
+				onChange={handleFileSelect}
 			/>
 		);
 	}
