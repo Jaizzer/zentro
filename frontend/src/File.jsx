@@ -48,13 +48,13 @@ export default function File({
 			</div>
 			<time
 				className="creationDate"
-				datetime={new Date(metadata.createdAt)}
+				dateTime={new Date(metadata.createdAt)}
 			>
 				{new Date(metadata.createdAt).toDateString()}
 			</time>
 			<div className="owner">
 				<img src={metadata.owner.profilePictureUrl} />
-				<span class="username">{metadata.owner.username}</span>
+				<span className="username">{metadata.owner.username}</span>
 			</div>
 			<div className="location">
 				<span className="iconContainer"></span>
