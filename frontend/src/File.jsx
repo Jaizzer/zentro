@@ -8,6 +8,7 @@ export default function File({
 }) {
 	const [isSelected, setIsSelected] = useState(false);
 
+	// Render a loading message of the metadata is not yet available
 	if (!metadata) {
 		return <div>Loading...</div>;
 	}
