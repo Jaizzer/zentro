@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export default function Item({ item, isInSelectMode, onSelectedItemsChange }) {
+export default function Item({
+	item,
+	isInSelectMode,
+	onToggleItemSelectionStatus,
+}) {
 	const [isSelected, setIsSelected] = useState(false);
 
 	// Render a loading message if the item is not yet available
@@ -16,7 +20,7 @@ export default function Item({ item, isInSelectMode, onSelectedItemsChange }) {
 
 		// Update item selection status
 		setIsSelected(!isSelected);
-		onSelectedItemsChange(item);
+		onToggleItemSelectionStatus(item);
 	};
 
 	if (isInSelectMode) {
