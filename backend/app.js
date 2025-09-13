@@ -21,6 +21,10 @@ app.listen(PORT, (error) => {
 	}
 });
 
+// Enable cors
+const cors = require("cors");
+app.use(cors());
+
 // Load connect-flash to store messages for page redirects
 const flash = require("connect-flash");
 app.use(flash());
