@@ -10,15 +10,15 @@ fileRouter.get("/", (req, res) => {
 	return res.send("Received a GET HTTP method");
 });
 
-fileRouter.post("/", (req, res) => {
+fileRouter.post("/:fileId", (req, res) => {
 	return res.send("Received a POST HTTP method");
 });
 
-fileRouter.put("/", (req, res) => {
+fileRouter.put("/:fileId", (req, res) => {
 	return res.send("Received a PUT HTTP method");
 });
 
-fileRouter.delete("/", (req, res) => {
+fileRouter.delete("/:fileId", (req, res) => {
 	return res.send("Received a DELETE HTTP method");
 });
 
