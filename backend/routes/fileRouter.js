@@ -6,6 +6,22 @@ const fileValidators = require("../validators/fileValidators.js");
 const authMiddlewares = require("../middlewares/authMiddlewares.js");
 const fileUpload = require("../config/multer.js");
 
+fileRouter.get("/", (req, res) => {
+	return res.send("Received a GET HTTP method");
+});
+
+fileRouter.post("/", (req, res) => {
+	return res.send("Received a POST HTTP method");
+});
+
+fileRouter.put("/", (req, res) => {
+	return res.send("Received a PUT HTTP method");
+});
+
+fileRouter.delete("/", (req, res) => {
+	return res.send("Received a DELETE HTTP method");
+});
+
 fileRouter.get(
 	"/upload",
 	authMiddlewares.isAuthenticated,
