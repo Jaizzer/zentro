@@ -4,7 +4,7 @@ const folderControllers = require("../controllers/folderControllers.js");
 const authMiddlewares = require("../middlewares/authMiddlewares.js");
 
 folderRouter.get(
-	"/retrieve{/:folderId}",
+	"/:id",
 	authMiddlewares.isAuthenticated,
 	folderControllers.getFolders
 );
