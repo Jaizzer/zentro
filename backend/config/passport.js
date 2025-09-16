@@ -8,6 +8,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const GithubStrategy = require("passport-github").Strategy;
 const JwtStrategy = require("passport-jwt").Strategy;
+const { ExtractJwt } = require("passport-jwt");
 
 // Import models
 const User = require("../models/userModel.js");
@@ -17,7 +18,6 @@ const LinkedAccount = require("../models/linkedAccountModel.js");
 // Import utilities
 const isEmailOrUsername = require("../utils/isEmailOrUsername.js");
 const bcrypt = require("bcrypt");
-const { ExtractJwt } = require("passport-jwt");
 
 // Configure JWT strategy
 const jwtOptions = {
