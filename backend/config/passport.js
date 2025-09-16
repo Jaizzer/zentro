@@ -7,6 +7,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const GithubStrategy = require("passport-github").Strategy;
+const JwtStrategy = require("passport-jwt").Strategy;
 
 // Import models
 const User = require("../models/userModel.js");
@@ -16,6 +17,26 @@ const LinkedAccount = require("../models/linkedAccountModel.js");
 // Import utilities
 const isEmailOrUsername = require("../utils/isEmailOrUsername.js");
 const bcrypt = require("bcrypt");
+const { ExtractJwt } = require("passport-jwt");
+
+// Configure JWT strategy
+const jwtOptions = {
+	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+	secretOrKey: process.env.JWT_SECRET,
+};
+passport.use(
+	new JwtStrategy(jwtOptions, async function (jwtPayload, done) {
+		const user = await User.findManyByOptions({
+			id: jwtPayload.id,
+		});
+
+		if (user) {
+			done(null, user);
+		} else {
+			done(null, false);
+		}
+	})
+);
 
 passport.use(
 	new LocalStrategy(
