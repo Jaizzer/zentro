@@ -3,7 +3,7 @@ const path = require("path");
 
 // Load the environment variables
 const dotenv = require("dotenv");
-require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 // Setup the server
 const express = require("express");
